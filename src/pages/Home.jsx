@@ -10,7 +10,7 @@ function Home() {
 
   const handleLogoClick = () => {
     consecutiveClicks += 1;
-    if (consecutiveClicks === 4) {
+    if (consecutiveClicks === 5) {
       Navigate("/super-login");
       consecutiveClicks = 0;
     }

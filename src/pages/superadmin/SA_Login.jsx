@@ -15,6 +15,7 @@ function SA_Login() {
   const Navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validationSchema = Yup.object({
     email: Yup.string().email().required("E-mail address is required."),
@@ -38,6 +39,7 @@ function SA_Login() {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        setIsSubmitting(true);
         const response = await axios.post(
           `${server_url}/superadmin/login`,
           values
@@ -47,6 +49,7 @@ function SA_Login() {
             "superadmin",
             JSON.stringify({ id: response.data.user.superadminId })
           );
+          Navigate("/super-teachs");
         } else {
           setLoginError("Your account doesn't exist!");
         }
@@ -56,6 +59,8 @@ function SA_Login() {
         } else {
           console.error("Error:", error);
         }
+      } finally {
+        setIsSubmitting(false);
       }
     },
   });
@@ -109,8 +114,13 @@ function SA_Login() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-green-500 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                    Sign-in
+                    className="bg-green-500 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <span className="loader"></span>
+                    ) : (
+                      "Sign-in"
+                    )}{" "}
                   </button>
                 </form>
               </div>

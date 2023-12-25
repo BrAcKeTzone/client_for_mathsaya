@@ -1,15 +1,18 @@
 /* HTML: <div class="loader"></div> */
 .loader {
-  width: fit-content;
+  width: inline-flex;
+  align-items: center;
   font-weight: bold;
   font-family: sans-serif;
-  font-size: 30px;
+  font-size: 16px;
   padding-bottom: 8px;
   background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
   animation: l2 2s linear infinite;
 }
 .loader:before {
   content: "Loading...";
+  display: inline-block;
+  margin-right: 8px;
 }
 @keyframes l2 {
   to {
