@@ -6,7 +6,15 @@ import "../assets/styles/RubikDoodleShadow.css";
 
 function Home() {
   const Navigate = useNavigate();
-  let touchStartTime = null;
+  let consecutiveClicks = 0;
+
+  const handleLogoClick = () => {
+    consecutiveClicks += 1;
+    if (consecutiveClicks === 4) {
+      Navigate("/super-login");
+      consecutiveClicks = 0;
+    }
+  };
 
   const handleLogoRightClick = (event) => {
     if (event.button === 2) {
@@ -15,18 +23,6 @@ function Home() {
     }
   };
 
-  const handleLogoTouchStart = () => {
-    touchStartTime = Date.now();
-  };
-
-  const handleLogoTouchEnd = () => {
-    const touchEndTime = Date.now();
-    const touchDuration = touchEndTime - touchStartTime;
-    if (touchDuration >= 3000) {
-      Navigate("/super-login");
-    }
-    touchStartTime = null;
-  };
   return (
     <>
       <div
@@ -42,8 +38,7 @@ function Home() {
           <div className="flex justify-center">
             <button
               onContextMenu={handleLogoRightClick}
-              onTouchStart={handleLogoTouchStart}
-              onTouchEnd={handleLogoTouchEnd}>
+              onClick={handleLogoClick}>
               <img src={Logo} width={300} height={300} />
             </button>
           </div>
