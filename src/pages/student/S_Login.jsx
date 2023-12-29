@@ -20,6 +20,7 @@ function S_Login() {
   const validationSchema = Yup.object({
     firstname: Yup.string().required("E-mail address is required."),
     lastname: Yup.string().required("Password is required."),
+    username: Yup.string().required("Username is required."),
   });
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function S_Login() {
     initialValues: {
       firstname: "",
       lastname: "",
+      username: "",
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -68,7 +70,8 @@ function S_Login() {
     <>
       <div
         className="h-screen bg-blue-300 flex justify-center items-center"
-        onContextMenu={preventRightClick}>
+        onContextMenu={preventRightClick}
+      >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -93,7 +96,9 @@ function S_Login() {
                       placeholder="First Name"
                     />
                     {formik.touched.firstname && formik.errors.firstname && (
-                      <div className="text-red-600">{formik.errors.firstname}</div>
+                      <div className="text-red-600">
+                        {formik.errors.firstname}
+                      </div>
                     )}
                   </div>
                   <div className="my-4">
@@ -112,10 +117,27 @@ function S_Login() {
                       </div>
                     )}
                   </div>
+                  <div className="my-4">
+                    {loginError && (
+                      <div className="text-red-600">{loginError}</div>
+                    )}
+                    <input
+                      type="text"
+                      {...formik.getFieldProps("username")}
+                      className="w-full p-2 border rounded"
+                      placeholder="Last Name"
+                    />
+                    {formik.touched.username && formik.errors.username && (
+                      <div className="text-red-600">
+                        {formik.errors.username}
+                      </div>
+                    )}
+                  </div>
                   <button
                     type="submit"
                     className="bg-blue-700 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? (
                       <span className="loader"></span>
                     ) : (
