@@ -51,13 +51,13 @@ function SA_Login() {
           );
           Navigate("/super-dash");
         } else {
-          setLoginError("Your account doesn't exist!");
+          setLoginError("Account doesn't exist!");
         }
       } catch (error) {
-        if (error.response && error.response.status === 404) {
-          setLoginError("Your account doesn't exist!");
+        if (error.response && error.response.status === 401) {
+          alert("Invalid Account!")
+          setLoginError("Account doesn't exist!");
         } else {
-          alert("Email or Password is incorrect!");
           console.error("Error:", error);
         }
       } finally {
