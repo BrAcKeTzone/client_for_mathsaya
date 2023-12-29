@@ -74,7 +74,7 @@ function SA_Login() {
           <span className="loader"></span>
         ) : (
           <>
-            <div className="rounded bg-purple-800 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+            <div className="rounded bg-emerald-800 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
               <div className="rounded bg-emerald-500 p-8">
                 <div className="flex flex-col justify-center items-center">
                   <h2 className="text-center text-3xl font-bold ">
