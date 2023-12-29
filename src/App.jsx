@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import SA_Login from "./pages/superadmin/SA_Login";
+import SA_Dash from "./pages/superadmin/SA_Dashboard";
 import SA_EmailList from "./pages/superadmin/SA_EmailList";
 import SA_SuperAdminList from "./pages/superadmin/SA_SuperAdminList";
 import SA_TeacherList from "./pages/superadmin/SA_TeacherList";
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/super-login" element={<SA_Login />} />
+        <Route path="/super-dash" element={<SA_Dash />} />
         <Route path="/super-emails" element={<SA_EmailList />} />
         <Route path="/super-supers" element={<SA_SuperAdminList />} />
         <Route path="/super-teachs" element={<SA_TeacherList />} />

@@ -23,9 +23,9 @@ function SA_Login() {
   });
 
   useEffect(() => {
-    const superadmin = Cookies.get("superadmin");
+    const superadmin = Cookies.get("spr");
     if (superadmin) {
-      Navigate("/super-emails");
+      Navigate("/super-dash");
     } else {
       setIsLoading(false);
     }
@@ -44,12 +44,12 @@ function SA_Login() {
           `${server_url}/superadmin/login`,
           values
         );
-        if (response.data.user.superadminId) {
+        if (response.data.user.superAdminId) {
           Cookies.set(
-            "superadmin",
-            JSON.stringify({ id: response.data.user.superadminId })
+            "spr",
+            JSON.stringify({ id: response.data.user.superAdminId })
           );
-          Navigate("/super-teachs");
+          Navigate("/super-dash");
         } else {
           setLoginError("Your account doesn't exist!");
         }
