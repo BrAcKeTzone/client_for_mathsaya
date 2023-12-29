@@ -115,7 +115,7 @@ function SA_Login() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-emerald-500 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-emerald-500 p-2 rounded w-full hover:bg-emerald-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                     disabled={isSubmitting}>
                     {isSubmitting ? (
                       <span className="loader"></span>

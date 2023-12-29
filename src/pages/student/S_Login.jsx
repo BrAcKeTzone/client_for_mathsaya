@@ -136,7 +136,7 @@ function S_Login() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-blue-500 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-blue-500 p-2 rounded w-full hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
