@@ -125,7 +125,7 @@ function S_Login() {
                       type="text"
                       {...formik.getFieldProps("username")}
                       className="w-full p-2 border rounded"
-                      placeholder="Last Name"
+                      placeholder="Username"
                     />
                     {formik.touched.username && formik.errors.username && (
                       <div className="text-red-600">
