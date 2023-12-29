@@ -70,15 +70,15 @@ function S_Login() {
   return (
     <>
       <div
-        className="h-screen bg-blue-300 flex justify-center items-center"
+        className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
           <>
-            <div className="rounded bg-blue-700 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
-              <div className="rounded bg-blue-500 p-8">
+            <div className="rounded bg-blue-600 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+              <div className="rounded bg-blue-300 p-8">
                 <div className="flex flex-col justify-center items-center">
                   <h2 className="text-center text-3xl font-bold ">
                     LET'S GET LEARNING
@@ -136,7 +136,7 @@ function S_Login() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-blue-700 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-blue-500 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
