@@ -18,8 +18,8 @@ function S_Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validationSchema = Yup.object({
-    firstname: Yup.string().required("E-mail address is required."),
-    lastname: Yup.string().required("Password is required."),
+    firstname: Yup.string().required("First Name is required."),
+    lastname: Yup.string().required("Last Name is required."),
     username: Yup.string().required("Username is required."),
   });
 
@@ -59,6 +59,7 @@ function S_Login() {
         if (error.response && error.response.status === 404) {
           setLoginError("Your account doesn't exist!");
         } else {
+          alert("First Name, Last Name or Username is incorrect!");
           console.error("Error:", error);
         }
       } finally {

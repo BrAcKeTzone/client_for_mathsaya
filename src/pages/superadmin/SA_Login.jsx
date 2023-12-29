@@ -57,6 +57,7 @@ function SA_Login() {
         if (error.response && error.response.status === 404) {
           setLoginError("Your account doesn't exist!");
         } else {
+          alert("Email or Password is incorrect!");
           console.error("Error:", error);
         }
       } finally {
