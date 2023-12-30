@@ -54,8 +54,11 @@ function SA_SuperAdminList() {
   }, [Navigate]);
 
   return (
-    <div className="flex flex-col items-center h-screen bg-emerald-600">
-      <h1 className="text-white text-4xl mb-4 p-4">Super Admin List</h1>
+    <div className="flex flex-col items-center h-screen bg-purple-600">
+      <h1 className="text-white text-4xl pt-4 pb-2">Super Admin List</h1>
+      <button className="bg-blue-500 hover:bg-blue-400 p-2 rounded mb-2">
+        <h2>NEW ADMIN</h2>
+      </button>
       <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
         {isLoading ? (
           <span className="loader"></span>
@@ -63,8 +66,8 @@ function SA_SuperAdminList() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-2">
             {superAdmins.map((superAdmin) => (
               <div
-                key={superAdmin.id}
-                className={`bg-green-500 hover:bg-green-400 flex justify-center flex-col items-center p-4 rounded shadow-md transition duration-300 ease-in-out transform hover:scale-105`}
+                key={superAdmin.superAdminId}
+                className={`bg-purple-500 hover:bg-purple-400 flex justify-center flex-col items-center p-4 rounded shadow-md transition duration-300 ease-in-out transform hover:scale-105`}
               >
                 <RiAdminFill className="text-8xl mb-2" />
                 <table className="flex justify-center flex-col items-center ">
@@ -76,11 +79,10 @@ function SA_SuperAdminList() {
                   <tr />
                   <td>{superAdmin.gender}</td>
                   <tr />
-                  <td className="grid grid-cols-3 gap-4 p-2 border-t-2">
+                  <td>{superAdmin.schoolName}</td>
+                  <tr />
+                  <td className="grid grid-cols-2 gap-4 p-2 border-t-2">
                     <button className="bg-blue-500 hover:bg-blue-400 p-2 rounded">
-                      <FaRegPlusSquare className="text-2xl" />
-                    </button>
-                    <button className="bg-yellow-500 hover:bg-yellow-400 p-2 rounded">
                       <FaRegEdit className="text-2xl" />
                     </button>
                     <button className="bg-red-500 hover:bg-red-400 p-2 rounded">
