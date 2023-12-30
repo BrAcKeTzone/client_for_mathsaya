@@ -15,15 +15,14 @@ function SA_Dashboard() {
   const [totalSuperAdmins, setTotalSuperAdmins] = useState(0);
 
   useEffect(() => {
-    const superadmin = JSON.parse(Cookies.get("spr"));
+    let superadmin = Cookies.get("spr");
     if (!superadmin) {
       Navigate("/super-login");
       return;
     }
 
-    console.log(superadmin.id);
+    superadmin = JSON.parse(Cookies.get("spr"));
 
-    // Check if the superadmin.id exists in Super Admin entries
     const checkSuperAdminId = async () => {
       try {
         const response = await axios.post(
