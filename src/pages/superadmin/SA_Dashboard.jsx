@@ -70,7 +70,7 @@ function SA_Dashboard() {
       {isLoading ? (
         <span className="loader"></span>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-blue-300 p-4 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
             <Link
               to="/super-emails"
