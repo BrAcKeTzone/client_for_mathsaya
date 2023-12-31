@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { RiMailFill, RiAdminFill } from "react-icons/ri";
 import { FaUserGraduate } from "react-icons/fa6";
+import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -65,44 +66,47 @@ function SA_Dashboard() {
   }, [Navigate]);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-200">
-      {isLoading ? (
-        <span className="loader"></span>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-blue-300 p-4 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-            <Link
-              to="/super-emails"
-              className="flex justify-center flex-col items-center"
-            >
-              <RiMailFill className="text-8xl mb-2" />
-              <p className="text-xl font-bold">{totalEmails}</p>
-              <p>Total Emails</p>
-            </Link>
+    <>
+      <Navbar />
+      <div className="flex justify-center items-center h-screen bg-gray-200">
+        {isLoading ? (
+          <span className="loader"></span>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-blue-300 p-4 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+              <Link
+                to="/super-emails"
+                className="flex justify-center flex-col items-center"
+              >
+                <RiMailFill className="text-8xl mb-2" />
+                <p className="text-xl font-bold">{totalEmails}</p>
+                <p>Total Emails</p>
+              </Link>
+            </div>
+            <div className="bg-green-300 p-4 rounded shadow-md hover:bg-green-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+              <Link
+                to="/super-teachs"
+                className="flex justify-center flex-col items-center"
+              >
+                <FaUserGraduate className="text-8xl mb-2" />
+                <p className="text-xl font-bold">{totalTeachers}</p>
+                <p>Total Teachers</p>
+              </Link>
+            </div>
+            <div className="bg-purple-300 p-4 rounded shadow-md hover:bg-purple-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+              <Link
+                to="/super-supers"
+                className="flex justify-center flex-col items-center"
+              >
+                <RiAdminFill className="text-8xl mb-2" />
+                <p className="text-xl font-bold">{totalSuperAdmins}</p>
+                <p>Total Super Admins</p>
+              </Link>
+            </div>
           </div>
-          <div className="bg-green-300 p-4 rounded shadow-md hover:bg-green-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-            <Link
-              to="/super-teachs"
-              className="flex justify-center flex-col items-center"
-            >
-              <FaUserGraduate className="text-8xl mb-2" />
-              <p className="text-xl font-bold">{totalTeachers}</p>
-              <p>Total Teachers</p>
-            </Link>
-          </div>
-          <div className="bg-purple-300 p-4 rounded shadow-md hover:bg-purple-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-            <Link
-              to="/super-supers"
-              className="flex justify-center flex-col items-center"
-            >
-              <RiAdminFill className="text-8xl mb-2" />
-              <p className="text-xl font-bold">{totalSuperAdmins}</p>
-              <p>Total Super Admins</p>
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 
