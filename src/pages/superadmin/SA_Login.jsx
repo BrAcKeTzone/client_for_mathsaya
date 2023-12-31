@@ -8,6 +8,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { preventRightClick } from "../../components/preventRightClick";
 import "../../assets/styles/loader.css";
 import "../../assets/styles/BubbleGumSans.css";
+import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -55,7 +56,7 @@ function SA_Login() {
         }
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          alert("Invalid Account!")
+          alert("Invalid Account!");
           setLoginError("Account doesn't exist!");
         } else {
           console.error("Error:", error);
@@ -67,9 +68,11 @@ function SA_Login() {
   });
   return (
     <>
+      <Navbar />
       <div
         className="h-screen bg-emerald-500 flex justify-center items-center"
-        onContextMenu={preventRightClick}>
+        onContextMenu={preventRightClick}
+      >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -116,7 +119,8 @@ function SA_Login() {
                   <button
                     type="submit"
                     className="bg-emerald-500 p-2 rounded w-full hover:bg-emerald-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? (
                       <span className="loader"></span>
                     ) : (

@@ -22,7 +22,9 @@ function Navbar() {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
-          <span className="text-xl font-bold">MathSaya</span>
+          <Link to="/" className="text-xl font-bold">
+            MathSaya
+          </Link>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           <NavLink to="/super-dash">Dashboard</NavLink>
