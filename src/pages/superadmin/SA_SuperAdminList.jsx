@@ -37,22 +37,39 @@ function SA_SuperAdminList() {
       }
     };
 
-    const fetchSuperAdmins = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(
-          `${server_url}/superadmin/superadmins`
-        );
-        setSuperAdmins(response.data);
-      } catch (error) {
-        console.error("Error fetching super admins:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     checkSuperAdminId();
   }, [Navigate]);
+
+  const fetchSuperAdmins = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`${server_url}/superadmin/superadmins`);
+      setSuperAdmins(response.data);
+    } catch (error) {
+      console.error("Error fetching super admins:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteSuperAdmin = async (superAdminId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this super admin?"
+    );
+
+    if (!isConfirmed) {
+      return; // If the user cancels the deletion, do nothing
+    }
+    try {
+      await axios.delete(
+        `${server_url}/superadmin/delete-superadmin/${superAdminId}`
+      );
+
+      fetchSuperAdmins();
+    } catch (error) {
+      console.error("Error deleting super admin:", error);
+    }
+  };
 
   return (
     <>
@@ -88,7 +105,12 @@ function SA_SuperAdminList() {
                       <button className="bg-blue-500 hover:bg-blue-400 p-2 rounded">
                         <FaRegEdit className="text-2xl" />
                       </button>
-                      <button className="bg-red-500 hover:bg-red-400 p-2 rounded">
+                      <button
+                        className="bg-red-500 hover:bg-red-400 p-2 rounded"
+                        onClick={() =>
+                          handleDeleteSuperAdmin(superAdmin.superAdminId)
+                        }
+                      >
                         <FaTrashAlt className="text-2xl" />
                       </button>
                     </td>
