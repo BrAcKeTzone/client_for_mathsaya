@@ -32,7 +32,7 @@
   animation: l2 2s linear infinite;
 }
 .please_wait:before {
-  content: "Please Wait...";
+  content: "One moment, please...";
   display: inline-block;
   margin-right: 8px;
 }
