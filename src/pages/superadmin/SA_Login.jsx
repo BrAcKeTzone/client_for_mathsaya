@@ -122,7 +122,7 @@ function SA_Login() {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      <span className="loader"></span>
+                      <span className="please_wait"></span>
                     ) : (
                       "Sign-in"
                     )}{" "}

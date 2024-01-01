@@ -58,7 +58,7 @@ function SA_SuperAdminList() {
     );
 
     if (!isConfirmed) {
-      return; // If the user cancels the deletion, do nothing
+      return;
     }
     try {
       await axios.delete(

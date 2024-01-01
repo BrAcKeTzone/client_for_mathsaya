@@ -9,6 +9,11 @@ function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
+    const isConfirmed = window.confirm("Are you sure you want to sign-out?");
+
+    if (!isConfirmed) {
+      return;
+    }
     Cookies.remove("spr");
     Navigate("/super-login");
   };
