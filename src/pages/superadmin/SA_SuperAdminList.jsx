@@ -16,6 +16,7 @@ function SA_SuperAdminList() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalKey, setModalKey] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     let superadmin = Cookies.get("spr");
@@ -85,27 +86,46 @@ function SA_SuperAdminList() {
     setIsModalOpen(false);
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredSuperAdmins = superAdmins.filter((superAdmin) =>
+    `${superAdmin.firstname} ${superAdmin.lastname}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Navbar />
       <div className="flex flex-col items-center h-screen bg-purple-600">
         <h1 className="text-white text-4xl pt-4 pb-2">Admin List</h1>
         <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
-          <div className="flex justify-end w-full mb-2 pr-2">
-            {!isLoading && (
+          {!isLoading && (
+            <div className="flex justify-between w-full mb-2 pr-2 pl-2">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="bg-white p-2 rounded mr-2"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              </div>
               <button
                 className="bg-blue-500 hover:bg-blue-400 p-2 rounded"
                 onClick={openModal}
               >
                 <h2>ADD ADMIN</h2>
               </button>
-            )}
-          </div>
+            </div>
+          )}
           {isLoading ? (
             <span className="loader"></span>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-2">
-              {superAdmins.map((superAdmin) => (
+              {filteredSuperAdmins.map((superAdmin) => (
                 <div
                   key={superAdmin.superAdminId}
                   className={`bg-purple-500 hover:bg-purple-400 flex justify-center flex-col items-center p-4 rounded shadow-md transition duration-300 ease-in-out transform hover:scale-105`}
