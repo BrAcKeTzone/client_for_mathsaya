@@ -89,7 +89,7 @@ function SA_SuperAdminList() {
     <>
       <Navbar />
       <div className="flex flex-col items-center h-screen bg-purple-600">
-        <h1 className="text-white text-4xl pt-4 pb-2">Super Admin List</h1>
+        <h1 className="text-white text-4xl pt-4 pb-2">Admin List</h1>
         <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
           <div className="flex justify-end w-full mb-2 pr-2">
             {!isLoading && (

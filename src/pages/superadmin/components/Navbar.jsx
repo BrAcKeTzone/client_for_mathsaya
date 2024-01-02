@@ -35,7 +35,7 @@ function Navbar() {
           <NavLink to="/super-dash">Dashboard</NavLink>
           <NavLink to="/super-emails">Emails</NavLink>
           <NavLink to="/super-teachs">Teachers</NavLink>
-          <NavLink to="/super-supers">Super Admins</NavLink>
+          <NavLink to="/super-supers">Admins</NavLink>
           <button
             onClick={handleLogout}
             className="hover:text-gray-300 focus:outline-none"
@@ -80,7 +80,7 @@ function Navbar() {
               Teachers
             </NavLink>
             <NavLink to="/super-supers" onClick={toggleMobileMenu}>
-              Super Admins
+              Admins
             </NavLink>
             <button
               onClick={handleLogout}

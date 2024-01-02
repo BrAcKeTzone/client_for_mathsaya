@@ -68,7 +68,8 @@ function SA_Dashboard() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center h-screen bg-gray-200">
+      <div className="flex flex-col items-center h-screen bg-gray-200">
+        <h1 className="text-black text-4xl pt-4 pb-2">Dashboard</h1>
         {isLoading ? (
           <span className="loader"></span>
         ) : (
