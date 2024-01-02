@@ -125,7 +125,7 @@ function SA_Login() {
                       <span className="please_wait"></span>
                     ) : (
                       "Sign-in"
-                    )}{" "}
+                    )}
                   </button>
                 </form>
               </div>

@@ -6,6 +6,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { FaRegPlusSquare, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
 import Navbar from "./components/Navbar";
+import ModalAddSuperAdmin from "./components/ModalAddSuperAdmin";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -13,6 +14,8 @@ function SA_SuperAdminList() {
   const Navigate = useNavigate();
   const [superAdmins, setSuperAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalKey, setModalKey] = useState(0);
 
   useEffect(() => {
     let superadmin = Cookies.get("spr");
@@ -71,15 +74,33 @@ function SA_SuperAdminList() {
     }
   };
 
+  const openModal = () => {
+    console.log("Modal open");
+    setModalKey((prevKey) => prevKey + 1);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    console.log("Modal close");
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Navbar />
       <div className="flex flex-col items-center h-screen bg-purple-600">
         <h1 className="text-white text-4xl pt-4 pb-2">Super Admin List</h1>
-        <button className="bg-blue-500 hover:bg-blue-400 p-2 rounded mb-2">
-          <h2>NEW ADMIN</h2>
-        </button>
         <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
+          <div className="flex justify-end w-full mb-2 pr-2">
+            {!isLoading && (
+              <button
+                className="bg-blue-500 hover:bg-blue-400 p-2 rounded"
+                onClick={openModal}
+              >
+                <h2>ADD ADMIN</h2>
+              </button>
+            )}
+          </div>
           {isLoading ? (
             <span className="loader"></span>
           ) : (
@@ -121,6 +142,12 @@ function SA_SuperAdminList() {
           )}
         </div>
       </div>
+      <ModalAddSuperAdmin
+        key={modalKey}
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        fetchSuperAdmins={fetchSuperAdmins} // Pass the function to fetch Super Admins
+      />
     </>
   );
 }
