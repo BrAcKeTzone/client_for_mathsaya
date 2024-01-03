@@ -20,18 +20,18 @@ const ModalEditSuperAdmin = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [superAdminData, setSuperAdminData] = useState(null);
 
-  useEffect(() => {
-    const fetchSuperAdminData = async () => {
-      try {
-        const response = await axios.get(
-          `${server_url}/superadmin/view/${superAdminId}`
-        );
-        setSuperAdminData(response.data);
-      } catch (error) {
-        console.error("Error fetching Super Admin data:", error);
-      }
-    };
+  const fetchSuperAdminData = async () => {
+    try {
+      const response = await axios.get(
+        `${server_url}/superadmin/view/${superAdminId}`
+      );
+      setSuperAdminData(response.data);
+    } catch (error) {
+      console.error("Error fetching Super Admin data:", error);
+    }
+  };
 
+  useEffect(() => {
     if (isOpen && superAdminId) {
       fetchSuperAdminData();
     }
@@ -43,18 +43,16 @@ const ModalEditSuperAdmin = ({
       firstname: superAdminData?.firstname || "",
       lastname: superAdminData?.lastname || "",
       email: superAdminData?.email || "",
-      password: "",
-      confirmPassword: "",
+      currentPassword: "",
+      newPassword: "",
       gender: superAdminData?.gender || "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("Required"),
       lastname: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Required"),
+      currentPassword: Yup.string().required("Required"),
+      newPassword: Yup.string().required("Required"),
       gender: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
@@ -71,6 +69,9 @@ const ModalEditSuperAdmin = ({
         console.error("Error editing Super Admin:", error);
         if (error.response && error.response.status === 400) {
           alert("Email already exists. Please use a different email.");
+        }
+        if (error.response && error.response.status === 401) {
+          alert("Password is incorrect.");
         }
       } finally {
         setIsSubmitting(false);
@@ -190,46 +191,46 @@ const ModalEditSuperAdmin = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
           <div className="mb-4">
             <label
-              htmlFor="password"
+              htmlFor="currentPassword"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Current Password
+            </label>
+            <input
+              type="password"
+              id="currentPassword"
+              name="currentPassword"
+              {...formik.getFieldProps("currentPassword")}
+              className="mt-1 p-2 w-full border rounded-md"
+              disabled={isSubmitting}
+            />
+            {formik.touched.currentPassword &&
+              formik.errors.currentPassword && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.currentPassword}
+                </div>
+              )}
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newPassword"
               className="block text-sm font-medium text-gray-600"
             >
               New Password
             </label>
             <input
-              type="text"
-              id="password"
-              name="password"
-              {...formik.getFieldProps("password")}
+              type="password"
+              id="newPassword"
+              name="newPassword"
+              {...formik.getFieldProps("newPassword")}
               className="mt-1 p-2 w-full border rounded-md"
               disabled={isSubmitting}
             />
-            {formik.touched.password && formik.errors.password && (
+            {formik.touched.newPassword && formik.errors.newPassword && (
               <div className="text-red-500 text-sm">
-                {formik.errors.password}
+                {formik.errors.newPassword}
               </div>
             )}
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Confirm Password
-            </label>
-            <input
-              type="text"
-              id="confirmPassword"
-              name="confirmPassword"
-              {...formik.getFieldProps("confirmPassword")}
-              className="mt-1 p-2 w-full border rounded-md"
-              disabled={isSubmitting}
-            />
-            {formik.touched.confirmPassword &&
-              formik.errors.confirmPassword && (
-                <div className="text-red-500 text-sm">
-                  {formik.errors.confirmPassword}
-                </div>
-              )}
           </div>
         </div>
 
