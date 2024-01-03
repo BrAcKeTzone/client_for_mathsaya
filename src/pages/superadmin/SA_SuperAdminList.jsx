@@ -184,7 +184,7 @@ function SA_SuperAdminList() {
         key={modalKey}
         isOpen={isAddModalOpen}
         closeModal={closeAddModal}
-        fetchSuperAdmins={fetchSuperAdmins} // Pass the function to fetch Super Admins
+        fetchSuperAdmins={fetchSuperAdmins}
       />
       <ModalEditSuperAdmin
         isOpen={isEditModalOpen}

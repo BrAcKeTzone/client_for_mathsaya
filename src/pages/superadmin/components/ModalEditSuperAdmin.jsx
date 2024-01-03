@@ -19,15 +19,19 @@ const ModalEditSuperAdmin = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [superAdminData, setSuperAdminData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchSuperAdminData = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         `${server_url}/superadmin/view/${superAdminId}`
       );
       setSuperAdminData(response.data);
     } catch (error) {
       console.error("Error fetching Super Admin data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -86,7 +90,6 @@ const ModalEditSuperAdmin = ({
       contentLabel="Edit Super Admin Modal"
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
     >
-      {console.log(superAdminData)}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Edit Super Admin</h2>
         <button
@@ -97,157 +100,166 @@ const ModalEditSuperAdmin = ({
           Close
         </button>
       </div>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
-          <div className="mb-4">
-            <label
-              htmlFor="firstname"
-              className="block text-sm font-medium text-gray-600"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstname"
-              name="firstname"
-              {...formik.getFieldProps("firstname")}
-              className="mt-1 p-2 w-full border rounded-md"
-              disabled={isSubmitting}
-            />
-            {formik.touched.firstname && formik.errors.firstname && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.firstname}
-              </div>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="lastname"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastname"
-              name="lastname"
-              {...formik.getFieldProps("lastname")}
-              className="mt-1 p-2 w-full border rounded-md"
-              disabled={isSubmitting}
-            />
-            {formik.touched.lastname && formik.errors.lastname && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.lastname}
-              </div>
-            )}
-          </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <span className="loader"></span>
         </div>
-        <div className="grid grid-cols-1 gap-4 mx-2">
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-600"
-            >
-              E-mail Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              {...formik.getFieldProps("email")}
-              className="mt-1 p-2 w-full border rounded-md"
-              disabled={isSubmitting}
-            />
-            {formik.touched.email && formik.errors.email && (
-              <div className="text-red-500 text-sm">{formik.errors.email}</div>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 gap-4 mx-2">
-          <div className="mb-4">
-            <label
-              htmlFor="gender"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Gender
-            </label>
-            <select
-              id="gender"
-              name="gender"
-              {...formik.getFieldProps("gender")}
-              className="mt-1 p-2 w-full border rounded-md"
-              disabled={isSubmitting}
-            >
-              <option value="" label="Select a gender" />
-              {genderOptions.map((option) => (
-                <option key={option} value={option} label={option} />
-              ))}
-            </select>
-            {formik.touched.gender && formik.errors.gender && (
-              <div className="text-red-500 text-sm">{formik.errors.gender}</div>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
-          <div className="mb-4">
-            <label
-              htmlFor="currentPassword"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Current Password
-            </label>
-            <input
-              type="password"
-              id="currentPassword"
-              name="currentPassword"
-              {...formik.getFieldProps("currentPassword")}
-              className="mt-1 p-2 w-full border rounded-md"
-              disabled={isSubmitting}
-            />
-            {formik.touched.currentPassword &&
-              formik.errors.currentPassword && (
+      ) : (
+        <form onSubmit={formik.handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
+            <div className="mb-4">
+              <label
+                htmlFor="firstname"
+                className="block text-sm font-medium text-gray-600"
+              >
+                First Name
+              </label>
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                {...formik.getFieldProps("firstname")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+              />
+              {formik.touched.firstname && formik.errors.firstname && (
                 <div className="text-red-500 text-sm">
-                  {formik.errors.currentPassword}
+                  {formik.errors.firstname}
                 </div>
               )}
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="lastname"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                {...formik.getFieldProps("lastname")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+              />
+              {formik.touched.lastname && formik.errors.lastname && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.lastname}
+                </div>
+              )}
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="newPassword"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Repeat / New Password
-            </label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              {...formik.getFieldProps("newPassword")}
-              className="mt-1 p-2 w-full border rounded-md"
+          <div className="grid grid-cols-1 gap-4 mx-2">
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-600"
+              >
+                E-mail Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                {...formik.getFieldProps("email")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.email}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 mx-2">
+            <div className="mb-4">
+              <label
+                htmlFor="gender"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Gender
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                {...formik.getFieldProps("gender")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+              >
+                <option value="" label="Select a gender" />
+                {genderOptions.map((option) => (
+                  <option key={option} value={option} label={option} />
+                ))}
+              </select>
+              {formik.touched.gender && formik.errors.gender && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.gender}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
+            <div className="mb-4">
+              <label
+                htmlFor="currentPassword"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Current Password
+              </label>
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                {...formik.getFieldProps("currentPassword")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+              />
+              {formik.touched.currentPassword &&
+                formik.errors.currentPassword && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.currentPassword}
+                  </div>
+                )}
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="newPassword"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Repeat / New Password
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                {...formik.getFieldProps("newPassword")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+              />
+              {formik.touched.newPassword && formik.errors.newPassword && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.newPassword}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex justify-end w-full mb-2 pr-2">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 mx-1 rounded-md hover:bg-blue-400"
               disabled={isSubmitting}
-            />
-            {formik.touched.newPassword && formik.errors.newPassword && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.newPassword}
-              </div>
-            )}
+            >
+              {isSubmitting ? (
+                <span className="please_wait"></span>
+              ) : (
+                "SAVE CHANGES"
+              )}
+            </button>
           </div>
-        </div>
-
-        <div className="flex justify-end w-full mb-2 pr-2">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white p-2 mx-1 rounded-md hover:bg-blue-400"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <span className="please_wait"></span>
-            ) : (
-              "SAVE CHANGES"
-            )}
-          </button>
-        </div>
-      </form>
+        </form>
+      )}
     </Modal>
   );
 };
