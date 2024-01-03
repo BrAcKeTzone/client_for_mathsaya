@@ -216,7 +216,7 @@ const ModalEditSuperAdmin = ({
               htmlFor="newPassword"
               className="block text-sm font-medium text-gray-600"
             >
-              New Password
+              Repeat / New Password
             </label>
             <input
               type="password"
