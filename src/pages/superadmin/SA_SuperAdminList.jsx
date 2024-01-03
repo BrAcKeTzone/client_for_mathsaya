@@ -7,6 +7,7 @@ import { FaRegPlusSquare, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
 import Navbar from "./components/Navbar";
 import ModalAddSuperAdmin from "./components/ModalAddSuperAdmin";
+import ModalEditSuperAdmin from "./components/ModalEditSuperAdmin";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -14,7 +15,9 @@ function SA_SuperAdminList() {
   const Navigate = useNavigate();
   const [superAdmins, setSuperAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editSuperAdminId, setEditSuperAdminId] = useState(null);
   const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -75,15 +78,27 @@ function SA_SuperAdminList() {
     }
   };
 
-  const openModal = () => {
-    console.log("Modal open");
+  const openAddModal = () => {
+    console.log("Modal ADD open");
     setModalKey((prevKey) => prevKey + 1);
-    setIsModalOpen(true);
+    setIsAddModalOpen(true);
   };
 
-  const closeModal = () => {
-    console.log("Modal close");
-    setIsModalOpen(false);
+  const openEditModal = (superAdminId) => {
+    console.log("Modal EDIT open");
+    setEditSuperAdminId(superAdminId);
+    setModalKey((prevKey) => prevKey + 1);
+    setIsEditModalOpen(true);
+  };
+
+  const closeAddModal = () => {
+    console.log("Modal ADD close");
+    setIsAddModalOpen(false);
+  };
+
+  const closeEditModal = () => {
+    console.log("Modal EDIT close");
+    setIsEditModalOpen(false);
   };
 
   const handleSearch = (event) => {
@@ -115,7 +130,7 @@ function SA_SuperAdminList() {
               </div>
               <button
                 className="bg-blue-500 hover:bg-blue-400 p-2 rounded"
-                onClick={openModal}
+                onClick={openAddModal}
               >
                 <h2>ADD ADMIN</h2>
               </button>
@@ -144,7 +159,10 @@ function SA_SuperAdminList() {
                     <tr />
                     <td className="grid grid-cols-2 gap-4 p-2 border-t-2">
                       <button className="bg-blue-500 hover:bg-blue-400 p-2 rounded">
-                        <FaRegEdit className="text-2xl" />
+                        <FaRegEdit
+                          className="text-2xl"
+                          onClick={() => openEditModal(superAdmin.superAdminId)}
+                        />
                       </button>
                       <button
                         className="bg-red-500 hover:bg-red-400 p-2 rounded"
@@ -164,9 +182,15 @@ function SA_SuperAdminList() {
       </div>
       <ModalAddSuperAdmin
         key={modalKey}
-        isOpen={isModalOpen}
-        closeModal={closeModal}
+        isOpen={isAddModalOpen}
+        closeModal={closeAddModal}
         fetchSuperAdmins={fetchSuperAdmins} // Pass the function to fetch Super Admins
+      />
+      <ModalEditSuperAdmin
+        isOpen={isEditModalOpen}
+        closeModal={closeEditModal}
+        fetchSuperAdmins={fetchSuperAdmins}
+        superAdminId={editSuperAdminId}
       />
     </>
   );
