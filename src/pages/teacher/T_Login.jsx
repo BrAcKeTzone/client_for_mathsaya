@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -69,7 +69,8 @@ function T_Login() {
     <>
       <div
         className="h-screen bg-orange-500 flex justify-center items-center"
-        onContextMenu={preventRightClick}>
+        onContextMenu={preventRightClick}
+      >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -116,14 +117,24 @@ function T_Login() {
                   <button
                     type="submit"
                     className="bg-orange-500 p-2 rounded w-full hover:bg-orange-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? (
-                      <span className="loader"></span>
+                      <span className="please_wait"></span>
                     ) : (
                       "Sign-in"
                     )}{" "}
                   </button>
                 </form>
+                <p className="py-1">
+                  Don't have an account?{" "}
+                  <Link
+                    to="/teach-signup"
+                    className="text-blue-700 hover:font-bold"
+                  >
+                    Click here...
+                  </Link>
+                </p>
               </div>
             </div>
           </>

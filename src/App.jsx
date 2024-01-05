@@ -9,6 +9,7 @@ import SA_EmailList from "./pages/superadmin/SA_EmailList";
 import SA_SuperAdminList from "./pages/superadmin/SA_SuperAdminList";
 import SA_TeacherList from "./pages/superadmin/SA_TeacherList";
 import T_Signup from "./pages/teacher/T_Signup";
+import T_Verify_OTP from "./pages/teacher/T_Verify_OTP";
 import T_Login from "./pages/teacher/T_Login";
 import T_Dashboard from "./pages/teacher/T_Dashboard";
 import T_Topics from "./pages/teacher/T_Topics";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/super-supers" element={<SA_SuperAdminList />} />
         <Route path="/super-teachs" element={<SA_TeacherList />} />
         <Route path="/teach-signup" element={<T_Signup />} />
+        <Route path="/teach-verifyOTP" element={<T_Verify_OTP />} />
         <Route path="/teach-login" element={<T_Login />} />
         <Route path="/teach-dash" element={<T_Dashboard />} />
         <Route path="/teach-topics" element={<T_Topics />} />
