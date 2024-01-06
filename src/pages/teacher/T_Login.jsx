@@ -8,6 +8,7 @@ import { FaUserGraduate } from "react-icons/fa6";
 import { preventRightClick } from "../../components/preventRightClick";
 import "../../assets/styles/loader.css";
 import "../../assets/styles/BubbleGumSans.css";
+import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -67,16 +68,17 @@ function T_Login() {
   });
   return (
     <>
+      <Navbar />
       <div
-        className="h-screen bg-orange-500 flex justify-center items-center"
+        className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
           <>
-            <div className="rounded bg-orange-600 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
-              <div className="rounded bg-orange-300 p-8">
+            <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+              <div className="rounded bg-blue-300 p-8">
                 <div className="flex flex-col justify-center items-center">
                   <h2 className="text-center text-3xl font-bold ">
                     UNLOCK YOUR CLASSROOM
@@ -91,7 +93,7 @@ function T_Login() {
                     <input
                       type="email"
                       {...formik.getFieldProps("email")}
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                       placeholder="Email"
                     />
                     {formik.touched.email && formik.errors.email && (
@@ -105,7 +107,7 @@ function T_Login() {
                     <input
                       type="password"
                       {...formik.getFieldProps("password")}
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                       placeholder="Password"
                     />
                     {formik.touched.password && formik.errors.password && (
@@ -116,7 +118,7 @@ function T_Login() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-orange-500 p-2 rounded w-full hover:bg-orange-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-blue-500 hover:bg-blue-600 hover:text-white p-2 rounded w-full hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (

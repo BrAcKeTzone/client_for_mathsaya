@@ -26,8 +26,9 @@ function Home() {
   return (
     <>
       <div
-        className="h-screen bg-blue-300 flex justify-center items-center"
-        onContextMenu={preventRightClick}>
+        className="h-screen bg-blue-500 flex justify-center items-center"
+        onContextMenu={preventRightClick}
+      >
         <div className="rounded bg-blue-400 shadow-lg shadow-black p-4 md:w-2/3 lg:w-1/3">
           <div className="px-4 pt-4">
             <h1 className="grid grid-rows-2 grid-flow-col justify-center">
@@ -38,7 +39,8 @@ function Home() {
           <div className="flex justify-center">
             <button
               onContextMenu={handleLogoRightClick}
-              onClick={handleLogoClick}>
+              onClick={handleLogoClick}
+            >
               <img src={Logo} width={300} height={300} />
             </button>
           </div>
@@ -49,7 +51,8 @@ function Home() {
             <div className="grid grid-cols-2 grid-flow-row gap-4 text-white font-bold">
               <Link
                 to="/teach-login"
-                className="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded shadow-md shadow-black">
+                className="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded shadow-md shadow-black"
+              >
                 <div className="grid grid-rows-2 grid-flow-col justify-center">
                   <span className="text-4xl flex justify-center">
                     <FaUserGraduate />
@@ -59,7 +62,8 @@ function Home() {
               </Link>
               <Link
                 to="/stud-login"
-                className="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded shadow-md shadow-black">
+                className="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded shadow-md shadow-black"
+              >
                 <div className="grid grid-rows-2 grid-flow-col justify-center">
                   <span className="text-4xl flex justify-center">
                     <FaUserGroup />

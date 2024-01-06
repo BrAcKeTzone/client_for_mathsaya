@@ -3,11 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { FaUserGraduate } from "react-icons/fa6";
 import { preventRightClick } from "../../components/preventRightClick";
 import "../../assets/styles/loader.css";
 import "../../assets/styles/BubbleGumSans.css";
+import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -34,6 +34,7 @@ function T_Signup() {
         );
         console.log("E-mail response:", response.data);
         alert("An OTP was sent to your e-mail!");
+        sessionStorage.setItem("signupEmail", values.email);
         Navigate("/teach-verifyOTP");
       } catch (error) {
         console.error("Error:", error);
@@ -44,12 +45,13 @@ function T_Signup() {
   });
   return (
     <>
+      <Navbar />
       <div
-        className="h-screen bg-orange-500 flex justify-center items-center"
+        className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
-        <div className="rounded bg-orange-600 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
-          <div className="rounded bg-orange-300 p-8">
+        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+          <div className="rounded bg-blue-300 p-8">
             <div className="flex flex-col justify-center items-center">
               <h2 className="text-center text-3xl font-bold">
                 START SHAPING MINDS TODAY
@@ -62,7 +64,7 @@ function T_Signup() {
                 <input
                   type="email"
                   {...formik.getFieldProps("email")}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                   placeholder="Email"
                 />
                 {formik.touched.email && formik.errors.email && (
@@ -71,7 +73,7 @@ function T_Signup() {
               </div>
               <button
                 type="submit"
-                className="bg-yellow-500 p-2 rounded w-full hover:bg-pink hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                className="bg-blue-500 hover:bg-blue-600 hover:text-white p-2 rounded w-full hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
