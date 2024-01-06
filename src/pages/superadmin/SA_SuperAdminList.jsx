@@ -136,10 +136,12 @@ function SA_SuperAdminList() {
               </button>
             </div>
           )}
+        </div>
+        <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
           {isLoading ? (
             <span className="loader"></span>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-2">
               {filteredSuperAdmins.map((superAdmin) => (
                 <div
                   key={superAdmin.superAdminId}

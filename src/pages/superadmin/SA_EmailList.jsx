@@ -95,7 +95,7 @@ function SA_EmailList() {
           {isLoading ? (
             <span className="loader"></span>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-2">
               {emailEntries.map((entry) => (
                 <div
                   key={entry.emailId}
