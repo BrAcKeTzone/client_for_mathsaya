@@ -14,80 +14,85 @@ function Navbar() {
     if (!isConfirmed) {
       return;
     }
-    Cookies.remove("tchr");
-    Navigate("/teach-login");
+    Cookies.remove("spr");
+    Navigate("/super-login");
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
   };
 
+  const isSuperLogin = location.pathname === "/teach-login";
+
   return (
     <nav className="bg-blue-500 p-4 text-white sticky top-0 w-full z-10 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
-          <Link to="/" className="text-xl font-bold">
+          <Link to="/" className="text-2xl font-bold">
             <h1>MathSaya</h1>
           </Link>
         </div>
-        <div className="hidden md:flex items-center space-x-4">
-          {/* <NavLink to="/super-dash">Dashboard</NavLink>
-          <NavLink to="/super-emails">Emails</NavLink>
-          <NavLink to="/super-teachs">Teachers</NavLink>
-          <NavLink to="/super-supers">Admins</NavLink> */}
-          {/* <button
-            onClick={handleLogout}
-            className="hover:text-gray-300 focus:outline-none"
-          >
-            Logout
-          </button> */}
-        </div>
-        <div className="md:hidden">
-          {/* Mobile menu button */}
-          <button
-            onClick={toggleMobileMenu}
-            className="text-white hover:text-gray-300 focus:outline-none"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-      {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden mt-2">
-          <div className="flex flex-col space-y-2">
-            {/* <NavLink to="/super-dash" onClick={toggleMobileMenu}>
-              Dashboard
-            </NavLink>
-            <NavLink to="/super-emails" onClick={toggleMobileMenu}>
-              Emails
-            </NavLink>
-            <NavLink to="/super-teachs" onClick={toggleMobileMenu}>
-              Teachers
-            </NavLink>
-            <NavLink to="/super-supers" onClick={toggleMobileMenu}>
-              Admins
-            </NavLink> */}
-            {/* <button
+        {!isSuperLogin && (
+          <div className="hidden md:flex items-center space-x-4">
+            <NavLink to="/teach-dash">Dashboard</NavLink>
+            <NavLink to="/teach-topics">Topics</NavLink>
+            <NavLink to="/teach-class">Classes</NavLink>
+            <NavLink to="/teach-contact">Admin Support</NavLink>
+            <button
               onClick={handleLogout}
               className="hover:text-gray-300 focus:outline-none"
             >
-              Logout
-            </button> */}
+              Sign out
+            </button>
+          </div>
+        )}
+        {!isSuperLogin && (
+          <div className="md:hidden">
+            {/* Mobile menu button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="text-white hover:text-gray-300 focus:outline-none"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
+      {!isSuperLogin && isMobileMenuOpen && (
+        <div className="md:hidden mt-2">
+          <div className="flex flex-col space-y-2">
+            <NavLink to="/teach-dash" onClick={toggleMobileMenu}>
+              Dashboard
+            </NavLink>
+            <NavLink to="/teach-topics" onClick={toggleMobileMenu}>
+              Topics
+            </NavLink>
+            <NavLink to="/teach-class" onClick={toggleMobileMenu}>
+              Classes
+            </NavLink>
+            <NavLink to="/teach-contact" onClick={toggleMobileMenu}>
+              Admin Support
+            </NavLink>
+            <button
+              onClick={handleLogout}
+              className="hover:text-gray-300 focus:outline-none"
+            >
+              Sign out
+            </button>
           </div>
         </div>
       )}
