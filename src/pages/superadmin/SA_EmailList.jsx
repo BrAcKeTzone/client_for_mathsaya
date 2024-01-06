@@ -63,8 +63,8 @@ function SA_EmailList() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center h-screen bg-blue-500">
-        <h1 className="text-white text-4xl pt-4 pb-2">Email List</h1>
+      <div className="flex flex-col items-center h-screen bg-green-500">
+        <h1 className="text-white text-6xl pt-4 pb-2">Email List</h1>
         <div className="grid grid-cols-3 gap-4 mb-4">
           <button
             onClick={() => handleDisplayTypeChange("unread")}

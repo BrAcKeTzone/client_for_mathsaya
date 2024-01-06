@@ -54,8 +54,8 @@ function SA_TeacherList() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center h-screen bg-emerald-600">
-        <h1 className="text-white text-4xl pt-4 pb-2">Teacher List</h1>
+      <div className="flex flex-col items-center h-screen bg-green-500">
+        <h1 className="text-white text-6xl pt-4 pb-2">Teacher List</h1>
         <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
           {isLoading ? (
             <span className="loader"></span>

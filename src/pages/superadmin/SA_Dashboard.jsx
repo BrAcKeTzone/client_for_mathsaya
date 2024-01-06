@@ -68,13 +68,13 @@ function SA_Dashboard() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center h-screen bg-gray-200">
-        <h1 className="text-black text-4xl pt-4 pb-2">Dashboard</h1>
+      <div className="flex flex-col items-center h-screen bg-green-500">
+        <h1 className="text-white text-6xl pt-4 pb-2">Dashboard</h1>
         {isLoading ? (
           <span className="loader"></span>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-blue-300 p-4 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <div className="bg-blue-300 p-6 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link
                 to="/super-emails"
                 className="flex justify-center flex-col items-center"
@@ -84,7 +84,7 @@ function SA_Dashboard() {
                 <p>Total Emails</p>
               </Link>
             </div>
-            <div className="bg-green-300 p-4 rounded shadow-md hover:bg-green-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <div className="bg-green-300 p-6 rounded shadow-md hover:bg-green-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link
                 to="/super-teachs"
                 className="flex justify-center flex-col items-center"
@@ -94,7 +94,7 @@ function SA_Dashboard() {
                 <p>Total Teachers</p>
               </Link>
             </div>
-            <div className="bg-purple-300 p-4 rounded shadow-md hover:bg-purple-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+            <div className="bg-purple-300 p-6 rounded shadow-md hover:bg-purple-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link
                 to="/super-supers"
                 className="flex justify-center flex-col items-center"

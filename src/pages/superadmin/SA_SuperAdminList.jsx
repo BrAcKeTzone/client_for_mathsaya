@@ -114,9 +114,9 @@ function SA_SuperAdminList() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center h-screen bg-purple-600">
-        <h1 className="text-white text-4xl pt-4 pb-2">Admin List</h1>
-        <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
+      <div className="flex flex-col items-center h-screen bg-green-500">
+        <h1 className="text-white text-6xl pt-4 pb-2">Admin List</h1>
+        <div className="mx-1">
           {!isLoading && (
             <div className="flex justify-between w-full mb-2 pr-2 pl-2">
               <div className="flex items-center">
@@ -137,7 +137,7 @@ function SA_SuperAdminList() {
             </div>
           )}
         </div>
-        <div className="overflow-y-auto overflow-x-hidden max-h-[80vh]">
+        <div className="overflow-y-auto overflow-x-hidden ">
           {isLoading ? (
             <span className="loader"></span>
           ) : (
@@ -145,7 +145,7 @@ function SA_SuperAdminList() {
               {filteredSuperAdmins.map((superAdmin) => (
                 <div
                   key={superAdmin.superAdminId}
-                  className={`bg-purple-500 hover:bg-purple-400 flex justify-center flex-col items-center p-4 rounded shadow-md transition duration-300 ease-in-out transform hover:scale-105`}
+                  className={`bg-green-500 hover:bg-green-400 flex justify-center flex-col items-center p-4 rounded shadow-md transition duration-300 ease-in-out transform hover:scale-105`}
                 >
                   <RiAdminFill className="text-8xl mb-2" />
                   <table className="flex justify-center flex-col items-center ">

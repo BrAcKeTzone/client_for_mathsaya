@@ -70,15 +70,15 @@ function SA_Login() {
     <>
       <Navbar />
       <div
-        className="h-screen bg-emerald-500 flex justify-center items-center"
+        className="h-screen bg-green-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
           <>
-            <div className="rounded bg-emerald-600 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
-              <div className="rounded bg-emerald-300 p-8">
+            <div className="rounded bg-green-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+              <div className="rounded bg-green-300 p-8">
                 <div className="flex flex-col justify-center items-center">
                   <h2 className="text-center text-3xl font-bold ">
                     SECURE ACCESS
@@ -93,7 +93,7 @@ function SA_Login() {
                     <input
                       type="email"
                       {...formik.getFieldProps("email")}
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                       placeholder="Email"
                     />
                     {formik.touched.email && formik.errors.email && (
@@ -107,7 +107,7 @@ function SA_Login() {
                     <input
                       type="password"
                       {...formik.getFieldProps("password")}
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                       placeholder="Password"
                     />
                     {formik.touched.password && formik.errors.password && (
@@ -118,7 +118,7 @@ function SA_Login() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-emerald-500 p-2 rounded w-full hover:bg-emerald-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-green-500 p-2 rounded w-full hover:text-white hover:bg-green-600 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (

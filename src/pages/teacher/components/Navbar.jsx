@@ -14,8 +14,8 @@ function Navbar() {
     if (!isConfirmed) {
       return;
     }
-    Cookies.remove("spr");
-    Navigate("/super-login");
+    Cookies.remove("tchr");
+    Navigate("/teach-login");
   };
 
   const toggleMobileMenu = () => {
@@ -36,12 +36,12 @@ function Navbar() {
           <NavLink to="/super-emails">Emails</NavLink>
           <NavLink to="/super-teachs">Teachers</NavLink>
           <NavLink to="/super-supers">Admins</NavLink> */}
-          <button
+          {/* <button
             onClick={handleLogout}
             className="hover:text-gray-300 focus:outline-none"
           >
             Logout
-          </button>
+          </button> */}
         </div>
         <div className="md:hidden">
           {/* Mobile menu button */}
@@ -82,12 +82,12 @@ function Navbar() {
             <NavLink to="/super-supers" onClick={toggleMobileMenu}>
               Admins
             </NavLink> */}
-            <button
+            {/* <button
               onClick={handleLogout}
               className="hover:text-gray-300 focus:outline-none"
             >
               Logout
-            </button>
+            </button> */}
           </div>
         </div>
       )}
