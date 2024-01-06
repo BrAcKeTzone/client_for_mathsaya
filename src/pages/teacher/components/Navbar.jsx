@@ -23,12 +23,12 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-800 p-4 text-white sticky top-0 w-full z-10">
+    <nav className="bg-blue-500 p-4 text-white sticky top-0 w-full z-10 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-8 mr-2" />
           <Link to="/" className="text-xl font-bold">
-            MathSaya
+            <h1>MathSaya</h1>
           </Link>
         </div>
         <div className="hidden md:flex items-center space-x-4">
