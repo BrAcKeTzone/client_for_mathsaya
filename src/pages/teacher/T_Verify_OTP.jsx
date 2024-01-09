@@ -15,18 +15,15 @@ const genderOptions = ["Male", "Female", "Non-binary"];
 function T_Verify_OTP() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleClearForm = () => {
-    formik.resetForm();
-  };
-
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      email: sessionStorage.getItem("signupEmail") || "", // Initial value from sessionStorage
+      firstname: sessionStorage.getItem("signupFirstName") || "",
+      lastname: sessionStorage.getItem("signupLastName") || "",
+      email: sessionStorage.getItem("signupEmail") || "",
       password: "",
       confirmPassword: "",
-      gender: "",
+      gender: sessionStorage.getItem("signupGender") || "",
+      schoolName: sessionStorage.getItem("signupSchoolName") || "",
       otp: "",
     },
     validationSchema: Yup.object({
@@ -38,9 +35,10 @@ function T_Verify_OTP() {
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Required"),
       gender: Yup.string().required("Required"),
+      schoolName: Yup.string().required("Required"),
       otp: Yup.string().required("Required"),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
       try {
         setIsSubmitting(true);
         const response = await axios.post(
@@ -49,6 +47,7 @@ function T_Verify_OTP() {
         );
         console.log("OTP verification successful:", response.data);
         alert("Account created successfully");
+        Navigate("/teach-login");
       } catch (error) {
         console.error("Error verifying OTP:", error);
       } finally {
@@ -65,14 +64,16 @@ function T_Verify_OTP() {
         className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
-        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/2">
           <div className="rounded bg-blue-300 p-8">
             <div className="flex flex-col justify-center items-center">
-              <h2 className="text-center text-3xl font-bold">VERIFY OTP</h2>
+              <h2 className="text-center text-3xl font-bold">
+                START SHAPING MINDS TODAY
+              </h2>
               <FaUserGraduate className="text-white text-9xl" />
             </div>
             <form onSubmit={formik.handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-2">
                 <div className="mb-4">
                   <label
                     htmlFor="firstname"
@@ -115,6 +116,31 @@ function T_Verify_OTP() {
                     </div>
                   )}
                 </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="gender"
+                    className="block text-sm font-medium text-gray-600"
+                  >
+                    Gender
+                  </label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    {...formik.getFieldProps("gender")}
+                    className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
+                    disabled={isSubmitting}
+                  >
+                    <option value="" label="Select" />
+                    {genderOptions.map((option) => (
+                      <option key={option} value={option} label={option} />
+                    ))}
+                  </select>
+                  {formik.touched.gender && formik.errors.gender && (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.gender}
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
                 <div className="mb-4">
@@ -140,26 +166,22 @@ function T_Verify_OTP() {
                 </div>
                 <div className="mb-4">
                   <label
-                    htmlFor="gender"
+                    htmlFor="otp"
                     className="block text-sm font-medium text-gray-600"
                   >
-                    Gender
+                    OTP
                   </label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    {...formik.getFieldProps("gender")}
+                  <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    {...formik.getFieldProps("otp")}
                     className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                     disabled={isSubmitting}
-                  >
-                    <option value="" label="Select a gender" />
-                    {genderOptions.map((option) => (
-                      <option key={option} value={option} label={option} />
-                    ))}
-                  </select>
-                  {formik.touched.gender && formik.errors.gender && (
+                  />
+                  {formik.touched.otp && formik.errors.otp && (
                     <div className="text-red-500 text-sm">
-                      {formik.errors.gender}
+                      {formik.errors.otp}
                     </div>
                   )}
                 </div>
@@ -209,49 +231,42 @@ function T_Verify_OTP() {
                     )}
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mx-2">
                 <div className="mb-4">
                   <label
-                    htmlFor="otp"
+                    htmlFor="schoolName"
                     className="block text-sm font-medium text-gray-600"
                   >
-                    OTP
+                    School Name
                   </label>
                   <input
                     type="text"
-                    id="otp"
-                    name="otp"
-                    {...formik.getFieldProps("otp")}
+                    id="schoolName"
+                    name="schoolName"
+                    {...formik.getFieldProps("schoolName")}
                     className="w-full p-2 border-2 rounded hover:border-black hover:shadow-lg transition duration-300 ease-in-out transform"
                     disabled={isSubmitting}
                   />
-                  {formik.touched.otp && formik.errors.otp && (
+                  {formik.touched.schoolName && formik.errors.schoolName && (
                     <div className="text-red-500 text-sm">
-                      {formik.errors.otp}
+                      {formik.errors.schoolName}
                     </div>
                   )}
                 </div>
-                <div className="flex justify-end items-center w-full">
-                  <button
-                    type="button"
-                    className="bg-red-500 hover:text-white p-2 rounded w-full hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                    disabled={isSubmitting}
-                    onClick={handleClearForm}
-                  >
-                    CLEAR
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 hover:text-white p-2 rounded w-full hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <span className="please_wait"></span>
-                    ) : (
-                      "SUBMIT"
-                    )}
-                  </button>
-                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2"></div>
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mx-2">
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-600 hover:text-white p-2 rounded w-full hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span className="please_wait"></span>
+                  ) : (
+                    "SUBMIT"
+                  )}
+                </button>
               </div>
             </form>
             <p className="py-1">

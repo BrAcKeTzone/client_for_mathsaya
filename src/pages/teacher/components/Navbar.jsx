@@ -22,7 +22,10 @@ function Navbar() {
     setMobileMenuOpen((prev) => !prev);
   };
 
-  const isSuperLogin = location.pathname === "/teach-login";
+  const isSuperLogin =
+    location.pathname === "/teach-login" ||
+    "/teach-signup" ||
+    location.pathname === "/teach-verifyOTP";
 
   return (
     <nav className="bg-blue-500 p-4 text-white sticky top-0 w-full z-10 shadow-md">
