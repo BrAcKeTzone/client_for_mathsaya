@@ -15,19 +15,19 @@ const ModalEditTeacher = ({
   isOpen,
   closeModal,
   fetchSuperAdmins,
-  superAdminId,
+  teacherId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [superAdminData, setSuperAdminData] = useState(null);
+  const [teacherData, setTeacherData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchSuperAdminData = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${server_url}/superadmin/view/${superAdminId}`
+        `${server_url}/teachers/display/${teacherId}`
       );
-      setSuperAdminData(response.data);
+      setTeacherData(response.data);
     } catch (error) {
       console.error("Error fetching Super Admin data:", error);
     } finally {
@@ -36,20 +36,20 @@ const ModalEditTeacher = ({
   };
 
   useEffect(() => {
-    if (isOpen && superAdminId) {
+    if (isOpen && teacherId) {
       fetchSuperAdminData();
     }
-  }, [isOpen, superAdminId]);
+  }, [isOpen, teacherId]);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstname: superAdminData?.firstname || "",
-      lastname: superAdminData?.lastname || "",
-      email: superAdminData?.email || "",
+      firstname: teacherData?.firstname || "",
+      lastname: teacherData?.lastname || "",
+      email: teacherData?.email || "",
       currentPassword: "",
       newPassword: "",
-      gender: superAdminData?.gender || "",
+      gender: teacherData?.gender || "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("Required"),
@@ -63,7 +63,7 @@ const ModalEditTeacher = ({
       try {
         setIsSubmitting(true);
         const response = await axios.put(
-          `${server_url}/superadmin/edit-superadmin/${superAdminId}`,
+          `${server_url}/superadmin/edit-superadmin/${teacherId}`,
           values
         );
         console.log("Super Admin edited successfully:", response.data);
@@ -91,7 +91,7 @@ const ModalEditTeacher = ({
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Edit Super Admin</h2>
+        <h2 className="text-xl font-semibold">Edit Teacher</h2>
         <button
           className="text-gray-500 hover:text-red-500"
           disabled={isSubmitting}

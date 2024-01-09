@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import "../../../assets/styles/loader.css";
 
-Modal.setAppElement("#root"); // Set the root element for React Modal
+Modal.setAppElement("#root");
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -67,7 +67,7 @@ const ModalAddTeacher = ({ isOpen, closeModal, fetchSuperAdmins }) => {
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Add Super Admin</h2>
+        <h2 className="text-xl font-semibold">Add Teacher</h2>
         <button
           className="text-gray-500 hover:text-red-500"
           disabled={isSubmitting}

@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { FaUserGraduate, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
 import Navbar from "./components/Navbar";
+import ModalAddTeacher from "./components/ModalAddTeacher";
+import ModalEditTeacher from "./components/ModalEditTeacher";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -14,7 +16,7 @@ function SA_TeacherList() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editSuperAdminId, setEditSuperAdminId] = useState(null);
+  const [editTeacherId, setEditTeacherId] = useState(null);
   const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -83,7 +85,7 @@ function SA_TeacherList() {
 
   const openEditModal = (superAdminId) => {
     console.log("Modal EDIT open");
-    setEditSuperAdminId(superAdminId);
+    setEditTeacherId(superAdminId);
     setModalKey((prevKey) => prevKey + 1);
     setIsEditModalOpen(true);
   };
@@ -156,7 +158,10 @@ function SA_TeacherList() {
                     <tr />
                     <td className="grid grid-cols-2 gap-4 p-2 border-t-2">
                       <button className="bg-blue-500 hover:bg-blue-400 p-2 rounded">
-                        <FaRegEdit className="text-2xl" />
+                        <FaRegEdit
+                          className="text-2xl"
+                          onClick={() => openEditModal(teacher.teacherId)}
+                        />
                       </button>
                       <button
                         className="bg-red-500 hover:bg-red-400 p-2 rounded"
@@ -172,6 +177,18 @@ function SA_TeacherList() {
           )}
         </div>
       </div>
+      <ModalAddTeacher
+        key={modalKey}
+        isOpen={isAddModalOpen}
+        closeModal={closeAddModal}
+        fetchTeachers={fetchTeachers}
+      />
+      <ModalEditTeacher
+        isOpen={isEditModalOpen}
+        closeModal={closeEditModal}
+        fetchTeachers={fetchTeachers}
+        teacherId={editTeacherId}
+      />
     </>
   );
 }
