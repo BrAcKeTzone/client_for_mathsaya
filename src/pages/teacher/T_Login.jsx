@@ -24,9 +24,10 @@ function T_Login() {
   });
 
   useEffect(() => {
+    sessionStorage.clear();
     const teacher = Cookies.get("teacher");
     if (teacher) {
-      Navigate("/super-emails");
+      Navigate("/teach-dash");
     } else {
       setIsLoading(false);
     }
