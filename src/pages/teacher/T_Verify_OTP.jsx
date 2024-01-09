@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -14,16 +14,23 @@ const genderOptions = ["Male", "Female", "Non-binary"];
 
 function T_Verify_OTP() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const Navigate = useNavigate();
+  const { state } = useLocation();
+  const firstname = state.firstname;
+  const lastname = state.lastname;
+  const email = state.email;
+  const gender = state.gender;
+  const schoolName = state.schoolName;
 
   const formik = useFormik({
     initialValues: {
-      firstname: sessionStorage.getItem("signupFirstName") || "",
-      lastname: sessionStorage.getItem("signupLastName") || "",
-      email: sessionStorage.getItem("signupEmail") || "",
+      firstname: firstname || "",
+      lastname: lastname || "",
+      email: email || "",
       password: "",
       confirmPassword: "",
-      gender: sessionStorage.getItem("signupGender") || "",
-      schoolName: sessionStorage.getItem("signupSchoolName") || "",
+      gender: gender || "",
+      schoolName: schoolName || "",
       otp: "",
     },
     validationSchema: Yup.object({
@@ -64,7 +71,7 @@ function T_Verify_OTP() {
         className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
-        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/2">
+        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/2 max-h-full overflow-y-auto">
           <div className="rounded bg-blue-300 p-8">
             <div className="flex flex-col justify-center items-center">
               <h2 className="text-center text-3xl font-bold">

@@ -136,7 +136,7 @@ function SA_TeacherList() {
             </div>
           )}
         </div>
-        <div className="overflow-y-auto overflow-x-hidden">
+        <div className="overflow-y-auto overflow-x-hidden h-full">
           {isLoading ? (
             <span className="loader"></span>
           ) : (

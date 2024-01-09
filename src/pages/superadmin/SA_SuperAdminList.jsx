@@ -137,7 +137,7 @@ function SA_SuperAdminList() {
             </div>
           )}
         </div>
-        <div className="overflow-y-auto overflow-x-hidden ">
+        <div className="overflow-y-auto overflow-x-hidden h-full">
           {isLoading ? (
             <span className="loader"></span>
           ) : (

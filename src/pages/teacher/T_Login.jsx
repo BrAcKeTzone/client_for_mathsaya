@@ -24,8 +24,7 @@ function T_Login() {
   });
 
   useEffect(() => {
-    sessionStorage.clear();
-    const teacher = Cookies.get("teacher");
+    const teacher = Cookies.get("tchr");
     if (teacher) {
       Navigate("/teach-dash");
     } else {
@@ -48,7 +47,7 @@ function T_Login() {
         );
         if (response.data.user.teacherId) {
           Cookies.set(
-            "teacher",
+            "tchr",
             JSON.stringify({ id: response.data.user.teacherId })
           );
           Navigate("/teach-dash");

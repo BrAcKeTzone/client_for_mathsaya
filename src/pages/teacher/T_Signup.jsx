@@ -46,12 +46,15 @@ function T_Signup() {
         );
         console.log("E-mail response:", response.data);
         alert("An OTP was sent to your e-mail!");
-        sessionStorage.setItem("signupFirstName", values.firstname);
-        sessionStorage.setItem("signupLastName", values.lastname);
-        sessionStorage.setItem("signupGender", values.gender);
-        sessionStorage.setItem("signupEmail", values.email);
-        sessionStorage.setItem("signupSchoolName", values.schoolName);
-        Navigate("/teach-verifyOTP");
+        Navigate("/teach-verifyOTP", {
+          state: {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            gender: values.gender,
+            email: values.email,
+            schoolName: values.schoolName,
+          },
+        });
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -67,7 +70,7 @@ function T_Signup() {
         className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
-        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/2">
+        <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/2 max-h-full overflow-y-auto">
           <div className="rounded bg-blue-300 p-8">
             <div className="flex flex-col justify-center items-center">
               <h2 className="text-center text-3xl font-bold">

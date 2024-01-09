@@ -73,11 +73,11 @@ function SA_Dashboard() {
         {isLoading ? (
           <span className="loader"></span>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-3">
             <div className="bg-blue-300 p-6 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link
                 to="/super-emails"
-                className="flex justify-center flex-col items-center"
+                // className="flex justify-center flex-col items-center"
               >
                 <RiMailFill className="text-8xl mb-2" />
                 <p className="text-xl font-bold">{totalEmails}</p>
@@ -87,7 +87,7 @@ function SA_Dashboard() {
             <div className="bg-green-300 p-6 rounded shadow-md hover:bg-green-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link
                 to="/super-teachs"
-                className="flex justify-center flex-col items-center"
+                // className="flex justify-center flex-col items-center"
               >
                 <FaUserGraduate className="text-8xl mb-2" />
                 <p className="text-xl font-bold">{totalTeachers}</p>
@@ -97,11 +97,11 @@ function SA_Dashboard() {
             <div className="bg-purple-300 p-6 rounded shadow-md hover:bg-purple-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link
                 to="/super-supers"
-                className="flex justify-center flex-col items-center"
+                // className="flex justify-center flex-col items-center"
               >
                 <RiAdminFill className="text-8xl mb-2" />
                 <p className="text-xl font-bold">{totalSuperAdmins}</p>
-                <p>Total Super Admins</p>
+                <p>Total Admins</p>
               </Link>
             </div>
           </div>

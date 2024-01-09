@@ -14,17 +14,17 @@ function Navbar() {
     if (!isConfirmed) {
       return;
     }
-    Cookies.remove("spr");
-    Navigate("/super-login");
+    Cookies.remove("tchr");
+    Navigate("/teach-login");
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
   };
 
-  const isSuperLogin =
+  const isTeachLogin =
     location.pathname === "/teach-login" ||
-    "/teach-signup" ||
+    location.pathname === "/teach-signup" ||
     location.pathname === "/teach-verifyOTP";
 
   return (
@@ -36,7 +36,7 @@ function Navbar() {
             <h1>MathSaya</h1>
           </Link>
         </div>
-        {!isSuperLogin && (
+        {!isTeachLogin && (
           <div className="hidden md:flex items-center space-x-4">
             <NavLink to="/teach-dash">Dashboard</NavLink>
             <NavLink to="/teach-topics">Topics</NavLink>
@@ -50,7 +50,7 @@ function Navbar() {
             </button>
           </div>
         )}
-        {!isSuperLogin && (
+        {!isTeachLogin && (
           <div className="md:hidden">
             {/* Mobile menu button */}
             <button
@@ -75,7 +75,7 @@ function Navbar() {
           </div>
         )}
       </div>
-      {!isSuperLogin && isMobileMenuOpen && (
+      {!isTeachLogin && isMobileMenuOpen && (
         <div className="md:hidden mt-2">
           <div className="flex flex-col space-y-2">
             <NavLink to="/teach-dash" onClick={toggleMobileMenu}>
