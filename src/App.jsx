@@ -18,6 +18,7 @@ import T_ContactAdmin from "./pages/teacher/T_ContactAdmin";
 import S_Login from "./pages/student/S_Login";
 import S_MathSaya from "./pages/student/S_MathSaya";
 import SA_Layout from "./pages/superadmin/components/SA_Layout";
+import T_Layout from "./pages/teacher/components/T_Layout";
 
 function App() {
   return (
@@ -64,13 +65,62 @@ function App() {
             </SA_Layout>
           }
         />
-        <Route path="/teach-signup" element={<T_Signup />} />
-        <Route path="/teach-verifyOTP" element={<T_Verify_OTP />} />
-        <Route path="/teach-login" element={<T_Login />} />
-        <Route path="/teach-dash" element={<T_Dashboard />} />
-        <Route path="/teach-topics" element={<T_Topics />} />
-        <Route path="/teach-class" element={<T_Classrooms />} />
-        <Route path="/teach-contact" element={<T_ContactAdmin />} />
+        <Route
+          path="/teach-signup"
+          element={
+            <T_Layout>
+              <T_Signup />
+            </T_Layout>
+          }
+        />
+        <Route
+          path="/teach-verifyOTP"
+          element={
+            <T_Layout>
+              <T_Verify_OTP />
+            </T_Layout>
+          }
+        />
+        <Route
+          path="/teach-login"
+          element={
+            <T_Layout>
+              <T_Login />
+            </T_Layout>
+          }
+        />
+        <Route
+          path="/teach-dash"
+          element={
+            <T_Layout>
+              <T_Dashboard />
+            </T_Layout>
+          }
+        />
+        <Route
+          path="/teach-topics"
+          element={
+            <T_Layout>
+              <T_Topics />
+            </T_Layout>
+          }
+        />
+        <Route
+          path="/teach-class"
+          element={
+            <T_Layout>
+              <T_Classrooms />
+            </T_Layout>
+          }
+        />
+        <Route
+          path="/teach-contact"
+          element={
+            <T_Layout>
+              <T_ContactAdmin />
+            </T_Layout>
+          }
+        />
         <Route path="/stud-login" element={<S_Login />} />
         <Route path="/stud-mathsaya" element={<S_MathSaya />} />
         <Route path="*" element={<NotFound />} />

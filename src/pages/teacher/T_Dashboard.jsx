@@ -86,7 +86,6 @@ function T_Dashboard() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center h-screen bg-blue-500">
         <h1 className="text-white text-6xl pt-4 pb-2">Dashboard</h1>
         {isLoading ? (

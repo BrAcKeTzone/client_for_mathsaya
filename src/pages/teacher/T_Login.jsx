@@ -68,7 +68,6 @@ function T_Login() {
   });
   return (
     <>
-      <Navbar />
       <div
         className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}
