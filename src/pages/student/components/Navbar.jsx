@@ -14,17 +14,12 @@ function Navbar() {
     if (!isConfirmed) {
       return;
     }
-    Cookies.remove("tchr");
-    Navigate("/teach-login");
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen((prev) => !prev);
+    Cookies.remove("stdt");
+    Navigate("/stud-login");
   };
 
   const isTeachLogin =
-    location.pathname === "/student-login" ||
-    location.pathname === "/student-signup";
+    location.pathname === "/stud-login" || location.pathname === "/stud-signup";
 
   return (
     <nav className="bg-blue-500 p-4 text-white sticky top-0 w-full z-10 shadow-md">
@@ -35,23 +30,55 @@ function Navbar() {
             <h1>MathSaya</h1>
           </Link>
         </div>
+        {!isTeachLogin && (
+          <div className="hidden md:flex items-center space-x-4">
+            <button
+              onClick={handleLogout}
+              className="hover:text-gray-300 focus:outline-none"
+            >
+              Sign out
+            </button>
+          </div>
+        )}
+        {!isTeachLogin && (
+          <div className="md:hidden">
+            {/* Mobile menu button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="text-white hover:text-gray-300 focus:outline-none"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
+      {!isTeachLogin && isMobileMenuOpen && (
+        <div className="md:hidden mt-2">
+          <div className="flex flex-col space-y-2">
+            <button
+              onClick={handleLogout}
+              className="hover:text-gray-300 focus:outline-none"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
-
-  // Custom NavLink component to handle highlighting
-  function NavLink({ to, children, onClick }) {
-    const isActive = location.pathname === to;
-    const className = isActive
-      ? "text-yellow-300 underline" // Change this style for active link
-      : "hover:text-gray-300";
-
-    return (
-      <Link to={to} className={className} onClick={onClick}>
-        {children}
-      </Link>
-    );
-  }
 }
 
 export default Navbar;
