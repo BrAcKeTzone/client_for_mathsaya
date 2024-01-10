@@ -19,6 +19,7 @@ import S_Login from "./pages/student/S_Login";
 import S_MathSaya from "./pages/student/S_MathSaya";
 import SA_Layout from "./pages/superadmin/components/SA_Layout";
 import T_Layout from "./pages/teacher/components/T_Layout";
+import S_Layout from "./pages/student/components/S_Layout";
 
 function App() {
   return (
@@ -121,8 +122,22 @@ function App() {
             </T_Layout>
           }
         />
-        <Route path="/stud-login" element={<S_Login />} />
-        <Route path="/stud-mathsaya" element={<S_MathSaya />} />
+        <Route
+          path="/stud-login"
+          element={
+            <S_Layout>
+              <S_Login />
+            </S_Layout>
+          }
+        />
+        <Route
+          path="/stud-mathsaya"
+          element={
+            <S_Layout>
+              <S_MathSaya />
+            </S_Layout>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
