@@ -8,7 +8,6 @@ import { RiAdminFill } from "react-icons/ri";
 import { preventRightClick } from "../../components/preventRightClick";
 import "../../assets/styles/loader.css";
 import "../../assets/styles/BubbleGumSans.css";
-import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -68,7 +67,6 @@ function SA_Login() {
   });
   return (
     <>
-      <Navbar />
       <div
         className="h-screen bg-green-500 flex justify-center items-center"
         onContextMenu={preventRightClick}

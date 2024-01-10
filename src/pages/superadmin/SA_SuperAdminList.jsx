@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import { RiAdminFill } from "react-icons/ri";
 import { FaRegPlusSquare, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
-import Navbar from "./components/Navbar";
 import ModalAddSuperAdmin from "./components/ModalAddSuperAdmin";
 import ModalEditSuperAdmin from "./components/ModalEditSuperAdmin";
 
@@ -113,7 +112,6 @@ function SA_SuperAdminList() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center h-screen bg-green-500">
         <h1 className="text-white text-6xl pt-4 pb-2">Admin List</h1>
         <div className="mx-1">

@@ -17,17 +17,53 @@ import T_Classrooms from "./pages/teacher/T_Classrooms";
 import T_ContactAdmin from "./pages/teacher/T_ContactAdmin";
 import S_Login from "./pages/student/S_Login";
 import S_MathSaya from "./pages/student/S_MathSaya";
+import SA_Layout from "./pages/superadmin/components/SA_Layout";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/super-login" element={<SA_Login />} />
-        <Route path="/super-dash" element={<SA_Dash />} />
-        <Route path="/super-emails" element={<SA_EmailList />} />
-        <Route path="/super-supers" element={<SA_SuperAdminList />} />
-        <Route path="/super-teachs" element={<SA_TeacherList />} />
+        <Route
+          path="/super-login"
+          element={
+            <SA_Layout>
+              <SA_Login />
+            </SA_Layout>
+          }
+        />
+        <Route
+          path="/super-dash"
+          element={
+            <SA_Layout>
+              <SA_Dash />
+            </SA_Layout>
+          }
+        />
+        <Route
+          path="/super-emails"
+          element={
+            <SA_Layout>
+              <SA_EmailList />
+            </SA_Layout>
+          }
+        />
+        <Route
+          path="/super-supers"
+          element={
+            <SA_Layout>
+              <SA_SuperAdminList />
+            </SA_Layout>
+          }
+        />
+        <Route
+          path="/super-teachs"
+          element={
+            <SA_Layout>
+              <SA_TeacherList />
+            </SA_Layout>
+          }
+        />
         <Route path="/teach-signup" element={<T_Signup />} />
         <Route path="/teach-verifyOTP" element={<T_Verify_OTP />} />
         <Route path="/teach-login" element={<T_Login />} />

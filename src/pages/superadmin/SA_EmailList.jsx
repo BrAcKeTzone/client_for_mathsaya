@@ -4,7 +4,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FaRegEnvelope, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
-import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -62,7 +61,6 @@ function SA_EmailList() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center h-screen bg-green-500">
         <h1 className="text-white text-6xl pt-4 pb-2">Email List</h1>
         <div className="grid grid-cols-3 gap-4 mb-4">

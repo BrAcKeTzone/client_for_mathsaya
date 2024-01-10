@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import { RiMailFill, RiAdminFill } from "react-icons/ri";
 import { FaUserSecret } from "react-icons/fa";
 import { FaUserGraduate } from "react-icons/fa6";
-import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -84,13 +83,12 @@ function SA_Dashboard() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center h-screen bg-green-500">
         <h1 className="text-white text-6xl pt-4 pb-2">Dashboard</h1>
         {isLoading ? (
           <span className="loader"></span>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-3 md:max-h-max overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-3 md:max-h-max overflow-y-auto">
             <div className="bg-green-300 p-6 rounded shadow-md hover:bg-green-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <Link to="/super-dash">
                 <FaUserSecret className="text-8xl mb-2" />

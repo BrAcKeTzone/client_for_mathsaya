@@ -4,7 +4,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FaUserGraduate, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
-import Navbar from "./components/Navbar";
 import ModalAddTeacher from "./components/ModalAddTeacher";
 import ModalEditTeacher from "./components/ModalEditTeacher";
 
@@ -112,7 +111,6 @@ function SA_TeacherList() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col items-center h-screen bg-green-500">
         <h1 className="text-white text-6xl pt-4 pb-2">Teacher List</h1>
         <div className="mx-1">
