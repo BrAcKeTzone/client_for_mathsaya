@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../assets/styles/hideVerticalScrollbar.css";
 
-function T_Units(server_url, setActiveComponent) {
+function T_Units({ server_url, setActiveComponent }) {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState("");
 
   useEffect(() => {
-    console.log(selectedUnit);
     const fetchUnits = async () => {
       try {
         setIsLoading(true);
@@ -24,7 +23,7 @@ function T_Units(server_url, setActiveComponent) {
     };
 
     fetchUnits();
-  }, [selectedUnit]);
+  }, [selectedUnit, server_url]);
 
   const handleClickUnit = (yunitId) => {
     setSelectedUnit(yunitId);
@@ -37,6 +36,7 @@ function T_Units(server_url, setActiveComponent) {
         {isLoading ? (
           <span className="loader"></span>
         ) : (
+          units.length > 0 &&
           units.map((unit) => (
             <div
               key={unit.yunitId}
