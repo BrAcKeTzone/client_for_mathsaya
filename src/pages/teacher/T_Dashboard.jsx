@@ -11,8 +11,6 @@ import {
 } from "react-icons/fa";
 import { FaUserGraduate } from "react-icons/fa6";
 
-import Navbar from "./components/Navbar";
-
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
 function T_Dashboard() {
@@ -50,7 +48,6 @@ function T_Dashboard() {
 
     const fetchTeacherData = async () => {
       try {
-        console.log(teacher.id);
         const response = await axios.get(
           `${server_url}/teachers/display/${teacher.id}`
         );
@@ -91,7 +88,7 @@ function T_Dashboard() {
         {isLoading ? (
           <span className="loader"></span>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4  p-3 md:max-h-max overflow-y-auto">
             <div className="bg-blue-300 p-6 rounded shadow-md hover:bg-blue-400 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
               <FaUserGraduate className="text-8xl mb-2" />
               <p className="text-xl font-bold">{teacherLName},</p>
