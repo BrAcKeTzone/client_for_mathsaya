@@ -2,59 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../assets/styles/hideVerticalScrollbar.css";
 
-const server_url = import.meta.env.VITE_SERVER_LINK;
-
-function T_Lessons() {
-  const [units, setLessons] = useState([
-    {
-      lessonId: "1",
-      lessonNumber: "101",
-      lessonName: "Introduction to React",
-      lessonThumbnail:
-        "https://static.wikia.nocookie.net/vsbattles/images/7/70/Kid_goku_render_xkeeperz_by_maxiuchiha22_dd2jqul.png/revision/latest?cb=20190816232153",
-    },
-    {
-      lessonId: "2",
-      lessonNumber: "102",
-      lessonName: "Advanced React Concepts",
-      lessonThumbnail:
-        "https://static.wikia.nocookie.net/vsbattles/images/7/70/Kid_goku_render_xkeeperz_by_maxiuchiha22_dd2jqul.png/revision/latest?cb=20190816232153",
-    },
-    {
-      lessonId: "3",
-      lessonNumber: "103",
-      lessonName: "Advanced React Concepts",
-      lessonThumbnail:
-        "https://static.wikia.nocookie.net/vsbattles/images/7/70/Kid_goku_render_xkeeperz_by_maxiuchiha22_dd2jqul.png/revision/latest?cb=20190816232153",
-    },
-    {
-      lessonId: "4",
-      lessonNumber: "104",
-      lessonName: "Advanced React Concepts",
-      lessonThumbnail:
-        "https://static.wikia.nocookie.net/vsbattles/images/7/70/Kid_goku_render_xkeeperz_by_maxiuchiha22_dd2jqul.png/revision/latest?cb=20190816232153",
-    },
-  ]);
-  //   const [units, setLessons] = useState([]);
+function T_Lessons({ server_url, setActiveComponent }) {
+  const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState("");
 
   useEffect(() => {
-    console.log(selectedLesson);
-    //     const fetchLessons = async () => {
-    //       try {
-    //         setIsLoading(true);
-    //         const response = await axios.get(`${server_url}/teacher/units`);
-    //         setLessons(response.data);
-    //       } catch (error) {
-    //         console.error("Error fetching units:", error);
-    //       } finally {
-    //         setIsLoading(false);
-    //       }
-    //     };
+    const fetchLessons = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(
+          `${server_url}/lessons/lessons/:teacherId`
+        );
+        setLessons(response.data);
+      } catch (error) {
+        console.error("Error fetching lessons:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    //     fetchLessons();
-  }, [selectedLesson]);
+    fetchLessons();
+  }, [selectedLesson, server_url]);
 
   const handleClickLesson = (lessonId) => {
     setSelectedLesson(lessonId);
@@ -67,7 +36,8 @@ function T_Lessons() {
         {isLoading ? (
           <span className="loader"></span>
         ) : (
-          units.map((lesson) => (
+          lessons.length > 0 &&
+          lessons.map((lesson) => (
             <div
               key={lesson.lessonId}
               className="bg-white rounded-md overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
