@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import T_TeacherInfo from "./components/T_TeacherInfo";
 import T_Units from "./components/T_Units";
@@ -69,7 +70,7 @@ function T_Topics() {
       </div>
       <div className="order-2 lg:order-2 lg:w-2/3 p-3 md:max-h-max overflow-y-auto">
         <div className="h-full">
-          <div>
+          <div className="px-4 py-1 border border-black rounded bg-blue-400">
             {activeComponent === "UnitsList" && (
               <T_Units
                 teacherId={teacher.id}

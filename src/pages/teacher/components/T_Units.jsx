@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../assets/styles/hideVerticalScrollbar.css";
 
 function T_Units({ teacherId, server_url, setActiveComponent }) {
@@ -60,7 +61,7 @@ function T_Units({ teacherId, server_url, setActiveComponent }) {
   };
 
   return (
-    <div>
+    <>
       <div className="flex flex-col md:flex-row items-center justify-between">
         <h1 className="text-white text-6xl pt-4 pb-2">Units</h1>
         <div className="flex items-center mt-4 md:mt-0 md:ml-4">
@@ -89,7 +90,7 @@ function T_Units({ teacherId, server_url, setActiveComponent }) {
           filteredUnits.map((unit) => (
             <div
               key={unit.yunitId}
-              className="flex flex-col bg-white rounded-md overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+              className="flex flex-col bg-blue-500 rounded-t-none rounded-b mr-2 overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
             >
               <button
                 onClick={() => {
@@ -108,11 +109,27 @@ function T_Units({ teacherId, server_url, setActiveComponent }) {
                   <div className="text-base">{unit.yunitName}</div>
                 </div>
               </button>
+              <div className="flex justify-center p-2 border-t-2">
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
+                  onClick={() => {
+                    console.log(`Edit button clicked for unit ${unit.yunitId}`);
+                  }}
+                >
+                  <FaRegEdit className="text-xl" />
+                </button>
+                <button
+                  className="bg-red-500 hover:bg-red-400 p-2 rounded mx-1"
+                  onClick={() => handleDeleteUnit(unit.yunitId)}
+                >
+                  <FaTrashAlt className="text-xl" />
+                </button>
+              </div>
             </div>
           ))
         )}
       </div>
-    </div>
+    </>
   );
 }
 
