@@ -6,6 +6,7 @@ function T_Exercises({ server_url, setActiveComponent }) {
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState("");
+  const [searchQueryExercises, setSearchQueryExercises] = useState("");
 
   useEffect(() => {
     const fetchExercises = async () => {

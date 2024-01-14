@@ -6,6 +6,7 @@ function T_Lessons({ server_url, setActiveComponent }) {
   const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState("");
+  const [searchQueryLessons, setSearchQueryLessons] = useState("");
 
   useEffect(() => {
     const fetchLessons = async () => {

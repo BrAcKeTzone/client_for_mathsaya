@@ -27,42 +27,35 @@ function T_Topics() {
   const [exercises, setExercises] = useState([]);
   const [questions, setQuestions] = useState([]);
 
-  const [selectedYunitId, setSelectedYunitId] = useState(null);
+  const [selectedUnitId, setSelectedUnitId] = useState(null);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [selectedExerciseId, setSelectedExerciseId] = useState(null);
   const [selectedSectionId, setSelectedSectionId] = useState(null);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [studentProfileId, setStudentProfileId] = useState(null);
 
-  const [searchQueryYunits, setSearchQueryYunits] = useState("");
-  const [searchQueryLessons, setSearchQueryLessons] = useState("");
-  const [searchQueryExercises, setSearchQueryExercises] = useState("");
-  const [searchQueryQuestions, setSearchQueryQuestions] = useState("");
-  const [searchQueryStudents, setSearchQueryStudents] = useState("");
-  const [searchQuerySections, setSearchQuerySections] = useState("");
+  let teacher = Cookies.get("tchr");
+  if (!teacher) {
+    Navigate("/teach-login");
+    return;
+  }
+
+  teacher = JSON.parse(Cookies.get("tchr"));
+
+  const checkTeacherId = async () => {
+    try {
+      const response = await axios.get(
+        `${server_url}/teachers/check-teacher/${teacher.id}`
+      );
+      console.log(response.data.message);
+    } catch (error) {
+      alert(error);
+      // Cookies.remove("tchr");
+      // Navigate("/teach-login");
+    }
+  };
 
   useEffect(() => {
-    let teacher = Cookies.get("tchr");
-    if (!teacher) {
-      Navigate("/teach-login");
-      return;
-    }
-
-    teacher = JSON.parse(Cookies.get("tchr"));
-
-    const checkTeacherId = async () => {
-      try {
-        const response = await axios.get(
-          `${server_url}/teachers/check-teacher/${teacher.id}`
-        );
-        console.log(response.data.message);
-      } catch (error) {
-        alert(error);
-        // Cookies.remove("tchr");
-        // Navigate("/teach-login");
-      }
-    };
-
     checkTeacherId();
   }, []);
   return (
@@ -79,19 +72,22 @@ function T_Topics() {
           <div>
             {activeComponent === "UnitsList" && (
               <T_Units
+                teacherId={teacher.id}
                 setActiveComponent={setActiveComponent}
                 server_url={server_url}
               />
             )}
             {activeComponent === "LessonsList" && (
               <T_Lessons
-                selectedYunitId={selectedYunitId}
+                teacherId={teacher.id}
+                selectedUnitId={selectedUnitId}
                 setActiveComponent={setActiveComponent}
                 server_url={server_url}
               />
             )}
             {activeComponent === "ExercisesList" && (
               <T_Exercises
+                teacherId={teacher.id}
                 selectedLessonId={selectedLessonId}
                 setActiveComponent={setActiveComponent}
                 server_url={server_url}
@@ -99,6 +95,7 @@ function T_Topics() {
             )}
             {activeComponent === "QuestionsList" && (
               <T_Questions
+                teacherId={teacher.id}
                 selectedExerciseId={selectedExerciseId}
                 setActiveComponent={setActiveComponent}
                 server_url={server_url}
