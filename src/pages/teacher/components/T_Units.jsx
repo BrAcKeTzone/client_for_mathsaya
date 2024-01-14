@@ -3,15 +3,14 @@ import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../assets/styles/hideVerticalScrollbar.css";
 
-function T_Units({ teacherId, server_url, setActiveComponent }) {
+function T_Units({ teacherId, server_url, handleClickUnit }) {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedUnit, setSelectedUnit] = useState("");
   const [searchQueryUnits, setSearchQueryUnits] = useState("");
 
   useEffect(() => {
     fetchUnits(teacherId);
-  }, [selectedUnit, server_url]);
+  }, [teacherId, server_url]);
 
   const fetchUnits = async (teacherId) => {
     try {
@@ -25,11 +24,6 @@ function T_Units({ teacherId, server_url, setActiveComponent }) {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleClickUnit = (yunitId) => {
-    setActiveComponent("LessonsList");
-    setSelectedUnit(yunitId);
   };
 
   const handleDeleteUnit = async (id) => {
@@ -78,7 +72,7 @@ function T_Units({ teacherId, server_url, setActiveComponent }) {
               console.log("Add Unit clicked");
             }}
           >
-            ADD UNIT
+            ADD NEW
           </button>
         </div>
       </div>{" "}

@@ -3,61 +3,66 @@ import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../assets/styles/hideVerticalScrollbar.css";
 
-function T_Lessons({ teacherId, server_url, setActiveComponent }) {
-  const [units, setUnits] = useState([]);
+function T_Lessons({
+  teacherId,
+  selectedUnitId,
+  server_url,
+  setActiveComponent,
+}) {
+  const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedUnit, setSelectedUnit] = useState("");
-  const [searchQueryUnits, setSearchQueryUnits] = useState("");
+  const [searchQueryLessons, setSearchQueryLessons] = useState("");
 
   useEffect(() => {
-    fetchUnits(teacherId);
-  }, [selectedUnit, server_url]);
+    console.log(selectedUnitId);
+    fetchLessons(teacherId);
+  }, [server_url]);
 
-  const fetchUnits = async (teacherId) => {
+  const fetchLessons = async (teacherId) => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${server_url}/yunits/yunits/${teacherId}`
+        `${server_url}/lessons/lessons/${teacherId}`
       );
-      setUnits(response.data);
+      setLessons(response.data);
     } catch (error) {
-      console.error("Error fetching units:", error);
+      console.error("Error fetching lessons:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleClickUnit = (yunitId) => {
+  const handleClickLesson = (lessonId) => {
     setActiveComponent("LessonsList");
-    setSelectedUnit(yunitId);
+    setSelectedLesson(lessonId);
   };
 
-  const handleDeleteUnit = async (id) => {
+  const handleDeleteLesson = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this unit?"
+      "Are you sure you want to delete this lesson?"
     );
     if (!confirmDelete) {
       return;
     }
     try {
-      await axios.delete(`${server_url}/yunits/delete/${id}`, {});
-      fetchUnits(teacherId);
+      await axios.delete(`${server_url}/lessons/delete/${id}`, {});
+      fetchLessons(teacherId);
     } catch (error) {
       alert(error);
     }
   };
 
-  const filteredUnits = units.filter((yunit) => {
+  const filteredLessons = lessons.filter((yunit) => {
     const { yunitNumber, yunitName } = yunit;
-    const searchValue = searchQueryUnits.toLowerCase();
+    const searchValue = searchQueryLessons.toLowerCase();
     return (
       yunitNumber.toString().toLowerCase().includes(searchValue) ||
       yunitName.toString().toLowerCase().includes(searchValue)
     );
   });
 
-  const handleSearchChangeUnits = (e) => {
-    setSearchQueryUnits(e.target.value);
+  const handleSearchChangeLessons = (e) => {
+    setSearchQueryLessons(e.target.value);
   };
 
   return (
@@ -67,18 +72,18 @@ function T_Lessons({ teacherId, server_url, setActiveComponent }) {
         <div className="flex items-center mt-4 md:mt-0 md:ml-4">
           <input
             type="text"
-            placeholder="Search Units"
-            value={searchQueryUnits}
-            onChange={handleSearchChangeUnits}
+            placeholder="Search Lessons"
+            value={searchQueryLessons}
+            onChange={handleSearchChangeLessons}
             className="p-2 border rounded"
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             onClick={() => {
-              console.log("Add Unit clicked");
+              console.log("Add Lesson clicked");
             }}
           >
-            ADD UNIT
+            ADD NEW
           </button>
         </div>
       </div>
@@ -86,41 +91,43 @@ function T_Lessons({ teacherId, server_url, setActiveComponent }) {
         {isLoading ? (
           <span className="loader"></span>
         ) : (
-          filteredUnits.length > 0 &&
-          filteredUnits.map((unit) => (
+          filteredLessons.length > 0 &&
+          filteredLessons.map((lesson) => (
             <div
-              key={unit.yunitId}
+              key={lesson.lessonId}
               className="flex flex-col bg-blue-500 rounded-t-none rounded-b mr-2 overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
             >
               <button
                 onClick={() => {
-                  handleClickUnit(unit.yunitId);
+                  handleClickLesson(lesson.lessonId);
                 }}
               >
                 <img
-                  src={unit.yunitThumbnail}
-                  alt={unit.yunitName}
+                  src={lesson.yunitThumbnail}
+                  alt={lesson.yunitName}
                   className="w-full h-40 object-cover object-center"
                 />
                 <div className="p-4 flex flex-col h-full">
                   <div className="text-xl font-bold mb-2">
-                    {unit.yunitNumber}
+                    {lesson.yunitNumber}
                   </div>
-                  <div className="text-base">{unit.yunitName}</div>
+                  <div className="text-base">{lesson.yunitName}</div>
                 </div>
               </button>
               <div className="flex justify-center p-2 border-t-2">
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => {
-                    console.log(`Edit button clicked for unit ${unit.yunitId}`);
+                    console.log(
+                      `Edit button clicked for lesson ${lesson.lessonId}`
+                    );
                   }}
                 >
                   <FaRegEdit className="text-xl" />
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-400 p-2 rounded mx-1"
-                  onClick={() => handleDeleteUnit(unit.yunitId)}
+                  onClick={() => handleDeleteLesson(lesson.lessonId)}
                 >
                   <FaTrashAlt className="text-xl" />
                 </button>
