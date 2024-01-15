@@ -112,7 +112,7 @@ function T_Exercises({
             >
               <button
                 onClick={() => {
-                  handleClickLesson(exercise.exerciseId);
+                  handleClickExercise(exercise.exerciseId);
                 }}
               >
                 <div className="p-4 flex flex-col h-full min-h-48">

@@ -66,6 +66,11 @@ function T_Topics() {
     setSelectedLessonId(lessonId);
   };
 
+  const handleClickExercise = (exerciseId) => {
+    setActiveComponent("QuestionsList");
+    setSelectedExerciseId(exerciseId);
+  };
+
   useEffect(() => {
     checkTeacherId();
   }, []);
@@ -103,6 +108,7 @@ function T_Topics() {
                 teacherId={teacher.id}
                 selectedLessonId={selectedLessonId}
                 setActiveComponent={setActiveComponent}
+                handleClickExercise={handleClickExercise}
                 server_url={server_url}
               />
             )}
