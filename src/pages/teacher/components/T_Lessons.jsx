@@ -7,7 +7,7 @@ function T_Lessons({
   teacherId,
   selectedUnitId,
   server_url,
-  setActiveComponent,
+  handleClickLesson,
 }) {
   const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,11 +30,6 @@ function T_Lessons({
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleClickLesson = (lessonId) => {
-    setActiveComponent("ExercisesList");
-    setSelectedLesson(lessonId);
   };
 
   const handleDeleteLesson = async (id) => {
