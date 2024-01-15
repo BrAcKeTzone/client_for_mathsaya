@@ -4,8 +4,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FaUserGraduate, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
-import ModalAddTeacher from "./components/ModalAddTeacher";
-import ModalEditTeacher from "./components/ModalEditTeacher";
+import ModalAddTeacher from "./components/Modals/ModalAddTeacher";
+import ModalEditTeacher from "./components/Modals/ModalEditTeacher";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 

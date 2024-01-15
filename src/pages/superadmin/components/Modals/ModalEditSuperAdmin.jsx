@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import "../../../assets/styles/loader.css";
+import "../../../../assets/styles/loader.css";
 
 Modal.setAppElement("#root");
 
@@ -11,23 +11,23 @@ const server_url = import.meta.env.VITE_SERVER_LINK;
 
 const genderOptions = ["Male", "Female", "Non-binary"];
 
-const ModalEditTeacher = ({
+const ModalEditSuperAdmin = ({
   isOpen,
   closeModal,
   fetchSuperAdmins,
-  teacherId,
+  superAdminId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [teacherData, setTeacherData] = useState(null);
+  const [superAdminData, setSuperAdminData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchSuperAdminData = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${server_url}/teachers/display/${teacherId}`
+        `${server_url}/superadmin/view/${superAdminId}`
       );
-      setTeacherData(response.data);
+      setSuperAdminData(response.data);
     } catch (error) {
       console.error("Error fetching Super Admin data:", error);
     } finally {
@@ -36,20 +36,20 @@ const ModalEditTeacher = ({
   };
 
   useEffect(() => {
-    if (isOpen && teacherId) {
+    if (isOpen && superAdminId) {
       fetchSuperAdminData();
     }
-  }, [isOpen, teacherId]);
+  }, [isOpen, superAdminId]);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstname: teacherData?.firstname || "",
-      lastname: teacherData?.lastname || "",
-      email: teacherData?.email || "",
+      firstname: superAdminData?.firstname || "",
+      lastname: superAdminData?.lastname || "",
+      email: superAdminData?.email || "",
       currentPassword: "",
       newPassword: "",
-      gender: teacherData?.gender || "",
+      gender: superAdminData?.gender || "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("Required"),
@@ -63,7 +63,7 @@ const ModalEditTeacher = ({
       try {
         setIsSubmitting(true);
         const response = await axios.put(
-          `${server_url}/superadmin/edit-superadmin/${teacherId}`,
+          `${server_url}/superadmin/edit-superadmin/${superAdminId}`,
           values
         );
         console.log("Super Admin edited successfully:", response.data);
@@ -91,7 +91,7 @@ const ModalEditTeacher = ({
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Edit Teacher</h2>
+        <h2 className="text-xl font-semibold">Edit Super Admin</h2>
         <button
           className="text-gray-500 hover:text-red-500"
           disabled={isSubmitting}
@@ -266,4 +266,4 @@ const ModalEditTeacher = ({
   );
 };
 
-export default ModalEditTeacher;
+export default ModalEditSuperAdmin;

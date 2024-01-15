@@ -4,14 +4,14 @@ import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import T_TeacherInfo from "./components/T_TeacherInfo";
-import T_Units from "./components/T_Units";
-import T_Lessons from "./components/T_Lessons";
-import T_Exercises from "./components/T_Exercises";
-import T_Questions from "./components/T_Questions";
-import T_Unit_Dashboard from "./components/T_Unit_Dashboard";
-import T_Lesson_Dashboard from "./components/T_Lesson_Dashboard";
-import T_Exercise_Dashboard from "./components/T_Exercise_Dashboard";
-import T_Question_Dashboard from "./components/T_Question_Dashboard";
+import T_Units from "./components/Topics/T_Units";
+import T_Lessons from "./components/Topics/T_Lessons";
+import T_Exercises from "./components/Topics/T_Exercises";
+import T_Questions from "./components/Topics/T_Questions";
+import T_Unit_Dashboard from "./components/Topics/T_Unit_Dashboard";
+import T_Lesson_Dashboard from "./components/Topics/T_Lesson_Dashboard";
+import T_Exercise_Dashboard from "./components/Topics/T_Exercise_Dashboard";
+import T_Question_Dashboard from "./components/Topics/T_Question_Dashboard";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 

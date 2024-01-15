@@ -5,8 +5,8 @@ import Cookies from "js-cookie";
 import { RiAdminFill } from "react-icons/ri";
 import { FaRegPlusSquare, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../assets/styles/hideVerticalScrollbar.css";
-import ModalAddSuperAdmin from "./components/ModalAddSuperAdmin";
-import ModalEditSuperAdmin from "./components/ModalEditSuperAdmin";
+import ModalAddSuperAdmin from "./components/Modals/ModalAddSuperAdmin";
+import ModalEditSuperAdmin from "./components/Modals/ModalEditSuperAdmin";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 

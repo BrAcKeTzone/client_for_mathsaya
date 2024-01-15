@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import "../../../assets/styles/hideVerticalScrollbar.css";
+import "../../../../assets/styles/hideVerticalScrollbar.css";
 
 function T_Questions({ teacherId, selectedExerciseId, server_url }) {
   const [questions, setQuestions] = useState([]);
@@ -121,7 +121,7 @@ function T_Questions({ teacherId, selectedExerciseId, server_url }) {
                         key={index}
                         className={`border p-2 text-center ${
                           choice.trim() === question.correct_answer
-                            ? "font-bold bg-blue-500 text-white"
+                            ? "font-bold bg-blue-500"
                             : ""
                         }`}
                       >

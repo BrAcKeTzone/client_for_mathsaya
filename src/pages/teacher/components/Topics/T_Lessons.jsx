@@ -1,68 +1,63 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import "../../../assets/styles/hideVerticalScrollbar.css";
+import "../../../../assets/styles/hideVerticalScrollbar.css";
 
-function T_Exercises({
+function T_Lessons({
   teacherId,
-  selectedLessonId,
+  selectedUnitId,
   server_url,
-  handleClickExercise,
+  handleClickLesson,
 }) {
-  const [exercises, setExercises] = useState([]);
+  const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchQueryExercises, setSearchQueryExercises] = useState("");
+  const [searchQueryLessons, setSearchQueryLessons] = useState("");
 
   useEffect(() => {
-    console.log(selectedLessonId);
-    fetchExercises(selectedLessonId);
+    console.log(selectedUnitId);
+    fetchLessons(selectedUnitId);
   }, [server_url]);
 
-  const fetchExercises = async (selectedLessonId) => {
+  const fetchLessons = async (selectedUnitId) => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${server_url}/exercises/exercises/${selectedLessonId}`
+        `${server_url}/lessons/lessons/${selectedUnitId}`
       );
-      setExercises(response.data);
+      setLessons(response.data);
     } catch (error) {
-      console.error("Error fetching exercises:", error);
+      console.error("Error fetching lessons:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleClickLesson = (exerciseId) => {
-    setActiveComponent("ExercisesList");
-    setSelectedExercises(exerciseId);
-  };
-
   const handleDeleteLesson = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this exercise?"
+      "Are you sure you want to delete this lesson?"
     );
     if (!confirmDelete) {
       return;
     }
     try {
-      await axios.delete(`${server_url}/exercises/delete/${id}`, {});
-      fetchExercises(selectedLessonId);
+      await axios.delete(`${server_url}/lessons/delete/${id}`, {});
+      fetchLessons(selectedUnitId);
     } catch (error) {
       alert(error);
     }
   };
 
-  const filteredExercises = exercises.filter((exercise) => {
-    const { exerciseNumber, exerciseName } = exercise;
-    const searchValue = searchQueryExercises.toLowerCase();
+  const filteredLessons = lessons.filter((lesson) => {
+    const { lessonNumber, lessonName } = lesson;
+    const searchValue = searchQueryLessons.toLowerCase();
     return (
-      exerciseNumber.toString().toLowerCase().includes(searchValue) ||
-      exerciseName.toString().toLowerCase().includes(searchValue)
+      lessonNumber.toString().toLowerCase().includes(searchValue) ||
+      lessonName.toString().toLowerCase().includes(searchValue)
     );
   });
 
-  const handleSearchChangeExercises = (e) => {
-    setSearchQueryExercises(e.target.value);
+  const handleSearchChangeLessons = (e) => {
+    setSearchQueryLessons(e.target.value);
   };
 
   const truncateText = (text, maxLength) => {
@@ -81,13 +76,13 @@ function T_Exercises({
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-between">
-        <h1 className="text-white text-6xl pt-4 pb-2">Exercises</h1>
+        <h1 className="text-white text-6xl pt-4 pb-2">Lessons</h1>
         <div className="flex items-center mt-4 md:mt-0 md:ml-4">
           <input
             type="text"
-            placeholder="Search Exercises"
-            value={searchQueryExercises}
-            onChange={handleSearchChangeExercises}
+            placeholder="Search Lessons"
+            value={searchQueryLessons}
+            onChange={handleSearchChangeLessons}
             className="p-2 border rounded"
           />
           <button
@@ -104,24 +99,29 @@ function T_Exercises({
         {isLoading ? (
           <span className="loader"></span>
         ) : (
-          filteredExercises.length > 0 &&
-          filteredExercises.map((exercise) => (
+          filteredLessons.length > 0 &&
+          filteredLessons.map((lesson) => (
             <div
-              key={exercise.exerciseId}
+              key={lesson.lessonId}
               className="flex flex-col bg-blue-500 rounded-t-none rounded-b mr-2 overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
             >
               <button
                 onClick={() => {
-                  handleClickExercise(exercise.exerciseId);
+                  handleClickLesson(lesson.lessonId);
                 }}
               >
+                <img
+                  src={lesson.lessonThumbnail}
+                  alt={lesson.lessonName}
+                  className="w-full h-40 object-cover object-center"
+                />
                 <div className="p-4 flex flex-col h-full min-h-48">
                   <div className="text-xl font-bold mb-2">
-                    {exercise.exerciseNumber}
+                    {lesson.lessonNumber}
                   </div>
-                  <div className="text-base">{exercise.exerciseName}</div>
+                  <div className="text-base">{lesson.lessonName}</div>
                   <div className="text-sm italic">
-                    {truncatedDescription(exercise.exerciseDescription)}
+                    {truncatedDescription(lesson.lessonDescription)}
                   </div>
                 </div>
               </button>
@@ -130,7 +130,7 @@ function T_Exercises({
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => {
                     console.log(
-                      `Edit button clicked for exercise ${exercise.exerciseId}`
+                      `Edit button clicked for lesson ${lesson.lessonId}`
                     );
                   }}
                 >
@@ -138,7 +138,7 @@ function T_Exercises({
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-400 p-2 rounded mx-1"
-                  onClick={() => handleDeleteLesson(exercise.exerciseId)}
+                  onClick={() => handleDeleteLesson(lesson.lessonId)}
                 >
                   <FaTrashAlt className="text-xl" />
                 </button>
@@ -151,4 +151,4 @@ function T_Exercises({
   );
 }
 
-export default T_Exercises;
+export default T_Lessons;

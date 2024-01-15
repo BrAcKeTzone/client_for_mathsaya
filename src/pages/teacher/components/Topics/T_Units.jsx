@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import "../../../assets/styles/hideVerticalScrollbar.css";
+import "../../../../assets/styles/hideVerticalScrollbar.css";
 
 function T_Units({ teacherId, server_url, handleClickUnit }) {
   const [units, setUnits] = useState([]);
