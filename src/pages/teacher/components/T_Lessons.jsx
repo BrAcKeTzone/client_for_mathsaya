@@ -15,14 +15,14 @@ function T_Lessons({
 
   useEffect(() => {
     console.log(selectedUnitId);
-    fetchLessons(teacherId);
+    fetchLessons(selectedUnitId);
   }, [server_url]);
 
-  const fetchLessons = async (teacherId) => {
+  const fetchLessons = async (selectedUnitId) => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${server_url}/lessons/lessons/${teacherId}`
+        `${server_url}/lessons/lessons/${selectedUnitId}`
       );
       setLessons(response.data);
     } catch (error) {
@@ -33,7 +33,7 @@ function T_Lessons({
   };
 
   const handleClickLesson = (lessonId) => {
-    setActiveComponent("LessonsList");
+    setActiveComponent("ExercisesList");
     setSelectedLesson(lessonId);
   };
 
@@ -46,23 +46,36 @@ function T_Lessons({
     }
     try {
       await axios.delete(`${server_url}/lessons/delete/${id}`, {});
-      fetchLessons(teacherId);
+      fetchLessons(selectedUnitId);
     } catch (error) {
       alert(error);
     }
   };
 
-  const filteredLessons = lessons.filter((yunit) => {
-    const { yunitNumber, yunitName } = yunit;
+  const filteredLessons = lessons.filter((lesson) => {
+    const { lessonNumber, lessonName } = lesson;
     const searchValue = searchQueryLessons.toLowerCase();
     return (
-      yunitNumber.toString().toLowerCase().includes(searchValue) ||
-      yunitName.toString().toLowerCase().includes(searchValue)
+      lessonNumber.toString().toLowerCase().includes(searchValue) ||
+      lessonName.toString().toLowerCase().includes(searchValue)
     );
   });
 
   const handleSearchChangeLessons = (e) => {
     setSearchQueryLessons(e.target.value);
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
+  const truncatedDescription = (description) => {
+    // Choose the maximum length for the truncated description
+    const maxLength = 100;
+    return truncateText(description, maxLength);
   };
 
   return (
@@ -87,7 +100,7 @@ function T_Lessons({
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -103,15 +116,18 @@ function T_Lessons({
                 }}
               >
                 <img
-                  src={lesson.yunitThumbnail}
-                  alt={lesson.yunitName}
+                  src={lesson.lessonThumbnail}
+                  alt={lesson.lessonName}
                   className="w-full h-40 object-cover object-center"
                 />
-                <div className="p-4 flex flex-col h-full">
+                <div className="p-4 flex flex-col h-full min-h-48">
                   <div className="text-xl font-bold mb-2">
-                    {lesson.yunitNumber}
+                    {lesson.lessonNumber}
                   </div>
-                  <div className="text-base">{lesson.yunitName}</div>
+                  <div className="text-base">{lesson.lessonName}</div>
+                  <div className="text-sm italic">
+                    {truncatedDescription(lesson.lessonDescription)}
+                  </div>
                 </div>
               </button>
               <div className="flex justify-center p-2 border-t-2">

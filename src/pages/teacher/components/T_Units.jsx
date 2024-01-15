@@ -76,7 +76,7 @@ function T_Units({ teacherId, server_url, handleClickUnit }) {
           </button>
         </div>
       </div>{" "}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -96,7 +96,7 @@ function T_Units({ teacherId, server_url, handleClickUnit }) {
                   alt={unit.yunitName}
                   className="w-full h-40 object-cover object-center"
                 />
-                <div className="p-4 flex flex-col h-full">
+                <div className="p-4 flex flex-col h-full min-h-36">
                   <div className="text-xl font-bold mb-2">
                     {unit.yunitNumber}
                   </div>
