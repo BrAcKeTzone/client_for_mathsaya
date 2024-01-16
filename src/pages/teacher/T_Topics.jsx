@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import T_TeacherInfo from "./components/T_TeacherInfo";
 import T_Units from "./components/Topics/T_Units";
@@ -19,21 +18,10 @@ function T_Topics() {
   const Navigate = useNavigate();
 
   const [activeComponent, setActiveComponent] = useState("UnitsList");
-  const [sections, setSections] = useState([]);
-  const [students, setStudents] = useState([]);
-  const [studentProfilesInfo, setStudentProfilesInfo] = useState([]);
-
-  const [yunits, setYunits] = useState([]);
-  const [lessons, setLessons] = useState([]);
-  const [exercises, setExercises] = useState([]);
-  const [questions, setQuestions] = useState([]);
 
   const [selectedUnitId, setSelectedUnitId] = useState(null);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [selectedExerciseId, setSelectedExerciseId] = useState(null);
-  const [selectedSectionId, setSelectedSectionId] = useState(null);
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [studentProfileId, setStudentProfileId] = useState(null);
 
   let teacher = Cookies.get("tchr");
   if (!teacher) {
@@ -89,7 +77,6 @@ function T_Topics() {
             {activeComponent === "UnitsList" && (
               <T_Units
                 teacherId={teacher.id}
-                setActiveComponent={setActiveComponent}
                 server_url={server_url}
                 handleClickUnit={handleClickUnit}
               />
@@ -98,7 +85,6 @@ function T_Topics() {
               <T_Lessons
                 teacherId={teacher.id}
                 selectedUnitId={selectedUnitId}
-                setActiveComponent={setActiveComponent}
                 server_url={server_url}
                 handleClickLesson={handleClickLesson}
               />
@@ -107,7 +93,6 @@ function T_Topics() {
               <T_Exercises
                 teacherId={teacher.id}
                 selectedLessonId={selectedLessonId}
-                setActiveComponent={setActiveComponent}
                 handleClickExercise={handleClickExercise}
                 server_url={server_url}
               />
@@ -116,7 +101,6 @@ function T_Topics() {
               <T_Questions
                 teacherId={teacher.id}
                 selectedExerciseId={selectedExerciseId}
-                setActiveComponent={setActiveComponent}
                 server_url={server_url}
               />
             )}
