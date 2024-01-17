@@ -48,11 +48,12 @@ function T_Students({
   };
 
   const filteredStudents = students.filter((student) => {
-    const { firstname, lastname } = student;
+    const { firstname, lastname, username } = student;
     const searchValue = searchQueryStudents.toLowerCase();
     return (
       firstname.toString().toLowerCase().includes(searchValue) ||
-      lastname.toString().toLowerCase().includes(searchValue)
+      lastname.toString().toLowerCase().includes(searchValue) ||
+      username.toString().toLowerCase().includes(searchValue)
     );
   });
 
@@ -63,7 +64,7 @@ function T_Students({
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-between">
-        <h1 className="text-white text-6xl pt-4 pb-2">Students</h1>
+        <h1 className="text-white text-6xl pt-4 pb-2">STUDENTS</h1>
         <div className="flex items-center mt-4 md:mt-0 md:ml-4">
           <input
             type="text"
@@ -97,17 +98,19 @@ function T_Students({
                   handleClickStudent(student.studentId);
                 }}
               >
-                <div className="bg-slate-700 w-full h-56 flex justify-center">
+                <div className="bg-slate-700 w-full flex justify-center">
                   {student.gender === "Male" ? (
-                    <CgBoy className="text-10xl text-white" />
+                    <CgBoy className="text-9xl text-white" />
                   ) : (
                     student.gender === "Female" && (
-                      <CgGirl className="text-10xl text-white" />
+                      <CgGirl className="text-9xl text-white" />
                     )
                   )}
                 </div>
-                <div className="p-4 flex flex-col h-full min-h-24">
-                  <div className="text-xl mb-2">{student.username}</div>
+                <div className="bg-slate-300 text-xl py-1">
+                  {student.username}
+                </div>
+                <div className="p-4 flex flex-col h-full min-h-16">
                   <div className="text-base font-bold mb-2">
                     {student.lastname}
                     {", "}

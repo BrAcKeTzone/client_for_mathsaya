@@ -65,8 +65,6 @@ function T_Verify_OTP() {
 
   return (
     <>
-      {" "}
-      <Navbar />
       <div
         className="h-screen bg-blue-500 flex justify-center items-center"
         onContextMenu={preventRightClick}

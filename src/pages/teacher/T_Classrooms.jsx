@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import T_TeacherInfo from "./components/T_TeacherInfo";
 import T_Sections from "./components/Classrooms/T_Sections";
 import T_Students from "./components/Classrooms/T_Students";
+import T_Stud_Profile from "./components/Classrooms/T_Stud_Profile";
 import T_Sections_Dashboard from "./components/Classrooms/T_Sections_Dashboard";
 import T_Students_Dashboard from "./components/Classrooms/T_Students_Dashboard";
-import T_Stud_Profile from "./components/Classrooms/T_Stud_Profile";
+import T_StudProf_Info from "./components/Classrooms/T_StudProf_Info";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -47,7 +48,7 @@ function T_Classrooms() {
   };
 
   const handleClickStudent = (studentId) => {
-    setActiveComponent("ExercisesList");
+    setActiveComponent("StudentProfile");
     setSelectedStudentId(studentId);
   };
 
@@ -60,6 +61,7 @@ function T_Classrooms() {
         <T_TeacherInfo />
         {activeComponent === "SectionsList" && <T_Sections_Dashboard />}
         {activeComponent === "StudentsList" && <T_Students_Dashboard />}
+        {activeComponent === "StudentProfile" && <T_StudProf_Info />}
       </div>
       <div className="order-2 lg:order-2 lg:w-2/3 p-3 md:max-h-max overflow-y-auto">
         <div className="h-full">
@@ -81,10 +83,9 @@ function T_Classrooms() {
               />
             )}
             {activeComponent === "StudentProfile" && (
-              <T_Students
-                selectedSectionId={selectedSectionId}
+              <T_Stud_Profile
                 server_url={server_url}
-                handleClickStudent={handleClickStudent}
+                selectedStudentId={selectedStudentId}
               />
             )}
           </div>

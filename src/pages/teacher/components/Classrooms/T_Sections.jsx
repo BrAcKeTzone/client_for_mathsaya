@@ -57,7 +57,7 @@ function T_Sections({ teacherId, server_url, handleClickSection }) {
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-between">
-        <h1 className="text-white text-6xl pt-4 pb-2">Sections</h1>
+        <h1 className="text-white text-6xl pt-4 pb-2">SECTIONS</h1>
         <div className="flex items-center mt-4 md:mt-0 md:ml-4">
           <input
             type="text"

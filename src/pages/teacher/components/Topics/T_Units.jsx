@@ -96,7 +96,7 @@ function T_Units({ teacherId, server_url, handleClickUnit }) {
                   alt={unit.yunitName}
                   className="w-full h-40 object-cover object-center"
                 />
-                <div className="p-4 flex flex-col h-full min-h-36">
+                <div className="p-4 flex flex-col h-full min-h-28">
                   <div className="text-xl font-bold mb-2">
                     {unit.yunitNumber}
                   </div>
