@@ -12,7 +12,7 @@ function Home() {
         className="h-screen bg-gradient-to-br from-teal-200 via-blue-200 to-indigo-700 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
-        <div className="rounded bg-white shadow-lg p-8 md:w-2/3 lg:w-1/3">
+        <div className="rounded bg-white bg-opacity-50 shadow-lg p-8 md:w-2/3 lg:w-1/3">
           <div className="fixed top-4 right-4">
             <Link to="/super-login">
               <button className="bg-rose-500 hover:bg-rose-700 py-2 px-4 rounded shadow-md text-white">
@@ -22,7 +22,7 @@ function Home() {
           </div>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-cyan-600 mb-2">WELCOME</h1>
-            <h2 className="text-3xl font-bold text-cyan-600">TO</h2>
+            <h1 className="text-3xl font-bold text-cyan-600">TO</h1>
           </div>
           <div className="flex justify-center mb-8">
             <img src={Logo} alt="Logo" className="w-48 h-48 object-cover" />
