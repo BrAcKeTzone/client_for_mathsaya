@@ -4,10 +4,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { FaUserGraduate } from "react-icons/fa6";
+import { FaUnlockAlt } from "react-icons/fa";
 import { preventRightClick } from "../../components/preventRightClick";
 import "../../assets/styles/loader.css";
-import "../../assets/styles/BubbleGumSans.css";
+import "../../assets/styles/AllFonts.css";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -68,20 +68,20 @@ function T_Login() {
   return (
     <>
       <div
-        className="h-screen bg-blue-500 flex justify-center items-center"
+        className="h-screen bg-gradient-to-br from-teal-200 via-blue-200 to-indigo-700 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
         {isLoading ? (
           <span className="loader"></span>
         ) : (
           <>
-            <div className="rounded bg-blue-400 shadow-lg shadow-black p-8 md:w-2/3 lg:w-1/3">
+            <div className="rounded bg-blue-400 shadow-lg p-8 md:w-2/3 lg:w-1/3">
               <div className="rounded bg-blue-300 p-8">
                 <div className="flex flex-col justify-center items-center">
-                  <h2 className="text-center text-3xl font-bold ">
+                  <h1 className="text-center text-3xl font-bold text-white">
                     UNLOCK YOUR CLASSROOM
-                  </h2>
-                  <FaUserGraduate className="text-white text-10xl" />
+                  </h1>
+                  <FaUnlockAlt className="text-white text-8xl" />
                 </div>
                 <form onSubmit={formik.handleSubmit}>
                   <div className="my-4">
@@ -114,6 +114,7 @@ function T_Login() {
                       </div>
                     )}
                   </div>
+
                   <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-600 hover:text-white p-2 rounded w-full hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
@@ -123,14 +124,21 @@ function T_Login() {
                       <span className="please_wait"></span>
                     ) : (
                       "Sign-in"
-                    )}{" "}
+                    )}
                   </button>
                 </form>
-                <p className="py-1">
+                <div className="flex justify-center">
+                  <p className="pb-1 text-white">
+                    <Link to="/" className="text-cyan-700 hover:font-bold">
+                      Forgot password?
+                    </Link>
+                  </p>
+                </div>
+                <p className="py-1 text-white">
                   Don't have an account?{" "}
                   <Link
                     to="/teach-signup"
-                    className="text-blue-700 hover:font-bold"
+                    className="text-cyan-700 hover:font-bold"
                   >
                     Click here...
                   </Link>
