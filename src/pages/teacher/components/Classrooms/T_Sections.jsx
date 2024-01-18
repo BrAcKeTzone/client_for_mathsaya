@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../../assets/styles/hideVerticalScrollbar.css";
+import ModalAddSection from "../Modals/ModalAddSection";
 
 function T_Sections({ teacherId, server_url, handleClickSection }) {
   const [sections, setSections] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuerySections, setSearchQuerySections] = useState("");
+  const [isAddSectionModalOpen, setIsAddSectionModalOpen] = useState(false);
+
+  const openAddSectionModal = () => {
+    setIsAddSectionModalOpen(true);
+  };
+
+  const closeAddSectionModal = () => {
+    setIsAddSectionModalOpen(false);
+  };
 
   useEffect(() => {
     fetchSections(teacherId);
@@ -51,7 +61,7 @@ function T_Sections({ teacherId, server_url, handleClickSection }) {
   });
 
   const handleSearchChangeSections = (e) => {
-    setSearchQueryUnits(e.target.value);
+    setSearchQuerySections(e.target.value);
   };
 
   return (
@@ -68,9 +78,7 @@ function T_Sections({ teacherId, server_url, handleClickSection }) {
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => {
-              console.log("Add Section clicked");
-            }}
+            onClick={openAddSectionModal}
           >
             ADD NEW
           </button>
@@ -120,6 +128,13 @@ function T_Sections({ teacherId, server_url, handleClickSection }) {
           ))
         )}
       </div>
+      <ModalAddSection
+        teacherId={teacherId}
+        server_url={server_url}
+        isOpen={isAddSectionModalOpen}
+        closeModal={closeAddSectionModal}
+        fetchSections={fetchSections}
+      />
     </>
   );
 }

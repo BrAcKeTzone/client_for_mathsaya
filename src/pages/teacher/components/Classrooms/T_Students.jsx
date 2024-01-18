@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { CgBoy, CgGirl } from "react-icons/cg";
 import "../../../../assets/styles/hideVerticalScrollbar.css";
+import ModalAddStudent from "../Modals/ModalAddStudent";
 
 function T_Students({
   teacherId,
@@ -13,6 +14,15 @@ function T_Students({
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryStudents, setSearchQueryStudents] = useState("");
+  const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
+
+  const openAddStudentModal = () => {
+    setIsAddStudentModalOpen(true);
+  };
+
+  const closeAddStudentModal = () => {
+    setIsAddStudentModalOpen(false);
+  };
 
   useEffect(() => {
     fetchStudents(selectedSectionId);
@@ -75,9 +85,7 @@ function T_Students({
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => {
-              console.log("Add Section clicked");
-            }}
+            onClick={openAddStudentModal}
           >
             ADD NEW
           </button>
@@ -140,6 +148,14 @@ function T_Students({
           ))
         )}
       </div>
+      <ModalAddStudent
+        teacherId={teacherId}
+        selectedSectionId={selectedSectionId}
+        server_url={server_url}
+        isOpen={isAddStudentModalOpen}
+        closeModal={closeAddStudentModal}
+        fetchStudents={fetchStudents}
+      />
     </>
   );
 }
