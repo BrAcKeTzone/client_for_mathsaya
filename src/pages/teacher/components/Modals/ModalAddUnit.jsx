@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -15,10 +15,22 @@ const ModalAddUnit = ({
   teacherId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
 
   const handleClearForm = () => {
-    formik.resetForm();
+    formik.setValues({
+      yunitNumber: "",
+      yunitName: "",
+      yunitThumbnail: null,
+    });
+    setResetKey((prevKey) => prevKey + 1);
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setResetKey(0);
+    }
+  }, [isOpen]);
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +42,7 @@ const ModalAddUnit = ({
       yunitNumber: Yup.number().required("Required").positive("Required"),
       yunitName: Yup.string().required("Required"),
       yunitThumbnail: Yup.mixed()
-        .required("Requ ang picture")
+        .required("Required")
         .test("fileFormat", "Unsupported File Format", (value) => {
           if (value) {
             return ["image/jpeg", "image/png"].includes(value.type);
@@ -73,6 +85,7 @@ const ModalAddUnit = ({
   return (
     <Modal
       isOpen={isOpen}
+      key={resetKey}
       onRequestClose={isSubmitting ? null : closeModal}
       contentLabel="Add Unit Modal"
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"

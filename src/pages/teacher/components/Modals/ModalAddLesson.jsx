@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,10 +16,22 @@ const ModalAddLesson = ({
   teacherId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
 
   const handleClearForm = () => {
-    formik.resetForm();
+    formik.setValues({
+      lessonNumber: "",
+      lessonName: "",
+      lessonThumbnail: null,
+    });
+    setResetKey((prevKey) => prevKey + 1);
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setResetKey(0);
+    }
+  }, [isOpen]);
 
   const formik = useFormik({
     initialValues: {
@@ -78,6 +90,7 @@ const ModalAddLesson = ({
   return (
     <Modal
       isOpen={isOpen}
+      key={resetKey}
       onRequestClose={isSubmitting ? null : closeModal}
       contentLabel="Add Lesson Modal"
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"

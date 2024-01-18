@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -20,6 +20,7 @@ const ModalAddQuestion = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showQuestionImageField, setShowQuestionImageField] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
 
   const handleClearForm = () => {
     formik.setValues({
@@ -28,7 +29,14 @@ const ModalAddQuestion = ({
       correct_answer: "",
       questionImage: null,
     });
+    setResetKey((prevKey) => prevKey + 1);
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setResetKey(0);
+    }
+  }, [isOpen]);
 
   const formik = useFormik({
     initialValues: {
@@ -115,6 +123,7 @@ const ModalAddQuestion = ({
   return (
     <Modal
       isOpen={isOpen}
+      key={resetKey}
       onRequestClose={isSubmitting ? null : closeModal}
       contentLabel="Add Question Modal"
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
