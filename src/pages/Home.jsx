@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 import { preventRightClick } from "../components/preventRightClick";
 import "../assets/styles/RubikDoodleShadow.css";
+import "../assets/styles/BubbleGumSans.css";
 
 function Home() {
   return (
