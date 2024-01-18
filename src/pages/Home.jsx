@@ -1,75 +1,49 @@
-import { FaUserGraduate, FaUserGroup } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { FaUserGraduate, FaUserGroup, FaUserShield } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 import { preventRightClick } from "../components/preventRightClick";
 import "../assets/styles/RubikDoodleShadow.css";
 
 function Home() {
-  const Navigate = useNavigate();
-  let consecutiveClicks = 0;
-
-  const handleLogoClick = () => {
-    consecutiveClicks += 1;
-    if (consecutiveClicks === 5) {
-      Navigate("/super-login");
-      consecutiveClicks = 0;
-    }
-  };
-
-  const handleLogoRightClick = (event) => {
-    if (event.button === 2) {
-      event.preventDefault();
-      Navigate("/super-login");
-    }
-  };
-
   return (
     <>
       <div
-        className="h-screen bg-blue-500 flex justify-center items-center"
+        className="h-screen bg-gradient-to-br from-teal-200 via-blue-200 to-indigo-700 flex justify-center items-center"
         onContextMenu={preventRightClick}
       >
-        <div className="rounded bg-blue-400 shadow-lg shadow-black p-4 md:w-2/3 lg:w-1/3">
-          <div className="px-4 pt-4">
-            <h1 className="grid grid-rows-2 grid-flow-col justify-center">
-              <span className="flex justify-center text-4xl">WELCOME</span>
-              <span className="flex justify-center text-3xl">TO</span>
-            </h1>
+        <div className="rounded bg-white shadow-lg p-8 md:w-2/3 lg:w-1/3">
+          <div className="fixed top-4 right-4">
+            <Link to="/super-login">
+              <button className="bg-rose-500 hover:bg-rose-700 py-2 px-4 rounded shadow-md text-white">
+                <FaUserShield className="text-2xl" />
+              </button>
+            </Link>
           </div>
-          <div className="flex justify-center">
-            <button
-              onContextMenu={handleLogoRightClick}
-              onClick={handleLogoClick}
-            >
-              <img src={Logo} width={300} height={300} />
-            </button>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-cyan-600 mb-2">WELCOME</h1>
+            <h2 className="text-3xl font-bold text-cyan-600">TO</h2>
           </div>
-          <div className="px-4 pb-4 bg-slate-700">
-            <div className="py-2 flex justify-center">
-              <h1 className="text-white text-2xl">ARE YOU A</h1>
+          <div className="flex justify-center mb-8">
+            <img src={Logo} alt="Logo" className="w-48 h-48 object-cover" />
+          </div>
+          <div className="bg-blue-200 py-4 px-8 rounded-md">
+            <div className="flex justify-center mb-4">
+              <h1 className="text-2xl font-bold text-blue-800">ARE YOU A</h1>
             </div>
-            <div className="grid grid-cols-2 grid-flow-row gap-4 text-white font-bold">
+            <div className="grid grid-cols-2 gap-4">
               <Link
                 to="/teach-login"
-                className="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded shadow-md shadow-black"
+                className="bg-cyan-500 hover:bg-cyan-700 py-2 px-4 rounded-md shadow-md text-white flex items-center justify-center"
               >
-                <div className="grid grid-rows-2 grid-flow-col justify-center">
-                  <span className="text-4xl flex justify-center">
-                    <FaUserGraduate />
-                  </span>
-                  <span className="text-2xl">Teacher</span>
-                </div>
+                <FaUserGraduate className="text-2xl mr-2" />
+                <span className="text-xl">Teacher</span>
               </Link>
               <Link
                 to="/stud-login"
-                className="bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded shadow-md shadow-black"
+                className="bg-amber-500 hover:bg-amber-700 py-2 px-4 rounded-md shadow-md text-white flex items-center justify-center"
               >
-                <div className="grid grid-rows-2 grid-flow-col justify-center">
-                  <span className="text-4xl flex justify-center">
-                    <FaUserGroup />
-                  </span>
-                  <span className="text-2xl">Student</span>
-                </div>
+                <FaUserGroup className="text-2xl mr-2" />
+                <span className="text-xl">Student</span>
               </Link>
             </div>
           </div>

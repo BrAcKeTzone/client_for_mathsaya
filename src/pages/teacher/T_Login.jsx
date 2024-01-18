@@ -8,7 +8,6 @@ import { FaUserGraduate } from "react-icons/fa6";
 import { preventRightClick } from "../../components/preventRightClick";
 import "../../assets/styles/loader.css";
 import "../../assets/styles/BubbleGumSans.css";
-import Navbar from "./components/Navbar";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
