@@ -22,7 +22,12 @@ const ModalAddQuestion = ({
   const [showQuestionImageField, setShowQuestionImageField] = useState(false);
 
   const handleClearForm = () => {
-    formik.resetForm();
+    formik.setValues({
+      question_text: "",
+      answer_choices: [""],
+      correct_answer: "",
+      questionImage: null,
+    });
   };
 
   const formik = useFormik({
@@ -35,7 +40,7 @@ const ModalAddQuestion = ({
     validationSchema: Yup.object({
       question_text: Yup.string().required("Required"),
       answer_choices: Yup.array()
-        .of(Yup.string())
+        .of(Yup.string().required("Required"))
         .min(2, "Must be at least 2 choices")
         .required("Required"),
       correct_answer: Yup.string()
@@ -51,10 +56,8 @@ const ModalAddQuestion = ({
         .nullable()
         .test("fileFormat", "Unsupported File Format", (value) => {
           if (value === null) {
-            // Allow null value
             return true;
           }
-          // Check file format for non-null values
           return ["image/jpeg", "image/png"].includes(value.type);
         }),
     }),
@@ -93,8 +96,13 @@ const ModalAddQuestion = ({
   });
 
   const handleAddAnswerChoice = () => {
-    formik.values.answer_choices.push("");
-    formik.setFieldValue("answer_choices", formik.values.answer_choices);
+    const newChoices = [...formik.values.answer_choices];
+    const lastChoice = newChoices[newChoices.length - 1];
+
+    if (lastChoice.trim() !== "") {
+      newChoices.push("");
+      formik.setFieldValue("answer_choices", newChoices);
+    }
   };
 
   const handleRemoveAnswerChoice = () => {
