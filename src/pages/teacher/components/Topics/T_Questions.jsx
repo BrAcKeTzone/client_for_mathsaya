@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../../assets/styles/hideVerticalScrollbar.css";
+import ModalAddQuestion from "../Modals/ModalAddQuestion";
 
 function T_Questions({ teacherId, selectedExerciseId, server_url }) {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryQuestions, setSearchQueryQuestions] = useState("");
+  const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
+
+  const openAddQuestionModal = () => {
+    setIsAddQuestionModalOpen(true);
+  };
+
+  const closeAddQuestionModal = () => {
+    setIsAddQuestionModalOpen(false);
+  };
 
   useEffect(() => {
     console.log(selectedExerciseId);
@@ -58,19 +68,6 @@ function T_Questions({ teacherId, selectedExerciseId, server_url }) {
     setSearchQueryQuestions(e.target.value);
   };
 
-  const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + "...";
-    }
-    return text;
-  };
-
-  const truncatedDescription = (description) => {
-    // Choose the maximum length for the truncated description
-    const maxLength = 100;
-    return truncateText(description, maxLength);
-  };
-
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-between">
@@ -85,9 +82,7 @@ function T_Questions({ teacherId, selectedExerciseId, server_url }) {
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => {
-              console.log("Add Exercise clicked");
-            }}
+            onClick={openAddQuestionModal}
           >
             ADD NEW
           </button>
@@ -103,18 +98,26 @@ function T_Questions({ teacherId, selectedExerciseId, server_url }) {
               key={question.questionId}
               className="flex flex-col bg-blue-500 rounded-t-none rounded-b mr-2 overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
             >
-              <div className="p-4 flex flex-col h-full min-h-48">
-                <div className="text-xl font-bold min-h-28">
+              <div className="flex flex-col h-full min-h-48">
+                <div className="p-4 text-xl font-bold min-h-28">
                   {question.question_text}
                 </div>
                 <div className="text-base">
-                  <img
-                    src={question.questionImage}
-                    alt={question.questionImage}
-                    className="w-full h-40 object-cover object-center"
-                  />
+                  {question.questionImage ? (
+                    <img
+                      src={question.questionImage}
+                      alt={question.questionImage}
+                      className="w-full h-40 object-cover object-center"
+                    />
+                  ) : (
+                    <div className="my-auto border border-black">
+                      <p className="w-full h-40 object-cover object-center flex justify-center items-center">
+                        No Image Attachment
+                      </p>
+                    </div>
+                  )}
                 </div>
-                <div className="text-base italic p-2 bg-white">
+                <div className="text-base italic p-2 mt-2 bg-white">
                   <div className="grid grid-cols-2 gap-2">
                     {question.answer_choices.split(",").map((choice, index) => (
                       <div
@@ -153,6 +156,14 @@ function T_Questions({ teacherId, selectedExerciseId, server_url }) {
           ))
         )}
       </div>
+      <ModalAddQuestion
+        teacherId={teacherId}
+        selectedExerciseId={selectedExerciseId}
+        server_url={server_url}
+        isOpen={isAddQuestionModalOpen}
+        closeModal={closeAddQuestionModal}
+        fetchQuestions={fetchQuestions}
+      />
     </>
   );
 }

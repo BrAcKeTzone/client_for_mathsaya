@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../../assets/styles/hideVerticalScrollbar.css";
+import ModalAddUnit from "../Modals/ModalAddUnit";
 
 function T_Units({ teacherId, server_url, handleClickUnit }) {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryUnits, setSearchQueryUnits] = useState("");
+  const [isAddUnitModalOpen, setIsAddUnitModalOpen] = useState(false);
+
+  const openAddUnitModal = () => {
+    setIsAddUnitModalOpen(true);
+  };
+
+  const closeAddUnitModal = () => {
+    setIsAddUnitModalOpen(false);
+  };
 
   useEffect(() => {
     fetchUnits(teacherId);
@@ -68,9 +78,7 @@ function T_Units({ teacherId, server_url, handleClickUnit }) {
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => {
-              console.log("Add Unit clicked");
-            }}
+            onClick={openAddUnitModal}
           >
             ADD NEW
           </button>
@@ -123,6 +131,13 @@ function T_Units({ teacherId, server_url, handleClickUnit }) {
           ))
         )}
       </div>
+      <ModalAddUnit
+        teacherId={teacherId}
+        server_url={server_url}
+        isOpen={isAddUnitModalOpen}
+        closeModal={closeAddUnitModal}
+        fetchUnits={fetchUnits}
+      />
     </>
   );
 }

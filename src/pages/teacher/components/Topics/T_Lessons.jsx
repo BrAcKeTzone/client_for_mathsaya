@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../../assets/styles/hideVerticalScrollbar.css";
+import ModalAddLesson from "../Modals/ModalAddLesson";
 
 function T_Lessons({
   teacherId,
@@ -12,6 +13,15 @@ function T_Lessons({
   const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryLessons, setSearchQueryLessons] = useState("");
+  const [isAddLessonModalOpen, setIsAddLessonModalOpen] = useState(false);
+
+  const openAddLessonModal = () => {
+    setIsAddLessonModalOpen(true);
+  };
+
+  const closeAddLessonModal = () => {
+    setIsAddLessonModalOpen(false);
+  };
 
   useEffect(() => {
     console.log(selectedUnitId);
@@ -68,7 +78,6 @@ function T_Lessons({
   };
 
   const truncatedDescription = (description) => {
-    // Choose the maximum length for the truncated description
     const maxLength = 100;
     return truncateText(description, maxLength);
   };
@@ -87,9 +96,7 @@ function T_Lessons({
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => {
-              console.log("Add Lesson clicked");
-            }}
+            onClick={openAddLessonModal}
           >
             ADD NEW
           </button>
@@ -147,6 +154,14 @@ function T_Lessons({
           ))
         )}
       </div>
+      <ModalAddLesson
+        teacherId={teacherId}
+        selectedUnitId={selectedUnitId}
+        server_url={server_url}
+        isOpen={isAddLessonModalOpen}
+        closeModal={closeAddLessonModal}
+        fetchLessons={fetchLessons}
+      />
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import "../../../../assets/styles/hideVerticalScrollbar.css";
+import ModalAddExercise from "../Modals/ModalAddExercise";
 
 function T_Exercises({
   teacherId,
@@ -12,6 +13,15 @@ function T_Exercises({
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryExercises, setSearchQueryExercises] = useState("");
+  const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
+
+  const openAddExerciseModal = () => {
+    setIsAddExerciseModalOpen(true);
+  };
+
+  const closeAddExerciseModal = () => {
+    setIsAddExerciseModalOpen(false);
+  };
 
   useEffect(() => {
     console.log(selectedLessonId);
@@ -73,7 +83,6 @@ function T_Exercises({
   };
 
   const truncatedDescription = (description) => {
-    // Choose the maximum length for the truncated description
     const maxLength = 100;
     return truncateText(description, maxLength);
   };
@@ -92,9 +101,7 @@ function T_Exercises({
           />
           <button
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => {
-              console.log("Add Lesson clicked");
-            }}
+            onClick={openAddExerciseModal}
           >
             ADD NEW
           </button>
@@ -147,6 +154,14 @@ function T_Exercises({
           ))
         )}
       </div>
+      <ModalAddExercise
+        teacherId={teacherId}
+        selectedLessonId={selectedLessonId}
+        server_url={server_url}
+        isOpen={isAddExerciseModalOpen}
+        closeModal={closeAddExerciseModal}
+        fetchExercises={fetchExercises}
+      />
     </>
   );
 }
