@@ -1,56 +1,212 @@
-import { FaUserGraduate, FaUserGroup, FaUserShield } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import Cookies from "js-cookie";
 import Logo from "../assets/images/logo.png";
-import { preventRightClick } from "../components/preventRightClick";
-import "../assets/styles/AllFonts.css";
 
-function Home() {
+const server_url = import.meta.env.VITE_SERVER_LINK;
+
+const SignIn = () => {
+  let usr = Cookies.get("SESSION_ID");
+
+  const Navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (usr) {
+      Navigate("/dash");
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        setIsSubmitting(true);
+        const response = await axios.post(`${server_url}/auth/login`, values);
+        if (response.data.user.userId) {
+          const expirationDate = new Date();
+          expirationDate.setDate(expirationDate.getDate() + 1);
+          Cookies.set(
+            "SESSION_ID",
+            JSON.stringify({ id: response.data.user.userId }),
+            {
+              expires: expirationDate,
+            }
+          );
+          Navigate("/dash");
+        } else {
+          setLoginError("Your account doesn't exist!");
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          setLoginError("Your account doesn't exist!");
+        } else {
+          alert("Email or Password is incorrect!");
+          console.error("Error:", error);
+        }
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+  });
+
   return (
-    <>
-      <div
-        className="h-screen bg-green-200 flex justify-center items-center"
-        onContextMenu={preventRightClick}
-      >
-        <div className="rounded bg-white bg-opacity-50 shadow-lg p-8 md:w-2/3 lg:w-1/3">
-          <div className="fixed top-4 right-4">
-            <Link to="/super-login">
-              <button className="bg-rose-500 hover:bg-rose-700 py-2 px-4 rounded shadow-md text-white">
-                <FaUserShield className="text-2xl" />
-              </button>
-            </Link>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {isLoading ? (
+        <div className="fullLoader"></div>
+      ) : (
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+          <div className="flex flex-col justify-center items-center">
+            <img src={Logo} className="size-20 m-2" />
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+              Sign In
+            </h2>
           </div>
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-yellow-500 mb-2">WELCOME</h1>
-            <h1 className="text-3xl font-bold text-yellow-500">TO</h1>
-          </div>
-          <div className="flex justify-center mb-8">
-            <img src={Logo} alt="Logo" className="w-48 h-48 object-cover" />
-          </div>
-          <div className="bg-yellow-300 py-4 px-8 rounded-md">
-            <div className="flex justify-center mb-4">
-              <h1 className="text-2xl font-bold text-yellow-800">ARE YOU A</h1>
+          <form onSubmit={formik.handleSubmit}>
+            {loginError && <div className="text-red-600">{loginError}</div>}
+            <div className="mb-4">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                placeholder="Email"
+                className={`w-full px-3 py-2 border ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded focus:outline-none focus:ring focus:border-blue-300`}
+                disabled={isSubmitting}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {formik.errors.email}
+                </p>
+              )}
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <Link
-                to="/teach-login"
-                className="bg-purple-500 hover:bg-purple-700 py-2 px-4 rounded-md shadow-md text-white flex items-center justify-center"
-              >
-                <FaUserGraduate className="text-2xl mr-2" />
-                <span className="text-xl">Teacher</span>
-              </Link>
-              <Link
-                to="/stud-login"
-                className="bg-orange-500 hover:bg-orange-700 py-2 px-4 rounded-md shadow-md text-white flex items-center justify-center"
-              >
-                <FaUserGroup className="text-2xl mr-2" />
-                <span className="text-xl">Student</span>
-              </Link>
+            <div className="mb-4">
+              <div className="relative">
+                <input
+                  type={formik.values.showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  placeholder="Password"
+                  className={`w-full px-3 py-2 border ${
+                    formik.touched.password && formik.errors.password
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  } rounded focus:outline-none focus:ring focus:border-blue-300`}
+                  disabled={isSubmitting}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none"
+                  onClick={() =>
+                    formik.setFieldValue(
+                      "showPassword",
+                      !formik.values.showPassword
+                    )
+                  }
+                >
+                  {formik.values.showPassword ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="h-4 w-4 text-gray-500"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 12l2-2m0 0l6-6 6 6m-6-6L6 12m6 6l6-6"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="h-4 w-4 text-gray-500"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 15v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2h9a2 2 0 012 2v1"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {formik.touched.password && formik.errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {formik.errors.password}
+                </p>
+              )}
             </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
 
-export default Home;
+            <div className="mb-4">
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white p-3 rounded focus:outline-none focus:ring focus:border-blue-300"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span className="please_wait"></span>
+                ) : (
+                  "Sign-in"
+                )}{" "}
+              </button>
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                className="text-blue-500 px-2 hover:text-white hover:bg-blue-500"
+                onClick={() => Navigate("/reset")}
+              >
+                Forgot Password?
+              </button>
+              <button
+                type="button"
+                className="text-blue-500 px-2 hover:text-white hover:bg-blue-500"
+                onClick={() => Navigate("/signup")}
+              >
+                Create Account?
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SignIn;

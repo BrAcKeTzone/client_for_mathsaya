@@ -1,3 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* HTML: <div class="fullLoader"></div> */
+.fullLoader {
+  width: 65px;
+  aspect-ratio: 1;
+  position: relative;
+}
+.fullLoader:before,
+.fullLoader:after {
+  content: "";
+  position: absolute;
+  border-radius: 50px;
+  box-shadow: 0 0 0 3px inset #000;
+  animation: l5 2.5s infinite;
+}
+.fullLoader:after {
+  animation-delay: -1.25s;
+  border-radius: 0;
+}
+@keyframes l5 {
+  0% {
+    inset: 0 35px 35px 0;
+  }
+  12.5% {
+    inset: 0 35px 0 0;
+  }
+  25% {
+    inset: 35px 35px 0 0;
+  }
+  37.5% {
+    inset: 35px 0 0 0;
+  }
+  50% {
+    inset: 35px 0 0 35px;
+  }
+  62.5% {
+    inset: 0 0 0 35px;
+  }
+  75% {
+    inset: 0 0 35px 35px;
+  }
+  87.5% {
+    inset: 0 0 35px 0;
+  }
+  100% {
+    inset: 0 35px 35px 0;
+  }
+}
+
+/* HTML: <div class="please_wait"></div> */
+.please_wait {
+  width: inline-flex;
+  align-items: center;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 16px;
+  padding-bottom: 8px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+  animation: l2 2s linear infinite;
+}
+.please_wait:before {
+  content: "One moment, please...";
+  display: inline-block;
+  margin-right: 8px;
+}
+@keyframes l2 {
+  to {
+    background-size: 100% 3px;
+  }
+}

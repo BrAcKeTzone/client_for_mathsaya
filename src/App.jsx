@@ -1,143 +1,98 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
+import NavLayout from "./pages/components/Layout";
 import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import ForgotPass from "./pages/ForgotPass";
+import Dashboard from "./pages/Dashboard";
+import TeacherList from "./pages/TeacherList";
+import AdminList from "./pages/AdminList";
+import Topics from "./pages/Topics";
+import Classrooms from "./pages/Classrooms";
+import StudentLogin from "./pages/StudentLogin";
+import Mathsaya from "./pages/Mathsaya";
 import NotFound from "./pages/NotFound";
-import SA_Login from "./pages/superadmin/SA_Login";
-import SA_Dash from "./pages/superadmin/SA_Dashboard";
-import SA_EmailList from "./pages/superadmin/SA_EmailList";
-import SA_SuperAdminList from "./pages/superadmin/SA_SuperAdminList";
-import SA_TeacherList from "./pages/superadmin/SA_TeacherList";
-import T_Signup from "./pages/teacher/T_Signup";
-import T_Verify_OTP from "./pages/teacher/T_Verify_OTP";
-import T_Login from "./pages/teacher/T_Login";
-import T_Dashboard from "./pages/teacher/T_Dashboard";
-import T_Topics from "./pages/teacher/T_Topics";
-import T_Classrooms from "./pages/teacher/T_Classrooms";
-import T_ContactAdmin from "./pages/teacher/T_ContactAdmin";
-import S_Login from "./pages/student/S_Login";
-import S_MathSaya from "./pages/student/S_MathSaya";
-import SA_Layout from "./pages/superadmin/components/SA_Layout";
-import T_Layout from "./pages/teacher/components/T_Layout";
-import S_Layout from "./pages/student/components/S_Layout";
 
 function App() {
+  const server_url = import.meta.env.VITE_SERVER_LINK;
+  let usr = Cookies.get("SESSION_ID");
+
+  const [userRole, setUserRole] = useState();
+
+  const fetchUserRole = async () => {
+    try {
+      usr = JSON.parse(Cookies.get("SESSION_ID"));
+      const infoResponse = await axios.get(`${server_url}/auth/${usr.id}`);
+      setUserRole(infoResponse.data.roleType);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (usr !== undefined) {
+      fetchUserRole();
+    }
+  }, [usr]);
+
+  const isTeacher = userRole === "Teacher";
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup/verify" element={<Signup />} />
+        <Route path="/reset" element={<ForgotPass />} />
         <Route
-          path="/super-login"
+          path="/dash"
           element={
-            <SA_Layout>
-              <SA_Login />
-            </SA_Layout>
+            <NavLayout userRole={userRole}>
+              <Dashboard fetchUserRole={fetchUserRole} />
+            </NavLayout>
+          }
+        />
+        {!isTeacher && (
+          <>
+            <Route
+              path="/teachers"
+              element={
+                <NavLayout userRole={userRole}>
+                  <TeacherList />
+                </NavLayout>
+              }
+            />
+            <Route
+              path="/admins"
+              element={
+                <NavLayout userRole={userRole}>
+                  <AdminList />
+                </NavLayout>
+              }
+            />
+          </>
+        )}
+        <Route
+          path="/topics"
+          element={
+            <NavLayout userRole={userRole}>
+              <Topics />
+            </NavLayout>
           }
         />
         <Route
-          path="/super-dash"
+          path="/classes"
           element={
-            <SA_Layout>
-              <SA_Dash />
-            </SA_Layout>
+            <NavLayout userRole={userRole}>
+              <Classrooms />
+            </NavLayout>
           }
         />
-        <Route
-          path="/super-emails"
-          element={
-            <SA_Layout>
-              <SA_EmailList />
-            </SA_Layout>
-          }
-        />
-        <Route
-          path="/super-supers"
-          element={
-            <SA_Layout>
-              <SA_SuperAdminList />
-            </SA_Layout>
-          }
-        />
-        <Route
-          path="/super-teachs"
-          element={
-            <SA_Layout>
-              <SA_TeacherList />
-            </SA_Layout>
-          }
-        />
-        <Route
-          path="/teach-signup"
-          element={
-            <T_Layout>
-              <T_Signup />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/teach-verifyOTP"
-          element={
-            <T_Layout>
-              <T_Verify_OTP />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/teach-login"
-          element={
-            <T_Layout>
-              <T_Login />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/teach-dash"
-          element={
-            <T_Layout>
-              <T_Dashboard />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/teach-topics"
-          element={
-            <T_Layout>
-              <T_Topics />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/teach-class"
-          element={
-            <T_Layout>
-              <T_Classrooms />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/teach-contact"
-          element={
-            <T_Layout>
-              <T_ContactAdmin />
-            </T_Layout>
-          }
-        />
-        <Route
-          path="/stud-login"
-          element={
-            <S_Layout>
-              <S_Login />
-            </S_Layout>
-          }
-        />
-        <Route
-          path="/stud-mathsaya"
-          element={
-            <S_Layout>
-              <S_MathSaya />
-            </S_Layout>
-          }
-        />
+        <Route path="/login" element={<StudentLogin />} />
+        <Route path="/game" element={<Mathsaya />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

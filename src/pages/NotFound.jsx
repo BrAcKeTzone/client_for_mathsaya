@@ -1,45 +1,23 @@
-import { FaHome } from "react-icons/fa";
-import { FaUserShield } from "react-icons/fa6";
+import React from "react";
 import { Link } from "react-router-dom";
-import { preventRightClick } from "../components/preventRightClick";
-import "../assets/styles/AllFonts.css";
 
-function NotFound() {
+const NotFound = () => {
   return (
-    <>
-      <div
-        className="h-screen bg-green-200 flex justify-center items-center"
-        onContextMenu={preventRightClick}
-      >
-        <div className="fixed top-4 right-4">
-          <Link to="/super-login">
-            <button className="bg-rose-500 hover:bg-rose-700 py-2 px-4 rounded shadow-md text-white">
-              <FaUserShield className="text-2xl" />
-            </button>
-          </Link>
-        </div>
-        <div className="grid grid-rows-2 grid-flow-col justify-center text-center">
-          <div className="flex md:flex-row flex-col">
-            <h1 className="text-red-500 md:text-5xl text-4xl font-extrabold mb-4 mx-1">
-              Error 404!
-            </h1>
-            <h1 className="text-red-500 text-5xl font-extrabold mb-4 mx-1">
-              Page not found!
-            </h1>
-          </div>
-
-          <div className="flex justify-center">
-            <Link to="/">
-              <button className="flex bg-orange-500 hover:bg-orange-700 py-2 px-4 rounded-b-lg text-white text-2xl shadow-md">
-                <FaHome className="text-3xl mr-2" />
-                Go Back to Home
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
+      <div className="text-6xl font-bold mb-4">404 Not Found</div>
+      <p className="text-lg mb-8">
+        Oops! The page you're looking for does not exist.
+      </p>
+      <img
+        src="https://i.imgur.com/qIufhof.png"
+        alt="Lost Astronaut"
+        className="w-96 h-auto mb-8"
+      />
+      <Link to="/" className="text-lg underline hover:text-gray-300">
+        Go back to Home
+      </Link>
+    </div>
   );
-}
+};
 
 export default NotFound;
