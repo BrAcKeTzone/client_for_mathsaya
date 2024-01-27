@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import ModalAddLesson from "../Modals/ModalAddLesson";
+import ModalAddLesson from "../modals/ModalAddLesson";
 
 function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
   const [lessons, setLessons] = useState([]);

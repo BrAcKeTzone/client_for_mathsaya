@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import ModalAddSection from "../Modals/ModalAddSection";
+import ModalAddSection from "../modals/ModalAddSection";
 
 function Sections({ teacherId, server_url, handleClickSection }) {
   const [sections, setSections] = useState([]);

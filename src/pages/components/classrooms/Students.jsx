@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { CgBoy, CgGirl } from "react-icons/cg";
-import ModalAddStudent from "../Modals/ModalAddStudent";
+import ModalAddStudent from "../modals/ModalAddStudent";
 
 function Students({
   teacherId,

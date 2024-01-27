@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import ModalAddUnit from "../Modals/ModalAddUnit";
+import ModalAddUnit from "../modals/ModalAddUnit";
 
 function Units({ teacherId, server_url, handleClickUnit }) {
   const [units, setUnits] = useState([]);

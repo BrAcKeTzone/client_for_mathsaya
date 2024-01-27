@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import ModalAddExercise from "../Modals/ModalAddExercise";
+import ModalAddExercise from "../modals/ModalAddExercise";
 
 function Exercises({
   teacherId,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import ModalAddQuestion from "../Modals/ModalAddQuestion";
+import ModalAddQuestion from "../modals/ModalAddQuestion";
 
 function Questions({ teacherId, selectedExerciseId, server_url }) {
   const [questions, setQuestions] = useState([]);
