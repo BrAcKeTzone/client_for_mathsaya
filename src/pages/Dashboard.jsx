@@ -43,7 +43,6 @@ const Dashboard = ({ fetchUserRole }) => {
       setIsLoading(true);
       const infoResponse = await axios.get(`${server_url}/auth/${usr.id}`);
       setTeacherData(infoResponse.data);
-
       const statResponse = await axios.get(
         `${server_url}/user/stats/${usr.id}`
       );

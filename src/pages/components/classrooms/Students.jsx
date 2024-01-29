@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { CgBoy, CgGirl } from "react-icons/cg";
 import ModalAddStudent from "../modals/ModalAddStudent";
+import ModalEditStudent from "../modals/ModalEditStudent";
 
 function Students({
   teacherId,
@@ -14,6 +15,8 @@ function Students({
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryStudents, setSearchQueryStudents] = useState("");
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
+  const [isEditStudentModalOpen, setIsEditStudentModalOpen] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
 
   const openAddStudentModal = () => {
     setIsAddStudentModalOpen(true);
@@ -23,9 +26,18 @@ function Students({
     setIsAddStudentModalOpen(false);
   };
 
+  const openEditStudentModal = (studentId) => {
+    setSelectedStudentId(studentId);
+    setIsEditStudentModalOpen(true);
+  };
+
+  const closeEditStudentModal = () => {
+    setSelectedStudentId(null);
+    setIsEditStudentModalOpen(false);
+  };
+
   const fetchStudents = async (selectedSectionId) => {
     try {
-      console.log(selectedSectionId);
       setIsLoading(true);
       const response = await axios.get(
         `${server_url}/students/${selectedSectionId}`
@@ -87,11 +99,11 @@ function Students({
             className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             onClick={openAddStudentModal}
           >
-            ADD NEW
+            ADD STUDENT
           </button>
         </div>
       </div>{" "}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -108,10 +120,10 @@ function Students({
               >
                 <div className="bg-slate-700 w-full flex justify-center">
                   {student.gender === "Male" ? (
-                    <CgBoy className="text-9xl text-white" />
+                    <CgBoy className="text-7xl text-white" />
                   ) : (
                     student.gender === "Female" && (
-                      <CgGirl className="text-9xl text-white" />
+                      <CgGirl className="text-7xl text-white" />
                     )
                   )}
                 </div>
@@ -119,27 +131,22 @@ function Students({
                   {student.username}
                 </div>
                 <div className="p-4 flex flex-col h-full min-h-16">
-                  <div className="text-base font-bold mb-2">
-                    {student.lastname}
-                    {", "}
-                    {student.firstname}
+                  <div className="flex flex-col text-base font-bold mb-2">
+                    <span>{student.lastname},</span>
+                    <span>{student.firstname}</span>
                   </div>
                 </div>
               </button>
               <div className="flex justify-center p-2 border-t-2">
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
-                  onClick={() => {
-                    console.log(
-                      `Edit button clicked for student ${student.studentId}`
-                    );
-                  }}
+                  onClick={() => openEditStudentModal(student.studentId)}
                 >
                   <FaRegEdit className="text-xl" />
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-400 p-2 rounded mx-1"
-                  onClick={() => handleDeleteSection(student.studentId)}
+                  onClick={() => handleDeleteStudent(student.studentId)}
                 >
                   <FaTrashAlt className="text-xl" />
                 </button>
@@ -155,6 +162,15 @@ function Students({
         isOpen={isAddStudentModalOpen}
         closeModal={closeAddStudentModal}
         fetchStudents={fetchStudents}
+      />
+      <ModalEditStudent
+        isOpen={isEditStudentModalOpen}
+        closeModal={closeEditStudentModal}
+        server_url={server_url}
+        fetchStudents={fetchStudents}
+        selectedSectionId={selectedSectionId}
+        teacherId={teacherId}
+        studentId={selectedStudentId}
       />
     </>
   );

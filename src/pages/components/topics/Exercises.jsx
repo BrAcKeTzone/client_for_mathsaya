@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import ModalAddExercise from "../modals/ModalAddExercise";
+import ModalEditExercise from "../modals/ModalEditExercise";
 
 function Exercises({
   teacherId,
@@ -13,6 +14,8 @@ function Exercises({
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryExercises, setSearchQueryExercises] = useState("");
   const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
+  const [isEditExerciseModalOpen, setIsEditExerciseModalOpen] = useState(false);
+  const [selectedExerciseId, setSelectedExerciseId] = useState(null);
 
   const openAddExerciseModal = () => {
     setIsAddExerciseModalOpen(true);
@@ -20,6 +23,16 @@ function Exercises({
 
   const closeAddExerciseModal = () => {
     setIsAddExerciseModalOpen(false);
+  };
+
+  const openEditExerciseModal = (studentId) => {
+    setSelectedExerciseId(studentId);
+    setIsEditExerciseModalOpen(true);
+  };
+
+  const closeEditExerciseModal = () => {
+    setSelectedExerciseId(null);
+    setIsEditExerciseModalOpen(false);
   };
 
   const fetchExercises = async (selectedLessonId) => {
@@ -130,9 +143,7 @@ function Exercises({
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => {
-                    console.log(
-                      `Edit button clicked for exercise ${exercise.exerciseId}`
-                    );
+                    openEditExerciseModal(exercise.exerciseId);
                   }}
                 >
                   <FaRegEdit className="text-xl" />
@@ -155,6 +166,15 @@ function Exercises({
         isOpen={isAddExerciseModalOpen}
         closeModal={closeAddExerciseModal}
         fetchExercises={fetchExercises}
+      />
+      <ModalEditExercise
+        isOpen={isEditExerciseModalOpen}
+        closeModal={closeEditExerciseModal}
+        server_url={server_url}
+        fetchExercises={fetchExercises}
+        selectedLessonId={selectedLessonId}
+        teacherId={teacherId}
+        exerciseId={selectedExerciseId}
       />
     </>
   );

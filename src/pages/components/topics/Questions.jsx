@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import ModalAddQuestion from "../modals/ModalAddQuestion";
+import ModalEditQuestion from "../modals/ModalEditQuestion";
 
 function Questions({ teacherId, selectedExerciseId, server_url }) {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryQuestions, setSearchQueryQuestions] = useState("");
   const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
+  const [isEditQuestionModalOpen, setIsEditQuestionModalOpen] = useState(false);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
   const openAddQuestionModal = () => {
     setIsAddQuestionModalOpen(true);
@@ -15,6 +18,16 @@ function Questions({ teacherId, selectedExerciseId, server_url }) {
 
   const closeAddQuestionModal = () => {
     setIsAddQuestionModalOpen(false);
+  };
+
+  const openEditQuestionModal = (studentId) => {
+    setSelectedQuestionId(studentId);
+    setIsEditQuestionModalOpen(true);
+  };
+
+  const closeEditQuestionModal = () => {
+    setSelectedQuestionId(null);
+    setIsEditQuestionModalOpen(false);
   };
 
   const fetchQuestions = async (selectedExerciseId) => {
@@ -131,9 +144,7 @@ function Questions({ teacherId, selectedExerciseId, server_url }) {
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => {
-                    console.log(
-                      `Edit button clicked for question ${question.questionId}`
-                    );
+                    openEditQuestionModal(question.questionId);
                   }}
                 >
                   <FaRegEdit className="text-xl" />
@@ -156,6 +167,15 @@ function Questions({ teacherId, selectedExerciseId, server_url }) {
         isOpen={isAddQuestionModalOpen}
         closeModal={closeAddQuestionModal}
         fetchQuestions={fetchQuestions}
+      />
+      <ModalEditQuestion
+        isOpen={isEditQuestionModalOpen}
+        closeModal={closeEditQuestionModal}
+        server_url={server_url}
+        fetchQuestions={fetchQuestions}
+        selectedExerciseId={selectedExerciseId}
+        teacherId={teacherId}
+        questionId={selectedQuestionId}
       />
     </>
   );

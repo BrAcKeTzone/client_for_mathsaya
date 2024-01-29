@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import ModalAddUnit from "../modals/ModalAddUnit";
+import ModalEditUnit from "../modals/ModalEditUnit";
 
 function Units({ teacherId, server_url, handleClickUnit }) {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryUnits, setSearchQueryUnits] = useState("");
   const [isAddUnitModalOpen, setIsAddUnitModalOpen] = useState(false);
+  const [isEditUnitModalOpen, setIsEditUnitModalOpen] = useState(false);
+  const [selectedUnitId, setSelectedUnitId] = useState(null);
 
   const openAddUnitModal = () => {
     setIsAddUnitModalOpen(true);
@@ -15,6 +18,16 @@ function Units({ teacherId, server_url, handleClickUnit }) {
 
   const closeAddUnitModal = () => {
     setIsAddUnitModalOpen(false);
+  };
+
+  const openEditUnitModal = (sectionId) => {
+    setSelectedUnitId(sectionId);
+    setIsEditUnitModalOpen(true);
+  };
+
+  const closeEditUnitModal = () => {
+    setSelectedUnitId(null);
+    setIsEditUnitModalOpen(false);
   };
 
   const fetchUnits = async (teacherId) => {
@@ -104,7 +117,7 @@ function Units({ teacherId, server_url, handleClickUnit }) {
                 />
                 <div className="p-2 flex flex-col h-full min-h-20">
                   <div className="text-xl font-bold mb-2">
-                    {unit.yunitNumber}
+                    Unit {unit.yunitNumber}
                   </div>
                   <div className="text-base">{unit.yunitName}</div>
                 </div>
@@ -113,7 +126,7 @@ function Units({ teacherId, server_url, handleClickUnit }) {
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => {
-                    console.log(`Edit button clicked for unit ${unit.yunitId}`);
+                    openEditUnitModal(unit.yunitId);
                   }}
                 >
                   <FaRegEdit className="text-xl" />
@@ -135,6 +148,14 @@ function Units({ teacherId, server_url, handleClickUnit }) {
         isOpen={isAddUnitModalOpen}
         closeModal={closeAddUnitModal}
         fetchUnits={fetchUnits}
+      />
+      <ModalEditUnit
+        teacherId={teacherId}
+        server_url={server_url}
+        isOpen={isEditUnitModalOpen}
+        closeModal={closeEditUnitModal}
+        fetchUnits={fetchUnits}
+        unitId={selectedUnitId}
       />
     </>
   );

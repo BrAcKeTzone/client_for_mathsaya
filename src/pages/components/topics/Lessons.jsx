@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import ModalAddLesson from "../modals/ModalAddLesson";
+import ModalEditLesson from "../modals/ModalEditLesson";
 
 function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
   const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryLessons, setSearchQueryLessons] = useState("");
   const [isAddLessonModalOpen, setIsAddLessonModalOpen] = useState(false);
+  const [isEditLessonModalOpen, setIsEditLessonModalOpen] = useState(false);
+  const [selectedLessonId, setSelectedLessonId] = useState(null);
 
   const openAddLessonModal = () => {
     setIsAddLessonModalOpen(true);
@@ -15,6 +18,16 @@ function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
 
   const closeAddLessonModal = () => {
     setIsAddLessonModalOpen(false);
+  };
+
+  const openEditLessonModal = (studentId) => {
+    setSelectedLessonId(studentId);
+    setIsEditLessonModalOpen(true);
+  };
+
+  const closeEditLessonModal = () => {
+    setSelectedLessonId(null);
+    setIsEditLessonModalOpen(false);
   };
 
   const fetchLessons = async (selectedUnitId) => {
@@ -96,7 +109,7 @@ function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
           </button>
         </div>
       </div>{" "}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -118,10 +131,10 @@ function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
                 />
                 <div className="p-2 flex flex-col h-full min-h-20">
                   <div className="text-xl font-bold mb-2">
-                    {lesson.lessonNumber}
+                    Lesson {lesson.lessonNumber}
                   </div>
-                  <div className="text-base">{lesson.lessonName}</div>
-                  <div className="text-sm italic ">
+                  <div className="text-base min-h-14">{lesson.lessonName}</div>
+                  <div className="text-sm italic min-h-20">
                     {truncatedDescription(lesson.lessonDescription)}
                   </div>
                 </div>
@@ -130,9 +143,7 @@ function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => {
-                    console.log(
-                      `Edit button clicked for lesson ${lesson.lessonId}`
-                    );
+                    openEditLessonModal(lesson.lessonId);
                   }}
                 >
                   <FaRegEdit className="text-xl" />
@@ -155,6 +166,15 @@ function Lessons({ teacherId, selectedUnitId, server_url, handleClickLesson }) {
         isOpen={isAddLessonModalOpen}
         closeModal={closeAddLessonModal}
         fetchLessons={fetchLessons}
+      />
+      <ModalEditLesson
+        isOpen={isEditLessonModalOpen}
+        closeModal={closeEditLessonModal}
+        server_url={server_url}
+        fetchLessons={fetchLessons}
+        selectedUnitId={selectedUnitId}
+        teacherId={teacherId}
+        lessonId={selectedLessonId}
       />
     </>
   );

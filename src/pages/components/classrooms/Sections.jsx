@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import ModalAddSection from "../modals/ModalAddSection";
+import ModalEditSection from "../modals/ModalEditSection"; // Import the new modal
 
 function Sections({ teacherId, server_url, handleClickSection }) {
   const [sections, setSections] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuerySections, setSearchQuerySections] = useState("");
   const [isAddSectionModalOpen, setIsAddSectionModalOpen] = useState(false);
+  const [isEditSectionModalOpen, setIsEditSectionModalOpen] = useState(false);
+  const [selectedSectionId, setSelectedSectionId] = useState(null);
 
   const openAddSectionModal = () => {
     setIsAddSectionModalOpen(true);
@@ -17,9 +20,18 @@ function Sections({ teacherId, server_url, handleClickSection }) {
     setIsAddSectionModalOpen(false);
   };
 
+  const openEditSectionModal = (sectionId) => {
+    setSelectedSectionId(sectionId);
+    setIsEditSectionModalOpen(true);
+  };
+
+  const closeEditSectionModal = () => {
+    setSelectedSectionId(null);
+    setIsEditSectionModalOpen(false);
+  };
+
   const fetchSections = async (teacherId) => {
     try {
-      console.log(teacherId);
       setIsLoading(true);
       const response = await axios.get(`${server_url}/sections/${teacherId}`);
       setSections(response.data);
@@ -82,7 +94,7 @@ function Sections({ teacherId, server_url, handleClickSection }) {
           </button>
         </div>
       </div>{" "}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -107,11 +119,7 @@ function Sections({ teacherId, server_url, handleClickSection }) {
               <div className="flex justify-center p-2 border-t-2">
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
-                  onClick={() => {
-                    console.log(
-                      `Edit button clicked for section ${section.sectionId}`
-                    );
-                  }}
+                  onClick={() => openEditSectionModal(section.sectionId)}
                 >
                   <FaRegEdit className="text-xl" />
                 </button>
@@ -132,6 +140,14 @@ function Sections({ teacherId, server_url, handleClickSection }) {
         isOpen={isAddSectionModalOpen}
         closeModal={closeAddSectionModal}
         fetchSections={fetchSections}
+      />
+      <ModalEditSection
+        teacherId={teacherId}
+        server_url={server_url}
+        isOpen={isEditSectionModalOpen}
+        closeModal={closeEditSectionModal}
+        fetchSections={fetchSections}
+        sectionId={selectedSectionId}
       />
     </>
   );
