@@ -1,7 +1,7 @@
 import React from "react";
 
-const Mathsaya = () => {
+function Mathsaya() {
   return <div>Mathsaya</div>;
-};
+}
 
 export default Mathsaya;

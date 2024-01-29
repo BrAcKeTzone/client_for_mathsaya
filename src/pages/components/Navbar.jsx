@@ -81,7 +81,6 @@ function Navbar({ userRole }) {
             <NavLink to="/teachers" onClick={toggleMobileMenu}>
               Teachers
             </NavLink>
-
             <NavLink to="/topics" onClick={toggleMobileMenu}>
               Topics
             </NavLink>

@@ -64,6 +64,11 @@ const SignIn = () => {
     },
   });
 
+  const switchToStudent = () => {
+    alert("Switching to Student Mode!");
+    Navigate("/login");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       {isLoading ? (
@@ -76,6 +81,15 @@ const SignIn = () => {
               Sign In
             </h2>
           </div>
+          <button
+            className="bg-red-500 text-white px-3 py-1 rounded absolute top-4 right-4 cursor-pointer"
+            onClick={() => {
+              switchToStudent();
+            }}
+          >
+            Switch to Student
+          </button>
+
           <form onSubmit={formik.handleSubmit}>
             {loginError && <div className="text-red-600">{loginError}</div>}
             <div className="mb-4">

@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CgBoy, CgGirl } from "react-icons/cg";
-
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 function StudProfile({ selectedStudentId, server_url }) {
   const [studentProfile, setStudentProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +48,35 @@ function StudProfile({ selectedStudentId, server_url }) {
     }
   };
 
+  const parseLoginDates = () => {
+    if (
+      studentProfile &&
+      studentProfile.studentProfile &&
+      studentProfile.studentProfile.loginDates
+    ) {
+      // Assuming loginDates is a comma-separated string of date strings
+      const dates = studentProfile.studentProfile.loginDates.split(",");
+      return dates.map((dateString) => ({
+        date: new Date(dateString),
+      }));
+    }
+    return [];
+  };
+
+  function CustomTooltip({ active, payload, label }) {
+    if (active) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`Date: ${new Date(
+            label
+          ).toLocaleDateString()}`}</p>
+        </div>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <>
       <div className="">
@@ -48,7 +85,7 @@ function StudProfile({ selectedStudentId, server_url }) {
             <h1 className="text-6xl text-white font-semibold mb-6">
               STUDENT PROFILE
             </h1>
-            <div className="bg-blue-200 rounded p-4 mb-6 hover:shadow-md hover:ring-4 ring-blue-400 transition duration-300">
+            <div className="bg-blue-200 rounded p-4 mb-2 hover:shadow-md hover:ring-4 ring-blue-400 transition duration-300">
               <div className="flex flex-row">
                 <div className="bg-slate-700 flex">
                   {studentProfile.student.gender === "Male" ? (
@@ -84,7 +121,25 @@ function StudProfile({ selectedStudentId, server_url }) {
                 </div>
               </div>
             </div>
-
+            <div className="bg-yellow-200 rounded p-4 mb-4 hover:shadow-md hover:ring-4 ring-yellow-400 transition duration-300">
+              <h2 className="text-2xl font-bold text-yellow-600">
+                Login Dates Chart
+              </h2>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={parseLoginDates()}>
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={(date) =>
+                      new Date(date).toLocaleDateString()
+                    }
+                  />
+                  <YAxis />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend />
+                  <Line type="monotone" dataKey="date" stroke="#8884d8" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="bg-green-200 rounded p-4 hover:shadow-md hover:ring-4 ring-green-400 transition duration-300">
                 <h2 className="text-2xl font-bold text-green-600">
