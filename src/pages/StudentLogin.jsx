@@ -48,7 +48,7 @@ const StudentLogin = () => {
           expirationDate.setDate(expirationDate.getDate() + 1);
           Cookies.set(
             "STUDENT_SESSION",
-            JSON.stringify({ id: response.data.profile.studentId }),
+            JSON.stringify({ id: response.data.profile.profileId }),
             {
               expires: expirationDate,
             }

@@ -134,7 +134,18 @@ const Signup = () => {
       );
       console.log("OTP verification successful:", response.data);
       alert("Account created successfully");
-      Navigate("/");
+      if (response.data.user.userId) {
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1);
+        Cookies.set(
+          "SESSION_ID",
+          JSON.stringify({ id: response.data.user.userId }),
+          {
+            expires: expirationDate,
+          }
+        );
+        Navigate("/dash");
+      }
     } catch (error) {
       console.error("Error verifying OTP:", error);
       alert("Account creation failed. Please try again");
