@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import Cookies from "js-cookie";
+import { FiMail } from "react-icons/fi";
 import logo from "../../assets/images/logo.png";
+import InboxMenuDesktop from "./InboxMenuDesktop";
+import InboxMenuMobile from "./InboxMenuMobile";
 
-function Navbar({ userRole }) {
+function Navbar({ userRole, server_url, usr }) {
   const Navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMessageMenuOpen, setMessageMenuOpen] = useState(false);
+  const [inboxFilter, setInboxFilter] = useState("unread");
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [inboxEntries, setInboxEntries] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState(null);
 
   const handleLogout = () => {
     const isConfirmed = window.confirm("Are you sure you want to sign-out?");
@@ -22,6 +31,63 @@ function Navbar({ userRole }) {
     setMobileMenuOpen((prev) => !prev);
   };
 
+  const toggleMessageMenu = () => {
+    setMessageMenuOpen((prev) => !prev);
+  };
+
+  const fetchInboxEntries = async () => {
+    try {
+      const response = await axios.get(
+        `${server_url}/user/inbox/${inboxFilter}/${usr}`
+      );
+      setUnreadCount(response.data.unreadCount);
+      if (inboxFilter === "unread") {
+        setInboxEntries(response.data.inboxUnreadEntries);
+      } else if (inboxFilter === "read") {
+        setInboxEntries(response.data.inboxReadEntries);
+      } else {
+        setInboxEntries(response.data.inboxAllEntries);
+      }
+    } catch (error) {
+      console.error(`Error fetching ${inboxFilter} inbox entries:`, error);
+    }
+  };
+
+  const handleInboxFilter = async (filter) => {
+    toggleMessageMenu();
+    setInboxFilter(filter);
+    await fetchInboxEntries();
+  };
+
+  useEffect(() => {
+    if (userRole !== "Teacher") {
+      fetchInboxEntries();
+    }
+  }, [inboxFilter, usr, server_url]);
+
+  const onEntryClick = (entry) => {
+    console.log("Clicked Entry Data:", entry);
+    setSelectedEntry(entry);
+  };
+
+  const onDeleteEntry = async (emailId) => {
+    try {
+      toggleMessageMenu();
+      const isConfirmed = window.confirm(
+        "Are you sure you want to delete this entry?"
+      );
+      if (!isConfirmed) {
+        return;
+      }
+      await axios.delete(`${server_url}/user/inbox/delete/${emailId}/${usr}`);
+      fetchInboxEntries();
+      if (selectedEntry && selectedEntry.emailId === emailId) {
+        setSelectedEntry(null);
+      }
+    } catch (error) {
+      console.error("Error deleting inbox entry:", error);
+    }
+  };
   return (
     <nav className="bg-blue-500 p-4 text-white sticky top-0 w-full z-10 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
@@ -31,8 +97,28 @@ function Navbar({ userRole }) {
             <h1>MathSaya</h1>
           </Link>
         </div>
-
         <div className="hidden md:flex items-center space-x-4">
+          <div className="relative">
+            {userRole !== "Teacher" && (
+              <div
+                onClick={toggleMessageMenu}
+                className={`hover:text-gray-300 rounded focus:outline-none relative ${
+                  isMessageMenuOpen ? "bg-black" : ""
+                }`}
+              >
+                <FiMail className="h-6 w-6" />
+                <InboxMenuDesktop
+                  isOpen={isMessageMenuOpen}
+                  filter={inboxFilter}
+                  onToggle={toggleMessageMenu}
+                  onFilterChange={handleInboxFilter}
+                  entries={inboxEntries}
+                  onEntryClick={onEntryClick}
+                  onDeleteEntry={onDeleteEntry}
+                />
+              </div>
+            )}
+          </div>
           <NavLink to="/dash">Dashboard</NavLink>
           {userRole !== "Teacher" && <NavLink to="/admins">Admins</NavLink>}
           {userRole !== "Teacher" && <NavLink to="/teachers">Teachers</NavLink>}
@@ -45,7 +131,6 @@ function Navbar({ userRole }) {
             Sign out
           </button>
         </div>
-
         <div className="md:hidden">
           {/* Mobile menu button */}
           <button
@@ -72,6 +157,25 @@ function Navbar({ userRole }) {
       {isMobileMenuOpen && (
         <div className="md:hidden mt-2">
           <div className="flex flex-col space-y-2">
+            <div className="relative">
+              {userRole !== "Teacher" && (
+                <div
+                  onClick={toggleMessageMenu}
+                  className="hover:text-gray-300 focus:outline-none relative"
+                >
+                  <FiMail className="h-6 w-6" />
+                  <InboxMenuMobile
+                    isOpen={isMessageMenuOpen}
+                    filter={inboxFilter}
+                    onToggle={toggleMessageMenu}
+                    onFilterChange={handleInboxFilter}
+                    entries={inboxEntries}
+                    nEntryClick={onEntryClick}
+                    onDeleteEntry={onDeleteEntry}
+                  />
+                </div>
+              )}
+            </div>
             <NavLink to="/dash" onClick={toggleMobileMenu}>
               Dashboard
             </NavLink>
@@ -81,6 +185,7 @@ function Navbar({ userRole }) {
             <NavLink to="/teachers" onClick={toggleMobileMenu}>
               Teachers
             </NavLink>
+
             <NavLink to="/topics" onClick={toggleMobileMenu}>
               Topics
             </NavLink>
@@ -103,7 +208,7 @@ function Navbar({ userRole }) {
   function NavLink({ to, children, onClick }) {
     const isActive = location.pathname === to;
     const className = isActive
-      ? "text-yellow-300 underline" // Change this style for active link
+      ? "text-yellow-300 underline"
       : "hover:text-gray-300";
 
     return (
