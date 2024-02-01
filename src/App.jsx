@@ -20,7 +20,7 @@ function App() {
   const server_url = import.meta.env.VITE_SERVER_LINK;
   let usr = Cookies.get("SESSION_ID");
 
-  const [userRole, setUserRole] = useState();
+  const [userRole, setUserRole] = useState("Teacher");
 
   const fetchUserRole = async () => {
     try {
@@ -50,7 +50,7 @@ function App() {
         <Route
           path="/dash"
           element={
-            <NavLayout userRole={userRole}>
+            <NavLayout userRole={userRole} server_url={server_url} usr={usr}>
               <Dashboard fetchUserRole={fetchUserRole} />
             </NavLayout>
           }
@@ -60,7 +60,11 @@ function App() {
             <Route
               path="/teachers"
               element={
-                <NavLayout userRole={userRole}>
+                <NavLayout
+                  userRole={userRole}
+                  server_url={server_url}
+                  usr={usr}
+                >
                   <TeacherList />
                 </NavLayout>
               }
@@ -68,7 +72,11 @@ function App() {
             <Route
               path="/admins"
               element={
-                <NavLayout userRole={userRole}>
+                <NavLayout
+                  userRole={userRole}
+                  server_url={server_url}
+                  usr={usr}
+                >
                   <AdminList />
                 </NavLayout>
               }
