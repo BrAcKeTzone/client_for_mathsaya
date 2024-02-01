@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import ModalAddExercise from "../modals/ModalAddExercise";
 import ModalEditExercise from "../modals/ModalEditExercise";
+import ModalAddLessonVideo from "../modals/ModalAddLessonVideo";
 
 function Exercises({
   teacherId,
@@ -16,6 +17,8 @@ function Exercises({
   const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
   const [isEditExerciseModalOpen, setIsEditExerciseModalOpen] = useState(false);
   const [selectedExerciseId, setSelectedExerciseId] = useState(null);
+  const [isAddLessonVideoModalOpen, setIsAddLessonVideoModalOpen] =
+    useState(false);
 
   const openAddExerciseModal = () => {
     setIsAddExerciseModalOpen(true);
@@ -33,6 +36,14 @@ function Exercises({
   const closeEditExerciseModal = () => {
     setSelectedExerciseId(null);
     setIsEditExerciseModalOpen(false);
+  };
+
+  const openAddLessonVideoModal = () => {
+    setIsAddLessonVideoModalOpen(true);
+  };
+
+  const closeAddLessonVideoModal = () => {
+    setIsAddLessonVideoModalOpen(false);
   };
 
   const fetchExercises = async (selectedLessonId) => {
@@ -114,6 +125,14 @@ function Exercises({
           </button>
         </div>
       </div>{" "}
+      <div className="w-full flex justify-center pt-2">
+        <button
+          className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          onClick={openAddLessonVideoModal}
+        >
+          Watch the lesson video
+        </button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
@@ -175,6 +194,13 @@ function Exercises({
         selectedLessonId={selectedLessonId}
         teacherId={teacherId}
         exerciseId={selectedExerciseId}
+      />
+      <ModalAddLessonVideo
+        isOpen={isAddLessonVideoModalOpen}
+        closeModal={closeAddLessonVideoModal}
+        server_url={server_url}
+        lessonId={selectedLessonId}
+        fetchLessons={fetchExercises}
       />
     </>
   );

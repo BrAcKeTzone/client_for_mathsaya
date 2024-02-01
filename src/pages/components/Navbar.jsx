@@ -66,6 +66,7 @@ function Navbar({ userRole, server_url, usr }) {
   }, [inboxFilter, usr, server_url]);
 
   const onEntryClick = (entry) => {
+    toggleMessageMenu();
     console.log("Clicked Entry Data:", entry);
     setSelectedEntry(entry);
   };
