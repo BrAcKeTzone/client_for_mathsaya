@@ -22,13 +22,13 @@ const TeacherList = () => {
   const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const openAddModal = () => {
-    setIsAddModalOpen(true);
-  };
+  // const openAddModal = () => {
+  //   setIsAddModalOpen(true);
+  // };
 
-  const closeAddModal = () => {
-    setIsAddModalOpen(false);
-  };
+  // const closeAddModal = () => {
+  //   setIsAddModalOpen(false);
+  // };
 
   const openEditModal = (userId) => {
     setEditTeacherId(userId);
@@ -124,12 +124,12 @@ const TeacherList = () => {
                   onChange={handleSearch}
                 />
               </div>
-              <button
+              {/* <button
                 className="bg-white hover:bg-gray-200 p-2 rounded"
                 onClick={openAddModal}
               >
                 <h2>ADD TEACHER</h2>
-              </button>
+              </button> */}
             </div>
           )}
         </div>

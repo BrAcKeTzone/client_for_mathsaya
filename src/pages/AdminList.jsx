@@ -15,10 +15,10 @@ const AdminList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [adminEntries, setAdminEntries] = useState([]);
   const [totalAdmins, setTotalAdmins] = useState(0);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editAdminId, setEditAdminId] = useState(null);
-  const [modalKey, setModalKey] = useState(0);
+  // const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -61,13 +61,13 @@ const AdminList = () => {
     }
   };
 
-  const openAddModal = () => {
-    setIsAddModalOpen(true);
-  };
+  // const openAddModal = () => {
+  //   setIsAddModalOpen(true);
+  // };
 
-  const closeAddModal = () => {
-    setIsAddModalOpen(false);
-  };
+  // const closeAddModal = () => {
+  //   setIsAddModalOpen(false);
+  // };
 
   const openEditModal = (userId) => {
     setEditAdminId(userId);
@@ -123,12 +123,12 @@ const AdminList = () => {
                   onChange={handleSearch}
                 />
               </div>
-              <button
+              {/* <button
                 className="bg-white hover:bg-gray-200 p-2 rounded"
                 onClick={openAddModal}
               >
                 <h2>ADD ADMIN</h2>
-              </button>
+              </button> */}
             </div>
           )}
         </div>
