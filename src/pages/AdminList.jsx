@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-// import ModalAddSuperAdmin from "./components/Modals/ModalAddSuperAdmin";
-// import ModalEditSuperAdmin from "./components/Modals/ModalEditSuperAdmin";
+import { GiArmorDowngrade } from "react-icons/gi";
+import ModalEditSuperAdmin from "./components/modals/ModalEditSuperAdmin";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -62,26 +62,39 @@ const AdminList = () => {
   };
 
   const openAddModal = () => {
-    console.log("Modal ADD open");
-    setModalKey((prevKey) => prevKey + 1);
     setIsAddModalOpen(true);
   };
 
-  const openEditModal = (adminId) => {
-    console.log("Modal EDIT open");
-    setEditAdminId(adminId);
-    setModalKey((prevKey) => prevKey + 1);
-    setIsEditModalOpen(true);
-  };
-
   const closeAddModal = () => {
-    console.log("Modal ADD close");
     setIsAddModalOpen(false);
   };
 
+  const openEditModal = (userId) => {
+    setEditAdminId(userId);
+    setIsEditModalOpen(true);
+  };
+
   const closeEditModal = () => {
-    console.log("Modal EDIT close");
+    setEditAdminId(null);
     setIsEditModalOpen(false);
+  };
+
+  const demoteAdmin = async (userId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to demote this admin?"
+    );
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      await axios.put(`${server_url}/user/admin/edit/${userId}`, {
+        roleType: "Teacher",
+      });
+      fetchAdminEntries();
+      console.log("Admin demoted to Teacher successfully.");
+    } catch (error) {
+      console.error("Error demoting admin:", error);
+    }
   };
 
   const handleSearch = (event) => {
@@ -129,6 +142,11 @@ const AdminList = () => {
                 <span className="text-gray-700 italic">Total Admin Count:</span>
                 <span className="font-bold ml-2">{totalAdmins}</span>
               </div>
+              <div className="bg-gray-300 p-1 mb-1 rounded">
+                <span className="text-gray-700 italic text-xs">
+                  Current user can't remove own account.
+                </span>
+              </div>
               <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                   <tr>
@@ -155,6 +173,14 @@ const AdminList = () => {
                         </td>
                         <td className="py-2 px-4 border-b">
                           <div className="flex justify-between">
+                            {admin.UserId !== usr.id && (
+                              <button
+                                className="bg-yellow-500 hover:bg-yellow-400 p-2 rounded"
+                                onClick={() => demoteAdmin(admin.UserId)}
+                              >
+                                <GiArmorDowngrade className="text-2xl" />
+                              </button>
+                            )}
                             <button
                               className="bg-blue-500 hover:bg-blue-400 p-2 rounded"
                               onClick={() => {
@@ -164,7 +190,7 @@ const AdminList = () => {
                             >
                               <FaRegEdit className="text-2xl" />
                             </button>
-                            {admin.UserId !== usr.id && ( // Render delete button only if admin.UserId is not equal to usr.id
+                            {admin.UserId !== usr.id && (
                               <button
                                 className="bg-red-500 hover:bg-red-400 p-2 rounded"
                                 onClick={() => handleDeleteAdmin(admin.UserId)}
@@ -182,18 +208,13 @@ const AdminList = () => {
           )}
         </div>
       </div>
-      {/* <ModalAddSuperAdmin
-        key={modalKey}
-        isOpen={isAddModalOpen}
-        closeModal={closeAddModal}
-        fetchAdminEntries={fetchAdminEntries}
-      />
       <ModalEditSuperAdmin
         isOpen={isEditModalOpen}
         closeModal={closeEditModal}
+        server_url={server_url}
         fetchAdminEntries={fetchAdminEntries}
         adminId={editAdminId}
-      /> */}
+      />
     </>
   );
 };

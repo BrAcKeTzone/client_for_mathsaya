@@ -253,8 +253,8 @@ export default class Settings extends Phaser.Scene {
 
     if (confirmed) {
       window.confirm("Sige, bye!");
-      Cookies.remove("studentProfile");
-      Cookies.remove("teacherId");
+      Cookies.remove("STUDENT_SESSION");
+      Cookies.remove("teach");
       window.location.href = "/";
     }
   }

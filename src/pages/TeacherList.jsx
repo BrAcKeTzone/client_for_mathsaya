@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-// import ModalAddSuperTeacher from "./components/Modals/ModalAddSuperTeacher";
-// import ModalEditSuperTeacher from "./components/Modals/ModalEditSuperTeacher";
+import { GiArmorUpgrade } from "react-icons/gi";
+
+import ModalEditSuperTeacher from "./components/modals/ModalEditSuperTeacher";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -17,9 +18,45 @@ const TeacherList = () => {
   const [totalTeachers, setTotalTeachers] = useState(0);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editAdminId, setEditAdminId] = useState(null);
+  const [editTeacherId, setEditTeacherId] = useState(null);
   const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const openAddModal = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const closeAddModal = () => {
+    setIsAddModalOpen(false);
+  };
+
+  const openEditModal = (userId) => {
+    setEditTeacherId(userId);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditTeacherId(null);
+    setIsEditModalOpen(false);
+  };
+
+  const promoteTeacher = async (userId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to promote this teacher to have Admin previledges?"
+    );
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      await axios.put(`${server_url}/user/bypass/teacher/edit/${userId}`, {
+        roleType: "Admin",
+      });
+      fetchTeacherEntries();
+      console.log("Teacher promoted to Admin successfully.");
+    } catch (error) {
+      console.error("Error promoting teacher:", error);
+    }
+  };
 
   useEffect(() => {
     if (!usr) {
@@ -59,29 +96,6 @@ const TeacherList = () => {
     } catch (error) {
       console.error("Error deleting teacher:", error);
     }
-  };
-
-  const openAddModal = () => {
-    console.log("Modal ADD open");
-    setModalKey((prevKey) => prevKey + 1);
-    setIsAddModalOpen(true);
-  };
-
-  const openEditModal = (userId) => {
-    console.log("Modal EDIT open");
-    setEditTeacherId(userId);
-    setModalKey((prevKey) => prevKey + 1);
-    setIsEditModalOpen(true);
-  };
-
-  const closeAddModal = () => {
-    console.log("Modal ADD close");
-    setIsAddModalOpen(false);
-  };
-
-  const closeEditModal = () => {
-    console.log("Modal EDIT close");
-    setIsEditModalOpen(false);
   };
 
   const handleSearch = (event) => {
@@ -160,6 +174,12 @@ const TeacherList = () => {
                         <td className="py-2 px-4 border-b">
                           <div className="flex justify-between">
                             <button
+                              className="bg-yellow-500 hover:bg-yellow-400 p-2 rounded"
+                              onClick={() => promoteTeacher(teacher.UserId)}
+                            >
+                              <GiArmorUpgrade className="text-2xl" />
+                            </button>
+                            <button
                               className="bg-blue-500 hover:bg-blue-400 p-2 rounded"
                               onClick={() => openEditModal(teacher.UserId)}
                             >
@@ -183,18 +203,13 @@ const TeacherList = () => {
           )}
         </div>
       </div>
-      {/* <ModalAddSuperTeacher
-        key={modalKey}
-        isOpen={isAddModalOpen}
-        closeModal={closeAddModal}
-        fetchTeacherEntries={fetchTeacherEntries}
-      />
       <ModalEditSuperTeacher
         isOpen={isEditModalOpen}
         closeModal={closeEditModal}
+        server_url={server_url}
         fetchTeacherEntries={fetchTeacherEntries}
-        adminId={editTeacherId}
-      /> */}
+        teacherId={editTeacherId}
+      />
     </>
   );
 };
