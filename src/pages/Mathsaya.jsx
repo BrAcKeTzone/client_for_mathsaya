@@ -3,6 +3,7 @@ import Confetti from "react-confetti";
 import Phaser from "phaser";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import ModalViewLessonVideo from "./components/modals/ModalViewLessonVideo";
 
 import GameIntro from "../pages/scenes/GameIntro";
 import TestScreen from "../pages/scenes/TestScreen";
@@ -17,6 +18,7 @@ import Profile from "../pages/scenes/Profile";
 import VideoScene from "../pages/scenes/VideoScene";
 
 const Mathsaya = () => {
+  const server_url = import.meta.env.VITE_SERVER_LINK;
   let usr = Cookies.get("STUDENT_SESSION");
 
   const Navigate = useNavigate();
@@ -26,6 +28,9 @@ const Mathsaya = () => {
   const [isPortrait, setIsPortrait] = useState(
     window.innerHeight > window.innerWidth
   );
+  const [isViewLessonVideoModalOpen, setIsViewLessonVideoModalOpen] =
+    useState(false);
+  const [isExercisesChoicesScene, setIsExercisesChoicesScene] = useState(false);
 
   let gameInstance;
 
@@ -101,9 +106,13 @@ const Mathsaya = () => {
     };
   }, [isPhaserGameActive]);
 
+  const handleViewLessonVideoButtonClick = () => {
+    setIsViewLessonVideoModalOpen(true);
+  };
+
   return (
     <>
-      {showConfetti && <Confetti />}
+      {/* {showConfetti && <Confetti />} */}
 
       {isMobile && isPortrait ? (
         <div className="text-center p-5">
@@ -115,6 +124,18 @@ const Mathsaya = () => {
       <div id="mathsaya_game" className="w-full h-screen">
         {/* Your Phaser game container */}
       </div>
+      <button
+        className="bg-green-500 text-white p-2 rounded mx-1 fixed top-1/2 transform -translate-y-1/2"
+        onClick={handleViewLessonVideoButtonClick}
+      >
+        LANTAWA ANG LEKSYON
+      </button>
+      <ModalViewLessonVideo
+        isOpen={isViewLessonVideoModalOpen}
+        closeModal={() => setIsViewLessonVideoModalOpen(false)}
+        server_url={server_url}
+        lessonId={sessionStorage.getItem("selectedLessonId")}
+      />
     </>
   );
 };

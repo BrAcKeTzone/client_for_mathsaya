@@ -20,7 +20,7 @@ let currentPage = 1;
 const itemsPerPage = 3;
 let startIndex = 0;
 let endIndex = itemsPerPage;
-let exercises = []; // Store fetched exercises
+let exercises = [];
 let completedExercises = [];
 
 // Function to fetch Exercises data
