@@ -143,8 +143,8 @@ const AdminList = () => {
                 <span className="font-bold ml-2">{totalAdmins}</span>
               </div>
               <div className="bg-gray-300 p-1 mb-1 rounded">
-                <span className="text-gray-700 italic text-xs">
-                  Current user can't remove own account.
+                <span className="text-gray-700 italic text-xs p-2">
+                  Current user can only edit his account.
                 </span>
               </div>
               <table className="min-w-full bg-white border border-gray-300">

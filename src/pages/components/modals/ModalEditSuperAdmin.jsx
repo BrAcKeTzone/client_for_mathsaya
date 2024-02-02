@@ -102,7 +102,7 @@ const ModalEditSuperAdmin = ({
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Edit Student</h2>
+        <h2 className="text-xl font-semibold">Edit Admin</h2>
         <button
           className="text-gray-500 hover:text-red-500"
           disabled={isSubmitting}
