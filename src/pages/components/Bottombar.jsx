@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { FaBug } from "react-icons/fa";
-import axios from "axios";
 import ModalSendMessage from "./modals/ModalSendMessage";
 import ModalUserInfo from "./modals/ModalUserInfo";
 
 function Bottombar({ server_url, usr }) {
   const [isSendMessageModalOpen, setSendMessageModalOpen] = useState(false);
   const [isUserInfoModalOpen, setIsUserInfoModalOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
 
   const openSendMessageModal = () => {
     setSendMessageModalOpen(true);
@@ -30,18 +28,18 @@ function Bottombar({ server_url, usr }) {
     <>
       <div className="fixed bottom-0 left-0 right-0 p-2 bg-transparent z-20 flex justify-between items-center">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex flex-col items-center"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex flex-col items-center w-20 sm:w-28"
           onClick={openUserInfoModal}
         >
-          <FiUser className="mr-2" />
-          Profile
+          <FiUser className="mr-2 text-3xl" />
+          <span className="hidden md:inline">Profile</span>
         </button>
         <button
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex flex-col items-center"
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex flex-col items-center w-20 sm:w-28"
           onClick={openSendMessageModal}
         >
-          <FaBug className="mr-2" />
-          Report Bug
+          <FaBug className="mr-2 text-3xl" />
+          <span className="hidden md:inline">Report Bug</span>
         </button>
       </div>
       <ModalSendMessage

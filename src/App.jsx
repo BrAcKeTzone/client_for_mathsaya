@@ -86,7 +86,7 @@ function App() {
         <Route
           path="/topics"
           element={
-            <NavLayout userRole={userRole}>
+            <NavLayout userRole={userRole} server_url={server_url} usr={usr}>
               <Topics />
             </NavLayout>
           }
@@ -94,7 +94,7 @@ function App() {
         <Route
           path="/classes"
           element={
-            <NavLayout userRole={userRole}>
+            <NavLayout userRole={userRole} server_url={server_url} usr={usr}>
               <Classrooms />
             </NavLayout>
           }
