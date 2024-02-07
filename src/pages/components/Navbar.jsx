@@ -107,7 +107,14 @@ function Navbar({ userRole, server_url, usr }) {
                   isMessageMenuOpen ? "bg-black" : ""
                 }`}
               >
-                <FiMail className="h-6 w-6" />
+                <div className="relative">
+                  <FiMail className="h-6 w-6" />
+                  {unreadCount > 0 && (
+                    <div className="absolute -top-1 -right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center text-white text-xs">
+                      {unreadCount}
+                    </div>
+                  )}
+                </div>{" "}
                 <InboxMenuDesktop
                   isOpen={isMessageMenuOpen}
                   filter={inboxFilter}

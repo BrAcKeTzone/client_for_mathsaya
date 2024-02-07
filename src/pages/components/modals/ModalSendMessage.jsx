@@ -32,7 +32,7 @@ const ModalSendMessage = ({ isOpen, closeModal, server_url, userId }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Report Sent")
+        alert("Report Sent");
         closeModal();
       } catch (error) {
         console.error("Error during sending email to admin:", error);
@@ -88,7 +88,7 @@ const ModalSendMessage = ({ isOpen, closeModal, server_url, userId }) => {
               htmlFor="content"
               className="block text-sm font-medium text-gray-600"
             >
-              Content:
+              Content: (Explain the bug encountered)
             </label>
             <textarea
               id="content"
@@ -110,7 +110,7 @@ const ModalSendMessage = ({ isOpen, closeModal, server_url, userId }) => {
               htmlFor="attachment"
               className="block text-sm font-medium text-gray-600"
             >
-              Attachment:
+              Attachment: (Screenshot of the bug encountered)
             </label>
             <input
               type="file"
