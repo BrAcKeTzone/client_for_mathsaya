@@ -6,6 +6,7 @@ import { FiMail } from "react-icons/fi";
 import logo from "../../assets/images/logo.png";
 import InboxMenuDesktop from "./InboxMenuDesktop";
 import InboxMenuMobile from "./InboxMenuMobile";
+import ModalOpenEntry from "./modals/ModalOpenEntry";
 
 function Navbar({ userRole, server_url, usr }) {
   const Navigate = useNavigate();
@@ -15,7 +16,8 @@ function Navbar({ userRole, server_url, usr }) {
   const [inboxFilter, setInboxFilter] = useState("unread");
   const [unreadCount, setUnreadCount] = useState(0);
   const [inboxEntries, setInboxEntries] = useState([]);
-  const [selectedEntry, setSelectedEntry] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEntryId, setSelectedEntryId] = useState(null);
 
   const handleLogout = () => {
     const isConfirmed = window.confirm("Are you sure you want to sign-out?");
@@ -33,6 +35,7 @@ function Navbar({ userRole, server_url, usr }) {
 
   const toggleMessageMenu = () => {
     setMessageMenuOpen((prev) => !prev);
+    fetchInboxEntries();
   };
 
   const fetchInboxEntries = async () => {
@@ -65,10 +68,9 @@ function Navbar({ userRole, server_url, usr }) {
     }
   }, [inboxFilter, usr, server_url]);
 
-  const onEntryClick = (entry) => {
-    toggleMessageMenu();
-    console.log("Clicked Entry Data:", entry);
-    setSelectedEntry(entry);
+  const onEntryClick = (entryId) => {
+    setSelectedEntryId(entryId);
+    setIsModalOpen(true);
   };
 
   const onDeleteEntry = async (emailId) => {
@@ -114,11 +116,10 @@ function Navbar({ userRole, server_url, usr }) {
                       {unreadCount}
                     </div>
                   )}
-                </div>{" "}
+                </div>
                 <InboxMenuDesktop
                   isOpen={isMessageMenuOpen}
                   filter={inboxFilter}
-                  onToggle={toggleMessageMenu}
                   onFilterChange={handleInboxFilter}
                   entries={inboxEntries}
                   onEntryClick={onEntryClick}
@@ -171,14 +172,20 @@ function Navbar({ userRole, server_url, usr }) {
                   onClick={toggleMessageMenu}
                   className="hover:text-gray-300 focus:outline-none relative"
                 >
-                  <FiMail className="h-6 w-6" />
+                  <div className="relative">
+                    <FiMail className="h-6 w-6" />
+                    {unreadCount > 0 && (
+                      <div className="absolute -top-1 -right-1 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center text-white text-xs">
+                        {unreadCount}
+                      </div>
+                    )}
+                  </div>{" "}
                   <InboxMenuMobile
                     isOpen={isMessageMenuOpen}
                     filter={inboxFilter}
-                    onToggle={toggleMessageMenu}
                     onFilterChange={handleInboxFilter}
                     entries={inboxEntries}
-                    nEntryClick={onEntryClick}
+                    onEntryClick={onEntryClick}
                     onDeleteEntry={onDeleteEntry}
                   />
                 </div>
@@ -208,6 +215,15 @@ function Navbar({ userRole, server_url, usr }) {
             </button>
           </div>
         </div>
+      )}
+      {isModalOpen && (
+        <ModalOpenEntry
+          isOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          server_url={server_url}
+          userId={usr}
+          emailId={selectedEntryId}
+        />
       )}
     </nav>
   );

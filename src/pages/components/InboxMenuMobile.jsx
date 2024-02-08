@@ -4,9 +4,10 @@ import React from "react";
 function InboxMenuMobile({
   isOpen,
   filter,
-  onToggle,
   onFilterChange,
   entries,
+  onEntryClick,
+  onDeleteEntry,
 }) {
   return (
     isOpen && (
@@ -37,33 +38,33 @@ function InboxMenuMobile({
             All
           </button>
         </div>
-        <div className="mt-2">
+        <div className="mt-2 max-w-16">
           {entries.length > 0 ? (
-            <table className="w-full border border-gray-300">
+            <table className="max-w-full overflow-x-auto border border-gray-300">
               <thead>
                 <tr className="bg-gray-200">
                   <th className="py-2 px-4 border-b">Sender</th>
                   <th className="py-2 px-4 border-b">Subject</th>
-                  <th className="py-2 px-4 border-b">Actions</th>
+                  {/* <th className="py-2 px-4 border-b">Actions</th> */}
                 </tr>
               </thead>
               <tbody>
                 {entries.map((entry) => (
                   <tr
                     key={entry.emailId}
-                    className="hover:bg-gray-50"
+                    className="hover:bg-gray-50 text-sm"
                     onClick={() => onEntryClick(entry.emailId)}
                   >
                     <td className="py-2 px-4 border-b">{entry.teacherEmail}</td>
                     <td className="py-2 px-4 border-b">{entry.subject}</td>
-                    <td className="py-2 px-4 border-b">
+                    {/* <td className="py-2 px-4 border-b">
                       <button
                         onClick={() => onDeleteEntry(entry.emailId)}
                         className="text-red-500 hover:text-red-700 focus:outline-none"
                       >
-                        Delete
+                        Fixed
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

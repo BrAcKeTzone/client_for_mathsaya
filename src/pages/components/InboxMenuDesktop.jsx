@@ -4,7 +4,6 @@ import React from "react";
 function InboxMenuDesktop({
   isOpen,
   filter,
-  onToggle,
   onFilterChange,
   entries,
   onEntryClick,
@@ -63,7 +62,7 @@ function InboxMenuDesktop({
                         onClick={() => onDeleteEntry(entry.emailId)}
                         className="text-red-500 hover:text-red-700 focus:outline-none"
                       >
-                        Delete
+                        Fixed
                       </button>
                     </td>
                   </tr>
