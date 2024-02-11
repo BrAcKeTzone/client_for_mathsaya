@@ -6,7 +6,7 @@ import wrongGesture from "../../assets/images/wrong.gif";
 import happyGesture from "../../assets/images/smile.gif";
 import ModalShowExplanation from "../components/modals/ModalShowExplanation";
 
-const GameOver = ({ questions, onBack, server_url }) => {
+const GameOver = ({ questions, selectedAnswers, onBack, server_url }) => {
   const [starsCount, setStarsCount] = useState(0);
   const [randomNumbers, setRandomNumbers] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -113,6 +113,7 @@ const GameOver = ({ questions, onBack, server_url }) => {
       </div>
       <ModalShowExplanation
         questions={questions}
+        selectedAnswers={selectedAnswers}
         isOpen={showExplanationModal}
         onClose={() => {
           setShowExplanationModal(false);

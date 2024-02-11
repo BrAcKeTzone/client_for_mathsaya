@@ -8,7 +8,14 @@ import voiceOffLogo from "../../assets/images/audiooff.png";
 import sky from "../../assets/images/sky.gif";
 import Cookies from "js-cookie";
 
-const Settings = ({ clicking, onBack }) => {
+const Settings = ({
+  clicking,
+  onBack,
+  audioState,
+  soundState,
+  setAudioState,
+  setSoundState,
+}) => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -18,23 +25,16 @@ const Settings = ({ clicking, onBack }) => {
     };
   }, []);
 
-  const [audioState, setAudioState] = useState(
-    sessionStorage.getItem("voice") === "true" ? true : false
-  );
-  const [soundState, setSoundState] = useState(
-    sessionStorage.getItem("music") === "true" ? true : false
-  );
-
   const handleVoiceToggle = () => {
     const newState = !audioState;
     setAudioState(newState);
-    sessionStorage.setItem("voice", newState);
+    localStorage.setItem("voice", newState);
   };
 
   const handleSoundToggle = () => {
     const newState = !soundState;
     setSoundState(newState);
-    sessionStorage.setItem("music", newState);
+    localStorage.setItem("music", newState);
   };
 
   const handleSignout = () => {

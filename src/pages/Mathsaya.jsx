@@ -70,7 +70,6 @@ const MathSaya = () => {
       yunitThumbnail: sampleImage,
     },
   ]);
-
   const [lessonChoices, setLessonChoices] = useState([
     {
       lessonId: 1,
@@ -118,7 +117,6 @@ const MathSaya = () => {
         "https://res.cloudinary.com/dnfunfiga/video/upload/v1706809934/mathsaya_uploads/lessons/p4ocybfbtkrtui6cwxme.mp4",
     },
   ]);
-
   const [exerciseChoices, setExerciceChoices] = useState([
     {
       exerciseId: 1,
@@ -156,7 +154,6 @@ const MathSaya = () => {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget libero vel justo varius ultrices. Cras nec justo ac nulla convallis sodales. Fusce auctor, ligula sed efficitur vehicula, ipsum est viverra eros, sit amet sollicitudin libero mi ac odio. Mauris convallis velit ut augue ultricies, sed dictum justo volutpat. Integer nec nisi a sem aliquam luctus sed sit amet ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut quis risus euismod, sollicitudin ligula nec, fermentum mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque varius tellus vel felis dapibus, vel lobortis sem vulputate. Fusce quis sodales dolor. Maecenas hendrerit enim a ipsum convallis, non fermentum ipsum laoreet. Sed feugiat magna nec augue dictum, eget eleifend libero scelerisque.",
     },
   ]);
-
   const [questions, setQuestions] = useState([
     {
       questionId: 1,
@@ -205,6 +202,7 @@ const MathSaya = () => {
     },
     // Add more questions here
   ]);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
 
   const bg_music = new Audio(playgameBG);
   const testscreen_loop = new Audio(testscreenLoop);
@@ -212,18 +210,18 @@ const MathSaya = () => {
   const click_sound = new Audio(clicksound);
   const calm_BG = new Audio(calmBG);
 
-  const initializeSessionStorage = () => {
-    if (sessionStorage.getItem("music") === null) {
-      sessionStorage.setItem("music", true);
+  const initializeLocalStorage = () => {
+    if (localStorage.getItem("music") === null) {
+      localStorage.setItem("music", true);
     }
-    if (sessionStorage.getItem("voice") === null) {
-      sessionStorage.setItem("voice", true);
+    if (localStorage.getItem("voice") === null) {
+      localStorage.setItem("voice", true);
     }
   };
 
   const handleIntroComplete = () => {
     click_sound.play();
-    initializeSessionStorage();
+    initializeLocalStorage();
 
     setShowGameIntro(false);
     setShowTestScreen(true);
@@ -234,17 +232,6 @@ const MathSaya = () => {
 
     setShowTestScreen(false);
     setShowPlayGame(true);
-
-    bg_music.pause();
-    if (sessionStorage.getItem("voice") === "true") {
-      wlcm.play();
-      if (sessionStorage.getItem("music") === "true") {
-        wlcm.onended = () => {
-          bg_music.play();
-          wlcm.onended = null;
-        };
-      }
-    }
   };
 
   const handlePlayClick = () => {
@@ -285,8 +272,6 @@ const MathSaya = () => {
   const handleProfileClick = () => {
     click_sound.play();
 
-    bg_music.pause();
-
     setShowPlayGame(false);
     setShowProfile(true);
   };
@@ -304,8 +289,6 @@ const MathSaya = () => {
     setShowProfile(false);
     setShowSettings(false);
     setShowPlayGame(true);
-
-    calm_BG.pause();
   };
 
   const handleBackToMainMenu = () => {
@@ -332,9 +315,17 @@ const MathSaya = () => {
   const handleBackFromGameOver = () => {
     click_sound.play();
 
+    sessionStorage.removeItem("score");
     setShowGameOver(false);
     setShowExerciseChoices(true);
   };
+
+  const [audioState, setAudioState] = useState(
+    localStorage.getItem("voice") === "true" ? true : false
+  );
+  const [soundState, setSoundState] = useState(
+    localStorage.getItem("music") === "true" ? true : false
+  );
 
   return (
     <div className="h-screen flex justify-center items-center overflow-hidden">
@@ -390,6 +381,7 @@ const MathSaya = () => {
       {showQuestionsAnswering && (
         <QuestionsAnswering
           questions={questions}
+          setSelectedAnswers={setSelectedAnswers}
           clicking={click_sound}
           onGameOver={handleGameOverClick}
           server_url={server_url}
@@ -398,6 +390,7 @@ const MathSaya = () => {
       {showGameOver && (
         <GameOver
           questions={questions}
+          selectedAnswers={selectedAnswers}
           clicking={click_sound}
           onBack={handleBackFromGameOver}
           server_url={server_url}
@@ -411,7 +404,14 @@ const MathSaya = () => {
         />
       )}
       {showSettings && (
-        <Settings clicking={click_sound} onBack={handleBackToPlayGame} />
+        <Settings
+          clicking={click_sound}
+          onBack={handleBackToPlayGame}
+          audioState={audioState}
+          soundState={soundState}
+          setAudioState={setAudioState}
+          setSoundState={setSoundState}
+        />
       )}
     </div>
   );

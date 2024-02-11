@@ -2,7 +2,12 @@ import React from "react";
 import Modal from "react-modal";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
-const ModalShowExplanation = ({ questions, isOpen, onClose }) => {
+const ModalShowExplanation = ({
+  questions,
+  selectedAnswers,
+  isOpen,
+  onClose,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -10,7 +15,20 @@ const ModalShowExplanation = ({ questions, isOpen, onClose }) => {
       className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg overflow-y-auto w-full max-w-screen-sm mx-auto md:max-w-none md:w-auto"
     >
       <div className="modal-content px-6 pt-6 bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300">
-        <h1 className="text-xl font-bold mb-4">Answer Explanations</h1>
+        <h1 className="flex flex-col items-center  font-bold mb-4">
+          <span className="text-2xl">Pagsusi sa mga Pangutana:</span>
+          <span className="text-sm">
+            Tubag sa Estudyante kontra sa Tugma nga Tubag
+          </span>
+        </h1>
+        <div className="flex items-center space-x-4">
+          <div className="w-4 h-4 bg-green-200 rounded-full"></div>
+          <p className="text-green-500 font-semibold">Sakto nga tubag</p>
+        </div>
+        <div className="flex items-center space-x-4">
+          <div className="w-4 h-4 bg-red-200 rounded-full"></div>
+          <p className="text-red-500 font-semibold">Mali nga tubag</p>
+        </div>
         <div className="overflow-y-auto max-h-96">
           {questions.map((question, index) => (
             <div key={index} className="mb-4">
@@ -29,9 +47,13 @@ const ModalShowExplanation = ({ questions, isOpen, onClose }) => {
                   <div
                     key={i}
                     className={`p-2 ${
-                      choice === question.correct_answer
-                        ? "bg-green-200"
-                        : "bg-gray-200"
+                      selectedAnswers[question.questionId] === choice
+                        ? choice === question.correct_answer
+                          ? "bg-blue-200" // Selected answer matches the correct answer
+                          : "bg-red-200" // Selected answer doesn't match the correct answer
+                        : choice === question.correct_answer
+                        ? "bg-green-200" // Correct answer
+                        : "bg-gray-200" // Other choices
                     }`}
                   >
                     {choice}

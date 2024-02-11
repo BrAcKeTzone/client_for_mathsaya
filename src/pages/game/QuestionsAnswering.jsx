@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import loopBG from "../../assets/images/loopingBG.gif";
 import dancing from "../../assets/images/dancing.gif";
 
-const QuestionsAnswering = ({ questions, onGameOver }) => {
+const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [countdown, setCountdown] = useState(60);
   const [showTransitionCountdown, setShowTransitionCountdown] = useState(false);
@@ -51,7 +51,11 @@ const QuestionsAnswering = ({ questions, onGameOver }) => {
     setTransitionCountdown(3);
   };
 
-  const handleAnswer = (selectedAnswer) => {
+  const handleAnswer = (questionId, selectedAnswer) => {
+    setSelectedAnswers((prevState) => ({
+      ...prevState,
+      [questionId]: selectedAnswer,
+    }));
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
 
     if (selectedAnswer === correctAnswer) {
@@ -122,7 +126,7 @@ const QuestionsAnswering = ({ questions, onGameOver }) => {
             <button
               key={index}
               className="px-4 py-2 bg-blue-500 text-white rounded border border-blue-500 hover:border-yellow-500 active:bg-yellow-500 "
-              onClick={() => handleAnswer(choice)}
+              onClick={() => handleAnswer(currentQuestion.questionId, choice)}
             >
               {choice}
             </button>
