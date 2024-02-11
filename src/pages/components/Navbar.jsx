@@ -84,8 +84,8 @@ function Navbar({ userRole, server_url, usr }) {
       }
       await axios.delete(`${server_url}/user/inbox/delete/${emailId}/${usr}`);
       fetchInboxEntries();
-      if (selectedEntry && selectedEntry.emailId === emailId) {
-        setSelectedEntry(null);
+      if (selectedEntryId && selectedEntryId.emailId === emailId) {
+        setSelectedEntryId(null);
       }
     } catch (error) {
       console.error("Error deleting inbox entry:", error);

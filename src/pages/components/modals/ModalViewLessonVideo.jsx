@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 Modal.setAppElement("#root");
 
-const ModalViewLessonVideo = ({
-  isOpen,
-  closeModal,
-  server_url,
-  lessonId,
-  fetchLessons,
-}) => {
+const ModalViewLessonVideo = ({ isOpen, closeModal, server_url, lessonId }) => {
   const [lessonVideo, setLessonVideo] = useState(null);
 
   useEffect(() => {
@@ -35,26 +30,28 @@ const ModalViewLessonVideo = ({
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="View Lesson Video Modal"
-      className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
+      className="Modal fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-4 bg-gradient-to-r from-blue-100 to-blue-200 rounded-md shadow-md"
     >
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">View Lesson Video</h2>
+      <div className="flex flex-col justify-center items-center">
+        <h2 className="text-xl font-semibold mb-4">View Lesson Video</h2>
+        <div>
+          {lessonVideo ? (
+            <video controls width="100%">
+              <source src={`${lessonVideo}`} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <p>No lesson video available.</p>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-center mt-4">
         <button
-          className="text-gray-500 hover:text-red-500"
+          className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 "
           onClick={closeModal}
         >
-          Close
+          <IoMdCloseCircleOutline className="text-4xl" />
         </button>
-      </div>
-      <div>
-        {lessonVideo ? (
-          <video controls width="100%">
-            <source src={`${lessonVideo}`} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <p>No lesson video available.</p>
-        )}
       </div>
     </Modal>
   );

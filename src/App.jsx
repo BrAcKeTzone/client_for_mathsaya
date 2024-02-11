@@ -13,8 +13,8 @@ import AdminList from "./pages/AdminList";
 import Topics from "./pages/Topics";
 import Classrooms from "./pages/Classrooms";
 import StudentLogin from "./pages/StudentLogin";
-import Mathsaya from "./pages/Mathsaya";
 import NotFound from "./pages/NotFound";
+import MathSaya from "./pages/Mathsaya";
 
 function App() {
   const server_url = import.meta.env.VITE_SERVER_LINK;
@@ -101,7 +101,7 @@ function App() {
           }
         />
         <Route path="/login" element={<StudentLogin />} />
-        <Route path="/game" element={<Mathsaya />} />
+        <Route path="/game" element={<MathSaya />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
