@@ -6,7 +6,6 @@ import musicOffLogo from "../../assets/images/soundoff.png";
 import voiceOnLogo from "../../assets/images/audioon.png";
 import voiceOffLogo from "../../assets/images/audiooff.png";
 import sky from "../../assets/images/sky.gif";
-import Cookies from "js-cookie";
 
 const Settings = ({
   clicking,
@@ -15,6 +14,7 @@ const Settings = ({
   soundState,
   setAudioState,
   setSoundState,
+  handleSignout,
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -26,24 +26,17 @@ const Settings = ({
   }, []);
 
   const handleVoiceToggle = () => {
+    clicking.play();
     const newState = !audioState;
     setAudioState(newState);
     localStorage.setItem("voice", newState);
   };
 
   const handleSoundToggle = () => {
+    clicking.play();
     const newState = !soundState;
     setSoundState(newState);
     localStorage.setItem("music", newState);
-  };
-
-  const handleSignout = () => {
-    const confirmSignout = window.confirm("Are you sure you want to sign out?");
-    if (confirmSignout) {
-      Cookies.remove("teach");
-      Cookies.remove("STUDENT_SESSION");
-      window.location.href = "/";
-    }
   };
 
   return (

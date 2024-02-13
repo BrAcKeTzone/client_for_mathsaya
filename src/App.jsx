@@ -39,7 +39,6 @@ function App() {
   }, [usr]);
 
   const isTeacher = userRole === "Teacher";
-  console.log(server_url);
 
   return (
     <Router>

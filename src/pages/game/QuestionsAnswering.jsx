@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import loopBG from "../../assets/images/loopingBG.gif";
 import dancing from "../../assets/images/dancing.gif";
 
-const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
+const QuestionsAnswering = ({
+  questions,
+  setSelectedAnswers,
+  onGameOver,
+  fetchQuestions,
+  selectedexercise,
+}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [countdown, setCountdown] = useState(60);
   const [showTransitionCountdown, setShowTransitionCountdown] = useState(false);
@@ -18,6 +24,14 @@ const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
   }, []);
 
   useEffect(() => {
+    fetchQuestions();
+  }, [selectedexercise]);
+
+  useEffect(() => {
+    sessionStorage.setItem("score", score);
+  }, [score]);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       if (countdown > 0 && !showTransitionCountdown) {
         setCountdown(countdown - 1);
@@ -28,7 +42,6 @@ const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
       } else if (showTransitionCountdown && transitionCountdown === 0) {
         if (currentQuestionIndex < questions.length - 1) {
           console.log("Total Score: " + score);
-          sessionStorage.setItem("score", score);
           handleNextQuestion();
         } else {
           onGameOver();
@@ -84,6 +97,10 @@ const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  if (!currentQuestion) {
+    return null; // Render nothing if currentQuestion is undefined
+  }
+
   let countdownColor = "";
   if (countdown <= 10) {
     countdownColor = "text-red-500";
@@ -98,21 +115,22 @@ const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
       }`}
       style={{ backgroundImage: `url(${loopBG})` }}
     >
-      <div className="absolute inset-0 bg-gray-100 bg-opacity-30 z-0"></div>
-      <h1 className=" flex flex-col text-center p-5  fixed top-16 max-w-[500px] bg-white bg-opacity-50 rounded z-10">
+      <div className="absolute inset-0 bg-gray-500 bg-opacity-30 z-0"></div>
+      {/* <h1 className=" flex flex-col text-center p-5  fixed top-16 max-w-[500px] bg-white bg-opacity-50 rounded z-10">
         Kung makatubag kag sakto sa dli pa muubos ug 40 segundos aduna kay tulo
         ka bituon, kung dli pa muubos sa 20 segundos aduna kay duha ka bituon,
         kung dli pa muubos sa 1 segundo aduna kay isa ka bituon.
-      </h1>
+      </h1> */}
       <div className="absolute bottom-1 md:top-5 md:right-5 right-0 left-0 md:left-auto text-white bg-slate-500 bg-opacity-20 md:bottom-auto">
         <span className={`text-4xl ${countdownColor}`}>
           {`Nahabiling Oras: ${countdown}`}
         </span>
       </div>
-
-      <div className="max-w-lg z-10 bg-white bg-opacity-50 p-10 rounded">
+      <div className="max-w-lg z-10 min-w-64 md:min-w-72">
         <div className="flex flex-col items-center justify-center mb-8">
-          <p className="text-center mb-2">{currentQuestion.question_text}</p>
+          <p className="text-center mb-2 hover:bg-white hover:bg-opacity-20 p-5 rounded">
+            {currentQuestion.question_text}
+          </p>
           {currentQuestion.questionImage && (
             <img
               src={currentQuestion.questionImage}
@@ -121,11 +139,11 @@ const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
             />
           )}
         </div>
-        <div className="grid grid-cols-2 gap-4 z-10">
-          {currentQuestion.answer_choices.map((choice, index) => (
+        <div className="grid grid-cols-2 gap-4 z-10 hover:bg-white hover:bg-opacity-20 p-5 rounded">
+          {currentQuestion.answer_choices.split(",").map((choice, index) => (
             <button
               key={index}
-              className="px-4 py-2 bg-blue-500 text-white rounded border border-blue-500 hover:border-yellow-500 active:bg-yellow-500 "
+              className="px-4 py-2 bg-blue-500 text-white rounded border hover:bg-yellow-200 hover:text-black active:bg-yellow-500 "
               onClick={() => handleAnswer(currentQuestion.questionId, choice)}
             >
               {choice}
@@ -135,13 +153,13 @@ const QuestionsAnswering = ({ questions, setSelectedAnswers, onGameOver }) => {
       </div>
       {showTransitionCountdown && (
         <>
-          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-20 text-center z-20">
-            <div className="text-9xl font-bold bg-white px-14 py-7 bg-opacity-20 rounded-full">
+          <div className="absolute inset-0 flex items-center justify-center bg-white hover:bg-opacity-30 text-center z-20">
+            <div className="text-9xl font-bold text-yellow-400 px-14 py-7 bg-opacity-20 rounded-full z-30">
               {`${transitionCountdown}`}
             </div>
-          </div>
-          <div className="absolute bottom-0 w-full flex justify-center">
-            <img src={dancing} alt="Dancing" className="w-60 h-w-60" />
+            <div className="absolute bottom-0 w-full flex justify-center">
+              <img src={dancing} alt="Dancing" className="h-80 w-h-80" />
+            </div>
           </div>
         </>
       )}

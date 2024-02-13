@@ -1,6 +1,9 @@
 // MathSaya.jsx
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 import GameIntro from "./game/GameIntro";
 import TestScreen from "./game/TestScreen";
 import PlayGame from "./game/PlayGame";
@@ -19,8 +22,6 @@ import clicksound from "../assets/audios/click_sound.mp3";
 import { preventRightClickAndHighlight } from "./components/mySystemLogic";
 import Eyeball from "./components/Eyeball";
 
-import sampleImage from "../assets/images/sky.gif";
-
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
 const MathSaya = () => {
@@ -28,180 +29,41 @@ const MathSaya = () => {
     preventRightClickAndHighlight();
   }, []);
 
-  const [showGameIntro, setShowGameIntro] = useState(true);
+  const Navigate = useNavigate();
+  const [showGameIntro, setShowGameIntro] = useState(false);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
   const [showLessonChoices, setShowLessonChoices] = useState(false);
-  const [showExerciseChoices, setShowExerciseChoices] = useState(false);
+  const [showExerciseChoices, setShowExerciseChoices] = useState(true);
   const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [unitChoices, setUnitChoices] = useState([
-    {
-      yunitId: 1,
-      yunitNumber: 1,
-      yunitName: "Unit 1",
-      yunitThumbnail: sampleImage,
-    },
-    {
-      yunitId: 2,
-      yunitNumber: 2,
-      yunitName: "Unit 2",
-      yunitThumbnail: sampleImage,
-    },
-    {
-      yunitId: 3,
-      yunitNumber: 3,
-      yunitName: "Unit 3",
-      yunitThumbnail: sampleImage,
-    },
-    {
-      yunitId: 4,
-      yunitNumber: 4,
-      yunitName: "Unit 4",
-      yunitThumbnail: sampleImage,
-    },
-    {
-      yunitId: 5,
-      yunitNumber: 5,
-      yunitName: "Unit 5",
-      yunitThumbnail: sampleImage,
-    },
-  ]);
-  const [lessonChoices, setLessonChoices] = useState([
-    {
-      lessonId: 1,
-      lessonNumber: 1,
-      lessonName: "Lesson 1",
-      lessonDescription: "Description for Lesson 1",
-      lessonThumbnail: sampleImage,
-      lessonVideo:
-        "https://res.cloudinary.com/dnfunfiga/video/upload/v1706809934/mathsaya_uploads/lessons/p4ocybfbtkrtui6cwxme.mp4",
-    },
-    {
-      lessonId: 2,
-      lessonNumber: 2,
-      lessonName: "Lesson 2",
-      lessonDescription: "Description for Lesson 2",
-      lessonThumbnail: sampleImage,
-      lessonVideo:
-        "https://res.cloudinary.com/dnfunfiga/video/upload/v1706809934/mathsaya_uploads/lessons/p4ocybfbtkrtui6cwxme.mp4",
-    },
-    {
-      lessonId: 3,
-      lessonNumber: 3,
-      lessonName: "Lesson 3",
-      lessonDescription: "Description for Lesson 3",
-      lessonThumbnail: sampleImage,
-      lessonVideo:
-        "https://res.cloudinary.com/dnfunfiga/video/upload/v1706809934/mathsaya_uploads/lessons/p4ocybfbtkrtui6cwxme.mp4",
-    },
-    {
-      lessonId: 4,
-      lessonNumber: 4,
-      lessonName: "Lesson 4",
-      lessonDescription: "Description for Lesson 4",
-      lessonThumbnail: sampleImage,
-      lessonVideo:
-        "https://res.cloudinary.com/dnfunfiga/video/upload/v1706809934/mathsaya_uploads/lessons/p4ocybfbtkrtui6cwxme.mp4",
-    },
-    {
-      lessonId: 5,
-      lessonNumber: 5,
-      lessonName: "Lesson 5",
-      lessonDescription: "Description for Lesson 5",
-      lessonThumbnail: sampleImage,
-      lessonVideo:
-        "https://res.cloudinary.com/dnfunfiga/video/upload/v1706809934/mathsaya_uploads/lessons/p4ocybfbtkrtui6cwxme.mp4",
-    },
-  ]);
-  const [exerciseChoices, setExerciceChoices] = useState([
-    {
-      exerciseId: 1,
-      exerciseNumber: 1,
-      exerciseName: "Exercise 1",
-      exerciseDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget libero vel justo varius ultrices. Cras nec justo ac nulla convallis sodales. Fusce auctor, ligula sed efficitur vehicula, ipsum est viverra eros, sit amet sollicitudin libero mi ac odio. Mauris convallis velit ut augue ultricies, sed dictum justo volutpat. Integer nec nisi a sem aliquam luctus sed sit amet ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut quis risus euismod, sollicitudin ligula nec, fermentum mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque varius tellus vel felis dapibus, vel lobortis sem vulputate. Fusce quis sodales dolor. Maecenas hendrerit enim a ipsum convallis, non fermentum ipsum laoreet. Sed feugiat magna nec augue dictum, eget eleifend libero scelerisque.",
-    },
-    {
-      exerciseId: 2,
-      exerciseNumber: 2,
-      exerciseName: "Exercise 2",
-      exerciseDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget libero vel justo varius ultrices. Cras nec justo ac nulla convallis sodales. Fusce auctor, ligula sed efficitur vehicula, ipsum est viverra eros, sit amet sollicitudin libero mi ac odio. Mauris convallis velit ut augue ultricies, sed dictum justo volutpat. Integer nec nisi a sem aliquam luctus sed sit amet ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut quis risus euismod, sollicitudin ligula nec, fermentum mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque varius tellus vel felis dapibus, vel lobortis sem vulputate. Fusce quis sodales dolor. Maecenas hendrerit enim a ipsum convallis, non fermentum ipsum laoreet. Sed feugiat magna nec augue dictum, eget eleifend libero scelerisque.",
-    },
-    {
-      exerciseId: 3,
-      exerciseNumber: 3,
-      exerciseName: "Exercise 3",
-      exerciseDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget libero vel justo varius ultrices. Cras nec justo ac nulla convallis sodales. Fusce auctor, ligula sed efficitur vehicula, ipsum est viverra eros, sit amet sollicitudin libero mi ac odio. Mauris convallis velit ut augue ultricies, sed dictum justo volutpat. Integer nec nisi a sem aliquam luctus sed sit amet ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut quis risus euismod, sollicitudin ligula nec, fermentum mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque varius tellus vel felis dapibus, vel lobortis sem vulputate. Fusce quis sodales dolor. Maecenas hendrerit enim a ipsum convallis, non fermentum ipsum laoreet. Sed feugiat magna nec augue dictum, eget eleifend libero scelerisque.",
-    },
-    {
-      exerciseId: 4,
-      exerciseNumber: 4,
-      exerciseName: "Exercise 4",
-      exerciseDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget libero vel justo varius ultrices. Cras nec justo ac nulla convallis sodales. Fusce auctor, ligula sed efficitur vehicula, ipsum est viverra eros, sit amet sollicitudin libero mi ac odio. Mauris convallis velit ut augue ultricies, sed dictum justo volutpat. Integer nec nisi a sem aliquam luctus sed sit amet ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut quis risus euismod, sollicitudin ligula nec, fermentum mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque varius tellus vel felis dapibus, vel lobortis sem vulputate. Fusce quis sodales dolor. Maecenas hendrerit enim a ipsum convallis, non fermentum ipsum laoreet. Sed feugiat magna nec augue dictum, eget eleifend libero scelerisque.",
-    },
-    {
-      exerciseId: 5,
-      exerciseNumber: 5,
-      exerciseName: "Exercise 5",
-      exerciseDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget libero vel justo varius ultrices. Cras nec justo ac nulla convallis sodales. Fusce auctor, ligula sed efficitur vehicula, ipsum est viverra eros, sit amet sollicitudin libero mi ac odio. Mauris convallis velit ut augue ultricies, sed dictum justo volutpat. Integer nec nisi a sem aliquam luctus sed sit amet ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut quis risus euismod, sollicitudin ligula nec, fermentum mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque varius tellus vel felis dapibus, vel lobortis sem vulputate. Fusce quis sodales dolor. Maecenas hendrerit enim a ipsum convallis, non fermentum ipsum laoreet. Sed feugiat magna nec augue dictum, eget eleifend libero scelerisque.",
-    },
-  ]);
-  const [questions, setQuestions] = useState([
-    {
-      questionId: 1,
-      question_text: "What is the capital of France?",
-      questionImage: null,
-      answer_choices: ["Paris", "London", "Berlin", "Madrid"],
-      correct_answer: "Paris",
-      answer_explanation: "Paris is the capital of France.",
-    },
-    {
-      questionId: 2,
-      question_text: "What is the largest planet in our solar system?",
-      questionImage: null,
-      answer_choices: ["Mars", "Jupiter", "Earth", "Saturn"],
-      correct_answer: "Jupiter",
-      answer_explanation: "Jupiter is the largest planet in our solar system.",
-    },
-    {
-      questionId: 3,
-      question_text: "Who wrote the novel 'To Kill a Mockingbird'?",
-      questionImage: null,
-      answer_choices: [
-        "Mark Twain",
-        "Harper Lee",
-        "F. Scott Fitzgerald",
-        "J.D. Salinger",
-      ],
-      correct_answer: "Harper Lee",
-      answer_explanation: "Harper Lee wrote the novel 'To Kill a Mockingbird'.",
-    },
-    {
-      questionId: 4,
-      question_text: "Which element has the chemical symbol 'Fe'?",
-      questionImage: null,
-      answer_choices: ["Iron", "Gold", "Silver", "Copper"],
-      correct_answer: "Iron",
-      answer_explanation: "The element with the chemical symbol 'Fe' is Iron.",
-    },
-    {
-      questionId: 6,
-      question_text: "What is the capital of Japan?",
-      questionImage: null,
-      answer_choices: ["Beijing", "Seoul", "Tokyo", "Bangkok"],
-      correct_answer: "Tokyo",
-      answer_explanation: "Tokyo is the capital of Japan.",
-    },
-    // Add more questions here
-  ]);
+  const [studentName, setStudentName] = useState({
+    firstname: "",
+    lastname: "",
+  });
+  const [firstLoginDate, setFirstLoginDate] = useState("");
+  const [completedExercises, setCompletedExercises] = useState([]);
+  const [completedLessons, setCompletedLessons] = useState([]);
+  const [completedUnits, setCompletedUnits] = useState([]);
+  const [averageStarRatingPerYunit, setAverageStarRatingPerYunit] = useState(
+    []
+  );
+  const [averageStarRatingPerLesson, setAverageStarRatingPerLesson] = useState(
+    []
+  );
+  const [minExercise, setMinExercise] = useState(null);
+  const [maxExercise, setMaxExercise] = useState(null);
+  const [minLesson, setMinLesson] = useState(null);
+  const [maxLesson, setMaxLesson] = useState(null);
+  const [minYunit, setMinYunit] = useState(null);
+  const [maxYunit, setMaxYunit] = useState(null);
+  const [unitChoices, setUnitChoices] = useState([]);
+  const [lessonChoices, setLessonChoices] = useState([]);
+  const [exerciseChoices, setExerciseChoice] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
 
   const bg_music = new Audio(playgameBG);
@@ -209,6 +71,117 @@ const MathSaya = () => {
   const wlcm = new Audio(welcome);
   const click_sound = new Audio(clicksound);
   const calm_BG = new Audio(calmBG);
+
+  const studentProfile = Cookies.get("STUDENT_SESSION");
+  const teacherId = Cookies.get("teach");
+  const selectedunit = sessionStorage.getItem("selectedunit");
+  const selectedlesson = sessionStorage.getItem("selectedlesson");
+  const selectedexercise = sessionStorage.getItem("selectedexercise");
+
+  useEffect(() => {
+    if (!studentProfile) {
+      alert("Session Expired. Re-login.");
+      Navigate("/login");
+    }
+  }, [studentProfile]);
+
+  useEffect(() => {
+    async function fetchStudentProfile() {
+      if (studentProfile) {
+        const studentProfileId = JSON.parse(studentProfile).id;
+        try {
+          const response = await axios.get(
+            `${server_url}/sprofile/student-profile/${studentProfileId}`
+          );
+          const studentData = response.data;
+
+          const { firstname, lastname } = studentData.student;
+          const { firstLoginDate } = studentData.studentProfile;
+          const completedExercises = studentData.completedExercises;
+          const completedLessons = studentData.completedLessons;
+          const completedUnits = studentData.completedUnits;
+          const averageStarRatingPerYunit =
+            studentData.averageStarRatingPerYunit;
+          const averageStarRatingPerLesson =
+            studentData.averageStarRatingPerLesson;
+          const minExercise = studentData.minExercise;
+          const maxExercise = studentData.maxExercise;
+          const minLesson = studentData.minLesson;
+          const maxLesson = studentData.maxLesson;
+          const minYunit = studentData.minYunit;
+          const maxYunit = studentData.maxYunit;
+
+          setStudentName({ firstname, lastname });
+          setFirstLoginDate({ firstLoginDate });
+          setCompletedExercises(completedExercises);
+          setCompletedLessons(completedLessons);
+          setCompletedUnits(completedUnits);
+          setAverageStarRatingPerYunit(averageStarRatingPerYunit);
+          setAverageStarRatingPerLesson(averageStarRatingPerLesson);
+          setMinExercise(minExercise);
+          setMaxExercise(maxExercise);
+          setMinLesson(minLesson);
+          setMaxLesson(maxLesson);
+          setMinYunit(minYunit);
+          setMaxYunit(maxYunit);
+
+          const teacherId = studentData.studentProfile.userId;
+          Cookies.set("teach", teacherId);
+        } catch (error) {
+          console.error("Error fetching student profile:", error);
+        }
+      } else {
+        console.error("Student profile not found in cookies.");
+      }
+    }
+    fetchStudentProfile();
+  }, [studentProfile]);
+
+  async function fetchUnits() {
+    try {
+      const response = await axios.get(`${server_url}/units/${teacherId}`);
+      const units = response.data;
+      setUnitChoices(units);
+    } catch (error) {
+      console.error("Error fetching Yunits:", error);
+    }
+  }
+
+  async function fetchLessons() {
+    try {
+      const response = await axios.get(`${server_url}/lessons/${selectedunit}`);
+      const lessons = response.data;
+      setLessonChoices(lessons);
+    } catch (error) {
+      console.error("Error fetching Lessons:", error);
+    }
+  }
+
+  async function fetchExercises() {
+    try {
+      const response = await axios.get(
+        `${server_url}/exercises/${selectedlesson}`
+      );
+      const exercises = response.data;
+      console.log("Exercises entry: ", exercises);
+      setExerciseChoice(exercises);
+    } catch (error) {
+      console.error("Error fetching Exercises:", error);
+    }
+  }
+
+  async function fetchQuestions() {
+    try {
+      const response = await axios.get(
+        `${server_url}/questions/${selectedexercise}`
+      );
+      const questions = response.data;
+      console.log("Questions entry: ", questions);
+      setQuestions(questions);
+    } catch (error) {
+      console.error("Error fetching Questions:", error);
+    }
+  }
 
   const initializeLocalStorage = () => {
     if (localStorage.getItem("music") === null) {
@@ -327,9 +300,18 @@ const MathSaya = () => {
     localStorage.getItem("music") === "true" ? true : false
   );
 
+  const handleSignout = () => {
+    const confirmSignout = window.confirm("Are you sure you want to sign out?");
+    if (confirmSignout) {
+      Cookies.remove("teach");
+      Cookies.remove("STUDENT_SESSION");
+      Navigate("/login");
+    }
+  };
+
   return (
     <div className="h-screen flex justify-center items-center overflow-hidden">
-      {!showGameIntro && !showTestScreen && (
+      {!showGameIntro && !showTestScreen && !showProfile && !showSettings && (
         <div className="fixed top-0">
           <Eyeball />
         </div>
@@ -353,38 +335,43 @@ const MathSaya = () => {
       )}
       {showUnitChoices && (
         <UnitChoices
+          fetchUnits={fetchUnits}
           unitChoices={unitChoices}
           clicking={click_sound}
           onSelect={handleUnitSelect}
           onBack={handleBackToMainMenu}
-          server_url={server_url}
+          teacherId={teacherId}
         />
       )}
       {showLessonChoices && (
         <LessonChoices
+          fetchLessons={fetchLessons}
           lessonChoices={lessonChoices}
           clicking={click_sound}
           onSelect={handleLessonSelect}
           onBack={handleBackToUnitChoices}
-          server_url={server_url}
+          selectedunit={selectedunit}
         />
       )}
       {showExerciseChoices && (
         <ExerciseChoices
+          fetchExercises={fetchExercises}
           exerciseChoices={exerciseChoices}
           clicking={click_sound}
           onSelect={handleExerciseSelect}
           onBack={handleBackToLessonChoices}
+          selectedlesson={selectedlesson}
           server_url={server_url}
         />
       )}
       {showQuestionsAnswering && (
         <QuestionsAnswering
+          fetchQuestions={fetchQuestions}
           questions={questions}
           setSelectedAnswers={setSelectedAnswers}
           clicking={click_sound}
           onGameOver={handleGameOverClick}
-          server_url={server_url}
+          selectedexercise={selectedexercise}
         />
       )}
       {showGameOver && (
@@ -398,9 +385,20 @@ const MathSaya = () => {
       )}
       {showProfile && (
         <Profile
-          clicking={click_sound}
           onBack={handleBackToPlayGame}
-          server_url={server_url}
+          studentName={studentName}
+          firstLoginDate={firstLoginDate}
+          completedExercises={completedExercises}
+          completedLessons={completedLessons}
+          completedUnits={completedUnits}
+          averageStarRatingPerYunit={averageStarRatingPerYunit}
+          averageStarRatingPerLesson={averageStarRatingPerLesson}
+          minExercise={minExercise}
+          maxExercise={maxExercise}
+          minLesson={minLesson}
+          maxLesson={maxLesson}
+          minYunit={minYunit}
+          maxYunit={maxYunit}
         />
       )}
       {showSettings && (
@@ -411,6 +409,7 @@ const MathSaya = () => {
           soundState={soundState}
           setAudioState={setAudioState}
           setSoundState={setSoundState}
+          handleSignout={handleSignout}
         />
       )}
     </div>

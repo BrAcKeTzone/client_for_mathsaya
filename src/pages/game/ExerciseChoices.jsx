@@ -4,7 +4,14 @@ import skyBackground from "../../assets/images/sky.gif";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import ModalViewLessonVideo from "../../pages/components/modals/ModalViewLessonVideo";
 
-const ExerciseChoices = ({ exerciseChoices, onBack, onSelect, server_url }) => {
+const ExerciseChoices = ({
+  exerciseChoices,
+  onBack,
+  onSelect,
+  fetchExercises,
+  selectedlesson,
+  server_url,
+}) => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -13,6 +20,10 @@ const ExerciseChoices = ({ exerciseChoices, onBack, onSelect, server_url }) => {
       setIsActive(false);
     };
   }, []);
+
+  useEffect(() => {
+    fetchExercises();
+  }, [selectedlesson]);
 
   const handleViewLessonVideoButtonClick = () => {
     setIsViewLessonVideoModalOpen(true);
@@ -59,7 +70,7 @@ const ExerciseChoices = ({ exerciseChoices, onBack, onSelect, server_url }) => {
           isOpen={isViewLessonVideoModalOpen}
           closeModal={() => setIsViewLessonVideoModalOpen(false)}
           server_url={server_url}
-          lessonId={sessionStorage.getItem("selectedlesson")}
+          lessonId={selectedlesson}
         />
       </div>
       <div className="flex flex-wrap justify-center py-4 px-6 sm:px-0 transition-transform duration-500 transform hover:-translate-y-1">

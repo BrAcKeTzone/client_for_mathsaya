@@ -3,7 +3,13 @@ import backLogo from "../../assets/images/back.png";
 import skyBackground from "../../assets/images/sky.gif";
 import { GrPrevious, GrNext } from "react-icons/gr";
 
-const LessonChoices = ({ lessonChoices, onBack, onSelect }) => {
+const LessonChoices = ({
+  lessonChoices,
+  onBack,
+  onSelect,
+  fetchLessons,
+  selectedunit,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isActive, setIsActive] = useState(false);
 
@@ -13,6 +19,10 @@ const LessonChoices = ({ lessonChoices, onBack, onSelect }) => {
       setIsActive(false);
     };
   }, []);
+
+  useEffect(() => {
+    fetchLessons();
+  }, [selectedunit]);
 
   const indexOfLastEntry = currentPage * 1;
   const indexOfFirstEntry = indexOfLastEntry - 1;

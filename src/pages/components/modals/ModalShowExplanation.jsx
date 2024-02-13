@@ -22,12 +22,12 @@ const ModalShowExplanation = ({
           </span>
         </h1>
         <div className="flex items-center space-x-4">
-          <div className="w-4 h-4 bg-green-200 rounded-full"></div>
-          <p className="text-green-500 font-semibold">Sakto nga tubag</p>
+          <div className="w-4 h-4 bg-green-300 rounded-full"></div>
+          <p className="text-green-500 font-semibold">Tugma nga tubag</p>
         </div>
         <div className="flex items-center space-x-4">
           <div className="w-4 h-4 bg-red-200 rounded-full"></div>
-          <p className="text-red-500 font-semibold">Mali nga tubag</p>
+          <p className="text-red-500 font-semibold">Sayup nga tubag</p>
         </div>
         <div className="overflow-y-auto max-h-96">
           {questions.map((question, index) => (
@@ -35,24 +35,26 @@ const ModalShowExplanation = ({
               <h2 className="text-lg font-semibold mb-2">
                 {question.question_text}
               </h2>
-              {question.questionImage && (
-                <img
-                  src={question.questionImage}
-                  alt="Question Image"
-                  className="w-64 h-64 mb-2"
-                />
-              )}
+              <div className="flex justify-center ml-2">
+                {question.questionImage && (
+                  <img
+                    src={question.questionImage}
+                    alt="Question Image"
+                    className="w-64 h-64 mb-2"
+                  />
+                )}
+              </div>
               <div className="grid grid-cols-2 gap-4">
-                {question.answer_choices.map((choice, i) => (
+                {question.answer_choices.split(",").map((choice, i) => (
                   <div
                     key={i}
                     className={`p-2 ${
                       selectedAnswers[question.questionId] === choice
                         ? choice === question.correct_answer
-                          ? "bg-blue-200" // Selected answer matches the correct answer
+                          ? "bg-green-300" // Selected answer matches the correct answer
                           : "bg-red-200" // Selected answer doesn't match the correct answer
                         : choice === question.correct_answer
-                        ? "bg-green-200" // Correct answer
+                        ? "bg-green-300" // Correct answer
                         : "bg-gray-200" // Other choices
                     }`}
                   >
