@@ -144,7 +144,7 @@ const Signup = () => {
             expires: expirationDate,
           }
         );
-        Navigate("/dash");
+        Navigate("/");
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);

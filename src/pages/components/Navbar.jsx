@@ -4,20 +4,20 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FiMail } from "react-icons/fi";
 import logo from "../../assets/images/logo.png";
-import InboxMenuDesktop from "./InboxMenuDesktop";
-import InboxMenuMobile from "./InboxMenuMobile";
-import ModalOpenEntry from "./modals/ModalOpenEntry";
+// import InboxMenuDesktop from "./InboxMenuDesktop";
+// import InboxMenuMobile from "./InboxMenuMobile";
+// import ModalOpenEntry from "./modals/ModalOpenEntry";
 
 function Navbar({ userRole, server_url, usr }) {
   const Navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMessageMenuOpen, setMessageMenuOpen] = useState(false);
-  const [inboxFilter, setInboxFilter] = useState("unread");
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [inboxEntries, setInboxEntries] = useState([]);
+  // const [inboxFilter, setInboxFilter] = useState("unread");
+  // const [unreadCount, setUnreadCount] = useState(0);
+  // const [inboxEntries, setInboxEntries] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedEntryId, setSelectedEntryId] = useState(null);
+  // const [selectedEntryId, setSelectedEntryId] = useState(null);
 
   const handleLogout = () => {
     const isConfirmed = window.confirm("Are you sure you want to sign-out?");
@@ -33,64 +33,64 @@ function Navbar({ userRole, server_url, usr }) {
     setMobileMenuOpen((prev) => !prev);
   };
 
-  const toggleMessageMenu = () => {
-    setMessageMenuOpen((prev) => !prev);
-    fetchInboxEntries();
-  };
+  // const toggleMessageMenu = () => {
+  //   setMessageMenuOpen((prev) => !prev);
+  //   fetchInboxEntries();
+  // };
 
-  const fetchInboxEntries = async () => {
-    try {
-      const response = await axios.get(
-        `${server_url}/user/inbox/${inboxFilter}/${usr}`
-      );
-      setUnreadCount(response.data.unreadCount);
-      if (inboxFilter === "unread") {
-        setInboxEntries(response.data.inboxUnreadEntries);
-      } else if (inboxFilter === "read") {
-        setInboxEntries(response.data.inboxReadEntries);
-      } else {
-        setInboxEntries(response.data.inboxAllEntries);
-      }
-    } catch (error) {
-      console.error(`Error fetching ${inboxFilter} inbox entries:`, error);
-    }
-  };
+  // const fetchInboxEntries = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${server_url}/user/inbox/${inboxFilter}/${usr}`
+  //     );
+  //     setUnreadCount(response.data.unreadCount);
+  //     if (inboxFilter === "unread") {
+  //       setInboxEntries(response.data.inboxUnreadEntries);
+  //     } else if (inboxFilter === "read") {
+  //       setInboxEntries(response.data.inboxReadEntries);
+  //     } else {
+  //       setInboxEntries(response.data.inboxAllEntries);
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error fetching ${inboxFilter} inbox entries:`, error);
+  //   }
+  // };
 
-  const handleInboxFilter = async (filter) => {
-    toggleMessageMenu();
-    setInboxFilter(filter);
-    await fetchInboxEntries();
-  };
+  // const handleInboxFilter = async (filter) => {
+  //   toggleMessageMenu();
+  //   setInboxFilter(filter);
+  //   await fetchInboxEntries();
+  // };
 
-  useEffect(() => {
-    if (userRole !== "Teacher") {
-      fetchInboxEntries();
-    }
-  }, [inboxFilter, usr, server_url]);
+  // useEffect(() => {
+  //   if (userRole !== "Teacher") {
+  //     fetchInboxEntries();
+  //   }
+  // }, [inboxFilter, usr, server_url]);
 
-  const onEntryClick = (entryId) => {
-    setSelectedEntryId(entryId);
-    setIsModalOpen(true);
-  };
+  // const onEntryClick = (entryId) => {
+  //   setSelectedEntryId(entryId);
+  //   setIsModalOpen(true);
+  // };
 
-  const onDeleteEntry = async (emailId) => {
-    try {
-      toggleMessageMenu();
-      const isConfirmed = window.confirm(
-        "Are you sure you want to delete this entry?"
-      );
-      if (!isConfirmed) {
-        return;
-      }
-      await axios.delete(`${server_url}/user/inbox/delete/${emailId}/${usr}`);
-      fetchInboxEntries();
-      if (selectedEntryId && selectedEntryId.emailId === emailId) {
-        setSelectedEntryId(null);
-      }
-    } catch (error) {
-      console.error("Error deleting inbox entry:", error);
-    }
-  };
+  // const onDeleteEntry = async (emailId) => {
+  //   try {
+  //     toggleMessageMenu();
+  //     const isConfirmed = window.confirm(
+  //       "Are you sure you want to delete this entry?"
+  //     );
+  //     if (!isConfirmed) {
+  //       return;
+  //     }
+  //     await axios.delete(`${server_url}/user/inbox/delete/${emailId}/${usr}`);
+  //     fetchInboxEntries();
+  //     if (selectedEntryId && selectedEntryId.emailId === emailId) {
+  //       setSelectedEntryId(null);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting inbox entry:", error);
+  //   }
+  // };
   return (
     <nav className="bg-blue-500 p-4 text-white sticky top-0 w-full z-10 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
@@ -101,7 +101,7 @@ function Navbar({ userRole, server_url, usr }) {
           </Link>
         </div>
         <div className="hidden md:flex items-center space-x-4">
-          <div className="relative">
+          {/* <div className="relative">
             {userRole !== "Teacher" && (
               <div
                 onClick={toggleMessageMenu}
@@ -127,7 +127,7 @@ function Navbar({ userRole, server_url, usr }) {
                 />
               </div>
             )}
-          </div>
+          </div> */}
           <NavLink to="/dash">Dashboard</NavLink>
           {userRole !== "Teacher" && <NavLink to="/admins">Admins</NavLink>}
           {userRole !== "Teacher" && <NavLink to="/teachers">Teachers</NavLink>}
@@ -166,7 +166,7 @@ function Navbar({ userRole, server_url, usr }) {
       {isMobileMenuOpen && (
         <div className="md:hidden mt-2">
           <div className="flex flex-col space-y-2">
-            <div className="relative">
+            {/* <div className="relative">
               {userRole !== "Teacher" && (
                 <div
                   onClick={toggleMessageMenu}
@@ -190,7 +190,7 @@ function Navbar({ userRole, server_url, usr }) {
                   />
                 </div>
               )}
-            </div>
+            </div> */}
             <NavLink to="/dash" onClick={toggleMobileMenu}>
               Dashboard
             </NavLink>

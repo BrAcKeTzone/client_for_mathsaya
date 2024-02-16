@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { FaBug } from "react-icons/fa";
-import ModalSendMessage from "./modals/ModalSendMessage";
+// import ModalSendMessage from "./modals/ModalSendMessage";
 import ModalUserInfo from "./modals/ModalUserInfo";
 
 function Bottombar({ server_url, usr }) {
-  const [isSendMessageModalOpen, setSendMessageModalOpen] = useState(false);
+  // const [isSendMessageModalOpen, setSendMessageModalOpen] = useState(false);
   const [isUserInfoModalOpen, setIsUserInfoModalOpen] = useState(false);
 
   const openSendMessageModal = () => {
@@ -34,20 +34,20 @@ function Bottombar({ server_url, usr }) {
           <FiUser className="mr-2 text-xl" />
           <span className="hidden md:inline">Profile</span>
         </button>
-        <button
+        {/* <button
           className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex flex-col items-center w-16 sm:w-28"
           onClick={openSendMessageModal}
         >
           <FaBug className="mr-2 text-xl" />
           <span className="hidden md:inline">Report Bug</span>
-        </button>
+        </button> */}
       </div>
-      <ModalSendMessage
+      {/* <ModalSendMessage
         isOpen={isSendMessageModalOpen}
         closeModal={closeSendMessageModal}
         server_url={server_url}
         userId={usr}
-      />
+      /> */}
       <ModalUserInfo
         isOpen={isUserInfoModalOpen}
         closeModal={closeUserInfoModal}
