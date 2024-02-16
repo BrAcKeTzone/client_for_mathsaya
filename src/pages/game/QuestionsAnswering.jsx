@@ -153,7 +153,7 @@ const QuestionsAnswering = ({
       </div>
       {showTransitionCountdown && (
         <>
-          <div className="absolute inset-0 flex items-center justify-center bg-white hover:bg-opacity-30 text-center z-20">
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-30 text-center z-20">
             <div className="text-9xl font-bold text-yellow-400 px-14 py-7 bg-opacity-20 rounded-full z-30">
               {`${transitionCountdown}`}
             </div>

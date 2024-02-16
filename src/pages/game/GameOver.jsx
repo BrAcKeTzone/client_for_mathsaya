@@ -6,7 +6,7 @@ import wrongGesture from "../../assets/images/wrong.gif";
 import happyGesture from "../../assets/images/smile.gif";
 import ModalShowExplanation from "../components/modals/ModalShowExplanation";
 
-const GameOver = ({ questions, selectedAnswers, onBack, server_url }) => {
+const GameOver = ({ questions, selectedAnswers, onBack, saveProgress }) => {
   const [starsCount, setStarsCount] = useState(0);
   const [randomNumbers, setRandomNumbers] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -29,6 +29,10 @@ const GameOver = ({ questions, selectedAnswers, onBack, server_url }) => {
     if (score) {
       setStarsCount(parseInt(score));
     }
+  }, []);
+
+  useEffect(() => {
+    saveProgress;
   }, []);
 
   useEffect(() => {

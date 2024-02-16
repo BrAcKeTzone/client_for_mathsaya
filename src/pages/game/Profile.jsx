@@ -59,7 +59,7 @@ const Profile = ({
             {/* Completed exercises list container */}
             <div className="bg-green-300 p-4 rounded-lg">
               <p className="text-lg font-semibold text-center text-green-900">
-                Pag-uswag sa mga Ehersisyo
+                Progresyon sa Pagkompleto sa mga Ehersisyo
               </p>
               <div className="bg-green-200 rounded p-2 max-h-80 overflow-y-auto">
                 {completedExercises.map((exercise, index) => (
@@ -74,7 +74,7 @@ const Profile = ({
             {/* Completed lessons list container */}
             <div className="bg-yellow-300 p-4 rounded-lg">
               <p className="text-lg font-semibold text-center text-yellow-900">
-                Pag-uswag sa mga Leksyon
+                Progresyon sa Pagkompleto sa mga Leksyon
               </p>
               <div className="bg-yellow-200 rounded p-2 max-h-80 overflow-y-auto">
                 {completedLessons.map((lesson, index) => (
@@ -90,7 +90,7 @@ const Profile = ({
             {/* Completed units list container */}
             <div className="bg-red-300 p-4 rounded-lg">
               <p className="text-lg font-semibold text-center text-red-900">
-                Pag-uswag sa mga Yunit
+                Progresyon sa Pagkompleto sa mga Yunit
               </p>
               <div className="bg-red-200 rounded p-2 max-h-80 overflow-y-auto">
                 {completedUnits.map((unit, index) => (

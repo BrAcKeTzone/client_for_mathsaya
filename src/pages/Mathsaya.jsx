@@ -65,6 +65,9 @@ const MathSaya = () => {
   const [exerciseChoices, setExerciseChoice] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [dataUnit, setDataUnit] = useState(null);
+  const [dataLesson, setDataLesson] = useState(null);
+  const [dataExercise, setDataExercise] = useState(null);
 
   const bg_music = new Audio(playgameBG);
   const testscreen_loop = new Audio(testscreenLoop);
@@ -73,10 +76,14 @@ const MathSaya = () => {
   const calm_BG = new Audio(calmBG);
 
   const studentProfile = Cookies.get("STUDENT_SESSION");
+  const studentProfileId = studentProfile
+    ? JSON.parse(studentProfile)?.id
+    : null;
   const teacherId = Cookies.get("teach");
   const selectedunit = sessionStorage.getItem("selectedunit");
   const selectedlesson = sessionStorage.getItem("selectedlesson");
   const selectedexercise = sessionStorage.getItem("selectedexercise");
+  const score = sessionStorage.getItem("score");
 
   useEffect(() => {
     if (!studentProfile) {
@@ -87,51 +94,45 @@ const MathSaya = () => {
 
   useEffect(() => {
     async function fetchStudentProfile() {
-      if (studentProfile) {
-        const studentProfileId = JSON.parse(studentProfile).id;
-        try {
-          const response = await axios.get(
-            `${server_url}/sprofile/student-profile/${studentProfileId}`
-          );
-          const studentData = response.data;
+      try {
+        const response = await axios.get(
+          `${server_url}/sprofile/student-profile/${studentProfileId}`
+        );
+        const studentData = response.data;
 
-          const { firstname, lastname } = studentData.student;
-          const { firstLoginDate } = studentData.studentProfile;
-          const completedExercises = studentData.completedExercises;
-          const completedLessons = studentData.completedLessons;
-          const completedUnits = studentData.completedUnits;
-          const averageStarRatingPerYunit =
-            studentData.averageStarRatingPerYunit;
-          const averageStarRatingPerLesson =
-            studentData.averageStarRatingPerLesson;
-          const minExercise = studentData.minExercise;
-          const maxExercise = studentData.maxExercise;
-          const minLesson = studentData.minLesson;
-          const maxLesson = studentData.maxLesson;
-          const minYunit = studentData.minYunit;
-          const maxYunit = studentData.maxYunit;
+        const { firstname, lastname } = studentData.student;
+        const { firstLoginDate } = studentData.studentProfile;
+        const completedExercises = studentData.completedExercises;
+        const completedLessons = studentData.completedLessons;
+        const completedUnits = studentData.completedUnits;
+        const averageStarRatingPerYunit = studentData.averageStarRatingPerYunit;
+        const averageStarRatingPerLesson =
+          studentData.averageStarRatingPerLesson;
+        const minExercise = studentData.minExercise;
+        const maxExercise = studentData.maxExercise;
+        const minLesson = studentData.minLesson;
+        const maxLesson = studentData.maxLesson;
+        const minYunit = studentData.minYunit;
+        const maxYunit = studentData.maxYunit;
 
-          setStudentName({ firstname, lastname });
-          setFirstLoginDate({ firstLoginDate });
-          setCompletedExercises(completedExercises);
-          setCompletedLessons(completedLessons);
-          setCompletedUnits(completedUnits);
-          setAverageStarRatingPerYunit(averageStarRatingPerYunit);
-          setAverageStarRatingPerLesson(averageStarRatingPerLesson);
-          setMinExercise(minExercise);
-          setMaxExercise(maxExercise);
-          setMinLesson(minLesson);
-          setMaxLesson(maxLesson);
-          setMinYunit(minYunit);
-          setMaxYunit(maxYunit);
+        setStudentName({ firstname, lastname });
+        setFirstLoginDate({ firstLoginDate });
+        setCompletedExercises(completedExercises);
+        setCompletedLessons(completedLessons);
+        setCompletedUnits(completedUnits);
+        setAverageStarRatingPerYunit(averageStarRatingPerYunit);
+        setAverageStarRatingPerLesson(averageStarRatingPerLesson);
+        setMinExercise(minExercise);
+        setMaxExercise(maxExercise);
+        setMinLesson(minLesson);
+        setMaxLesson(maxLesson);
+        setMinYunit(minYunit);
+        setMaxYunit(maxYunit);
 
-          const teacherId = studentData.studentProfile.userId;
-          Cookies.set("teach", teacherId);
-        } catch (error) {
-          console.error("Error fetching student profile:", error);
-        }
-      } else {
-        console.error("Student profile not found in cookies.");
+        const teacherId = studentData.studentProfile.userId;
+        Cookies.set("teach", teacherId);
+      } catch (error) {
+        console.error("Error fetching student profile:", error);
       }
     }
     fetchStudentProfile();
@@ -180,6 +181,48 @@ const MathSaya = () => {
       setQuestions(questions);
     } catch (error) {
       console.error("Error fetching Questions:", error);
+    }
+  }
+
+  async function saveProgress() {
+    try {
+      const completeDataExercise = {
+        exerciseId: selectedexercise,
+        starRating: score,
+        studentProfileId,
+      };
+      const responseExercise = await axios.post(
+        `${server_url}/sprofile/add-completed-exercise`,
+        completeDataExercise
+      );
+      console.log("Exercise: ", completeDataExercise);
+
+      const completeDataLesson = {
+        lessonId: selectedlesson,
+        starRating: score,
+        studentProfileId,
+      };
+      const responseLesson = await axios.post(
+        `${server_url}/sprofile/add-completed-lesson`,
+        completeDataLesson
+      );
+      console.log("Lesson: ", completeDataLesson);
+
+      const completeDataUnit = {
+        yunitId: selectedunit,
+        starRating: score,
+        studentProfileId,
+      };
+      const responseUnit = await axios.post(
+        `${server_url}/sprofile/add-completed-yunit`,
+        completeDataUnit
+      );
+      console.log("Unit: ", completeDataUnit);
+
+      return { responseExercise, responseLesson, responseUnit };
+    } catch (error) {
+      console.error("Error saving progress:", error);
+      throw error; // Rethrow the error to handle it at a higher level
     }
   }
 
@@ -380,7 +423,7 @@ const MathSaya = () => {
           selectedAnswers={selectedAnswers}
           clicking={click_sound}
           onBack={handleBackFromGameOver}
-          server_url={server_url}
+          saveProgress={saveProgress}
         />
       )}
       {showProfile && (
