@@ -33,7 +33,9 @@ const ModalViewLessonVideo = ({ isOpen, closeModal, server_url, lessonId }) => {
       className="Modal fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-4 bg-gradient-to-r from-blue-100 to-blue-200 rounded-md shadow-md"
     >
       <div className="flex flex-col justify-center items-center">
-        <h2 className="text-xl font-semibold mb-4">View Lesson Video</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          Lantawa ang bidyo diskusyon sa leksyon
+        </h2>
         <div>
           {lessonVideo ? (
             <video controls width="100%">
@@ -41,7 +43,7 @@ const ModalViewLessonVideo = ({ isOpen, closeModal, server_url, lessonId }) => {
               Your browser does not support the video tag.
             </video>
           ) : (
-            <p>No lesson video available.</p>
+            <p>Wala pay bidyo sa leksyon.</p>
           )}
         </div>
       </div>

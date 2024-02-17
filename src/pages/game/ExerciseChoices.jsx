@@ -48,7 +48,6 @@ const ExerciseChoices = ({
     onSelect(exercise);
   };
 
-  // Check if an exercise entry matches any completed exercise
   const isCompleted = (exerciseId) => {
     return completedExercises.some(
       (completedExercise) => completedExercise.exerciseId === exerciseId
@@ -98,13 +97,13 @@ const ExerciseChoices = ({
               {exercise.exerciseName}
             </p>
             <p className="mb-2 transition-opacity duration-500 hover:opacity-70">
-              Exercise Number: {exercise.exerciseNumber}
+              Ikapila nga tun-anan: {exercise.exerciseNumber}
             </p>
             <p className="mb-2 h-44 w-60 overflow-y-auto p-1 transition-opacity duration-500 hover:opacity-70">
-              Instruction: {exercise.exerciseDescription}
+              Timan-e: {exercise.exerciseDescription}
             </p>
             {isCompleted(exercise.exerciseId) && (
-              <p className="text-green-600 font-bold">Completed</p>
+              <p className="text-green-600 font-bold">Human na</p>
             )}
           </div>
         ))}

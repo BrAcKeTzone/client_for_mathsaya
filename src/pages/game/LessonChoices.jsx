@@ -64,7 +64,7 @@ const LessonChoices = ({
               className="w-64 h-64 cursor-pointer transition-transform duration-500 transform hover:rotate-6"
             />
             <p className="mb-2 transition-opacity duration-500 hover:opacity-70">
-              Lesson Number: {lesson.lessonNumber}
+              Ikapila nga leksyon: {lesson.lessonNumber}
             </p>
           </div>
         ))}
