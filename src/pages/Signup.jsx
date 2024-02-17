@@ -134,17 +134,17 @@ const Signup = () => {
       );
       console.log("OTP verification successful:", response.data);
       alert("Account created successfully");
-      if (response.data.user.userId) {
+      if (response.data.teacher.userId) {
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         Cookies.set(
           "SESSION_ID",
-          JSON.stringify({ id: response.data.user.userId }),
+          JSON.stringify({ id: response.data.teacher.userId }),
           {
             expires: expirationDate,
           }
         );
-        Navigate("/");
+        Navigate("/dash");
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
