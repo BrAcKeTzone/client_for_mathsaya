@@ -5,7 +5,7 @@ import settingLogo from "../../assets/images/settings.png";
 import sky from "../../assets/images/sky.gif";
 import weird from "../../assets/images/weird.gif";
 
-const PlayGame = ({ onPlay, onProfile, onSettings }) => {
+const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
@@ -14,6 +14,10 @@ const PlayGame = ({ onPlay, onProfile, onSettings }) => {
     return () => {
       setIsActive(false);
     };
+  }, []);
+
+  useEffect(() => {
+    fetchStudentProfile();
   }, []);
 
   const handleButtonClick = (buttonType) => {

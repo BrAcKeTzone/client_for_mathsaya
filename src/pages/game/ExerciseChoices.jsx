@@ -11,6 +11,7 @@ const ExerciseChoices = ({
   fetchExercises,
   selectedlesson,
   server_url,
+  completedExercises, // Add completedExercises as a prop
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -47,6 +48,13 @@ const ExerciseChoices = ({
     onSelect(exercise);
   };
 
+  // Check if an exercise entry matches any completed exercise
+  const isCompleted = (exerciseId) => {
+    return completedExercises.some(
+      (completedExercise) => completedExercise.exerciseId === exerciseId
+    );
+  };
+
   return (
     <div
       className={`min-h-screen w-full flex flex-col justify-center items-center overflow-hidden p-10 bg-cover bg-center transition-opacity duration-500 ${
@@ -77,8 +85,14 @@ const ExerciseChoices = ({
         {currentEntries.map((exercise, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center m-4 cursor-pointer rounded border border-black transition-transform duration-500 transform hover:scale-105"
-            onClick={() => handleExerciseSelect(exercise)}
+            className={`flex flex-col items-center justify-center m-4 cursor-pointer rounded border border-black transition-transform duration-500 transform hover:scale-105 ${
+              isCompleted(exercise.exerciseId) ? "bg-green-200" : ""
+            }`}
+            onClick={
+              isCompleted(exercise.exerciseId)
+                ? null
+                : () => handleExerciseSelect(exercise)
+            }
           >
             <p className="text-center mb-2 transition-opacity duration-500 hover:opacity-70">
               {exercise.exerciseName}
@@ -89,6 +103,9 @@ const ExerciseChoices = ({
             <p className="mb-2 h-44 w-60 overflow-y-auto p-1 transition-opacity duration-500 hover:opacity-70">
               Instruction: {exercise.exerciseDescription}
             </p>
+            {isCompleted(exercise.exerciseId) && (
+              <p className="text-green-600 font-bold">Completed</p>
+            )}
           </div>
         ))}
       </div>

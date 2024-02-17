@@ -30,7 +30,7 @@ const MathSaya = () => {
   }, []);
 
   const Navigate = useNavigate();
-  const [showGameIntro, setShowGameIntro] = useState(false);
+  const [showGameIntro, setShowGameIntro] = useState(true);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
@@ -38,7 +38,7 @@ const MathSaya = () => {
   const [showExerciseChoices, setShowExerciseChoices] = useState(false);
   const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
-  const [showProfile, setShowProfile] = useState(true);
+  const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [studentName, setStudentName] = useState({
     firstname: "",
@@ -96,6 +96,8 @@ const MathSaya = () => {
       setCompletedExercises(completedExercises);
       setCompletedLessons(completedLessons);
       setCompletedUnits(completedUnits);
+
+      console.log(completedExercises);
 
       const teacherId = studentData.studentProfile.userId;
       Cookies.set("teach", teacherId);
@@ -345,6 +347,7 @@ const MathSaya = () => {
       {showPlayGame && (
         <PlayGame
           clicking={click_sound}
+          fetchStudentProfile={fetchStudentProfile}
           onProfile={handleProfileClick}
           onSettings={handleSettingsClick}
           onPlay={handlePlayClick}
@@ -378,6 +381,7 @@ const MathSaya = () => {
           onSelect={handleExerciseSelect}
           onBack={handleBackToLessonChoices}
           selectedlesson={selectedlesson}
+          completedExercises={completedExercises}
           server_url={server_url}
         />
       )}
@@ -405,7 +409,6 @@ const MathSaya = () => {
       {showProfile && (
         <Profile
           onBack={handleBackToPlayGame}
-          fetchStudentProfile={fetchStudentProfile}
           studentName={studentName}
           firstLoginDate={firstLoginDate}
           completedExercises={completedExercises}
