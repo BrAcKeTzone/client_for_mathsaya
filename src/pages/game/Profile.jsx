@@ -4,19 +4,12 @@ import backButton from "../../assets/images/back.png";
 
 const Profile = ({
   onBack,
+  fetchStudentProfile,
   studentName,
   firstLoginDate,
   completedExercises,
   completedLessons,
   completedUnits,
-  averageStarRatingPerYunit,
-  averageStarRatingPerLesson,
-  minExercise,
-  maxExercise,
-  minLesson,
-  maxLesson,
-  minYunit,
-  maxYunit,
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -25,6 +18,10 @@ const Profile = ({
     return () => {
       setIsActive(false);
     };
+  }, []);
+
+  useEffect(() => {
+    fetchStudentProfile();
   }, []);
 
   return (

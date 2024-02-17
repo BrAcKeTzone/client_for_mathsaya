@@ -35,10 +35,10 @@ const MathSaya = () => {
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
   const [showLessonChoices, setShowLessonChoices] = useState(false);
-  const [showExerciseChoices, setShowExerciseChoices] = useState(true);
+  const [showExerciseChoices, setShowExerciseChoices] = useState(false);
   const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
+  const [showProfile, setShowProfile] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [studentName, setStudentName] = useState({
     firstname: "",
@@ -48,26 +48,12 @@ const MathSaya = () => {
   const [completedExercises, setCompletedExercises] = useState([]);
   const [completedLessons, setCompletedLessons] = useState([]);
   const [completedUnits, setCompletedUnits] = useState([]);
-  const [averageStarRatingPerYunit, setAverageStarRatingPerYunit] = useState(
-    []
-  );
-  const [averageStarRatingPerLesson, setAverageStarRatingPerLesson] = useState(
-    []
-  );
-  const [minExercise, setMinExercise] = useState(null);
-  const [maxExercise, setMaxExercise] = useState(null);
-  const [minLesson, setMinLesson] = useState(null);
-  const [maxLesson, setMaxLesson] = useState(null);
-  const [minYunit, setMinYunit] = useState(null);
-  const [maxYunit, setMaxYunit] = useState(null);
+
   const [unitChoices, setUnitChoices] = useState([]);
   const [lessonChoices, setLessonChoices] = useState([]);
   const [exerciseChoices, setExerciseChoice] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [dataUnit, setDataUnit] = useState(null);
-  const [dataLesson, setDataLesson] = useState(null);
-  const [dataExercise, setDataExercise] = useState(null);
 
   const bg_music = new Audio(playgameBG);
   const testscreen_loop = new Audio(testscreenLoop);
@@ -92,51 +78,31 @@ const MathSaya = () => {
     }
   }, [studentProfile]);
 
-  useEffect(() => {
-    async function fetchStudentProfile() {
-      try {
-        const response = await axios.get(
-          `${server_url}/sprofile/student-profile/${studentProfileId}`
-        );
-        const studentData = response.data;
+  async function fetchStudentProfile() {
+    try {
+      const response = await axios.get(
+        `${server_url}/sprofile/student-profile/${studentProfileId}`
+      );
+      const studentData = response.data;
 
-        const { firstname, lastname } = studentData.student;
-        const { firstLoginDate } = studentData.studentProfile;
-        const completedExercises = studentData.completedExercises;
-        const completedLessons = studentData.completedLessons;
-        const completedUnits = studentData.completedUnits;
-        const averageStarRatingPerYunit = studentData.averageStarRatingPerYunit;
-        const averageStarRatingPerLesson =
-          studentData.averageStarRatingPerLesson;
-        const minExercise = studentData.minExercise;
-        const maxExercise = studentData.maxExercise;
-        const minLesson = studentData.minLesson;
-        const maxLesson = studentData.maxLesson;
-        const minYunit = studentData.minYunit;
-        const maxYunit = studentData.maxYunit;
+      const { firstname, lastname } = studentData.student;
+      const { firstLoginDate } = studentData.studentProfile;
+      const completedExercises = studentData.completedExercises;
+      const completedLessons = studentData.completedLessons;
+      const completedUnits = studentData.completedUnits;
 
-        setStudentName({ firstname, lastname });
-        setFirstLoginDate({ firstLoginDate });
-        setCompletedExercises(completedExercises);
-        setCompletedLessons(completedLessons);
-        setCompletedUnits(completedUnits);
-        setAverageStarRatingPerYunit(averageStarRatingPerYunit);
-        setAverageStarRatingPerLesson(averageStarRatingPerLesson);
-        setMinExercise(minExercise);
-        setMaxExercise(maxExercise);
-        setMinLesson(minLesson);
-        setMaxLesson(maxLesson);
-        setMinYunit(minYunit);
-        setMaxYunit(maxYunit);
+      setStudentName({ firstname, lastname });
+      setFirstLoginDate({ firstLoginDate });
+      setCompletedExercises(completedExercises);
+      setCompletedLessons(completedLessons);
+      setCompletedUnits(completedUnits);
 
-        const teacherId = studentData.studentProfile.userId;
-        Cookies.set("teach", teacherId);
-      } catch (error) {
-        console.error("Error fetching student profile:", error);
-      }
+      const teacherId = studentData.studentProfile.userId;
+      Cookies.set("teach", teacherId);
+    } catch (error) {
+      console.error("Error fetching student profile:", error);
     }
-    fetchStudentProfile();
-  }, [studentProfile]);
+  }
 
   async function fetchUnits() {
     try {
@@ -181,48 +147,6 @@ const MathSaya = () => {
       setQuestions(questions);
     } catch (error) {
       console.error("Error fetching Questions:", error);
-    }
-  }
-
-  async function saveProgress() {
-    try {
-      const completeDataExercise = {
-        exerciseId: selectedexercise,
-        starRating: score,
-        studentProfileId,
-      };
-      const responseExercise = await axios.post(
-        `${server_url}/sprofile/add-completed-exercise`,
-        completeDataExercise
-      );
-      console.log("Exercise: ", completeDataExercise);
-
-      const completeDataLesson = {
-        lessonId: selectedlesson,
-        starRating: score,
-        studentProfileId,
-      };
-      const responseLesson = await axios.post(
-        `${server_url}/sprofile/add-completed-lesson`,
-        completeDataLesson
-      );
-      console.log("Lesson: ", completeDataLesson);
-
-      const completeDataUnit = {
-        yunitId: selectedunit,
-        starRating: score,
-        studentProfileId,
-      };
-      const responseUnit = await axios.post(
-        `${server_url}/sprofile/add-completed-yunit`,
-        completeDataUnit
-      );
-      console.log("Unit: ", completeDataUnit);
-
-      return { responseExercise, responseLesson, responseUnit };
-    } catch (error) {
-      console.error("Error saving progress:", error);
-      throw error; // Rethrow the error to handle it at a higher level
     }
   }
 
@@ -352,6 +276,56 @@ const MathSaya = () => {
     }
   };
 
+  async function saveExerciseProgress() {
+    try {
+      const completeDataExercise = {
+        exerciseId: selectedexercise,
+        starRating: score,
+        studentProfileId,
+      };
+      const responseExercise = await axios.post(
+        `${server_url}/sprofile/add-completed-exercise`,
+        completeDataExercise
+      );
+      console.log(responseExercise);
+    } catch (error) {
+      console.error("Error saving exercise progress:", error);
+      throw error;
+    }
+  }
+  async function saveLessonProgress() {
+    try {
+      const completeDataLesson = {
+        lessonId: selectedlesson,
+        studentProfileId,
+      };
+      const responseLesson = await axios.post(
+        `${server_url}/sprofile/add-completed-lesson`,
+        completeDataLesson
+      );
+      console.log(responseLesson);
+    } catch (error) {
+      console.error("Error saving lesson progress:", error);
+      throw error;
+    }
+  }
+  async function saveUnitProgress() {
+    try {
+      const completedDataUnit = {
+        yunitId: selectedunit,
+        studentProfileId,
+      };
+      const responseUnit = await axios.post(
+        `${server_url}/sprofile/add-completed-yunit`,
+        completedDataUnit
+      );
+      console.log(responseUnit);
+    } catch (error) {
+      console.error("Error saving unit progress:", error);
+      throw error;
+    }
+  }
+
   return (
     <div className="h-screen flex justify-center items-center overflow-hidden">
       {!showGameIntro && !showTestScreen && !showProfile && !showSettings && (
@@ -423,25 +397,20 @@ const MathSaya = () => {
           selectedAnswers={selectedAnswers}
           clicking={click_sound}
           onBack={handleBackFromGameOver}
-          saveProgress={saveProgress}
+          saveExerciseProgress={saveExerciseProgress}
+          saveLessonProgress={saveLessonProgress}
+          saveUnitProgress={saveUnitProgress}
         />
       )}
       {showProfile && (
         <Profile
           onBack={handleBackToPlayGame}
+          fetchStudentProfile={fetchStudentProfile}
           studentName={studentName}
           firstLoginDate={firstLoginDate}
           completedExercises={completedExercises}
           completedLessons={completedLessons}
           completedUnits={completedUnits}
-          averageStarRatingPerYunit={averageStarRatingPerYunit}
-          averageStarRatingPerLesson={averageStarRatingPerLesson}
-          minExercise={minExercise}
-          maxExercise={maxExercise}
-          minLesson={minLesson}
-          maxLesson={maxLesson}
-          minYunit={minYunit}
-          maxYunit={maxYunit}
         />
       )}
       {showSettings && (
