@@ -4,6 +4,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { GiArmorDowngrade } from "react-icons/gi";
+import { TfiReload } from "react-icons/tfi";
+
 import ModalEditSuperAdmin from "./components/modals/ModalEditSuperAdmin";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
@@ -15,10 +17,8 @@ const AdminList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [adminEntries, setAdminEntries] = useState([]);
   const [totalAdmins, setTotalAdmins] = useState(0);
-  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editAdminId, setEditAdminId] = useState(null);
-  // const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -60,14 +60,6 @@ const AdminList = () => {
       console.error("Error deleting admin:", error);
     }
   };
-
-  // const openAddModal = () => {
-  //   setIsAddModalOpen(true);
-  // };
-
-  // const closeAddModal = () => {
-  //   setIsAddModalOpen(false);
-  // };
 
   const openEditModal = (userId) => {
     setEditAdminId(userId);
@@ -123,12 +115,13 @@ const AdminList = () => {
                   onChange={handleSearch}
                 />
               </div>
-              {/* <button
-                className="bg-white hover:bg-gray-200 p-2 rounded"
-                onClick={openAddModal}
+              <button
+                className="bg-blue-500 md:bg-white hover:bg-blue-300 p-2 rounded"
+                onClick={fetchAdminEntries}
               >
-                <h2>ADD ADMIN</h2>
-              </button> */}
+                <h2 className="hidden md:block">RELOAD</h2>
+                <TfiReload className="block md:hidden text-white hover:text-black" />
+              </button>
             </div>
           )}
         </div>
@@ -144,7 +137,7 @@ const AdminList = () => {
               </div>
               <div className="bg-gray-300 p-1 mb-1 rounded">
                 <span className="text-gray-700 italic text-xs p-2">
-                  Current user can only edit his account.
+                  Warning: Current user cannot demote or delete their account.
                 </span>
               </div>
               <table className="min-w-full bg-white border border-gray-300">

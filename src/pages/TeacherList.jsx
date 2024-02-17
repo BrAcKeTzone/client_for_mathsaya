@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { GiArmorUpgrade } from "react-icons/gi";
+import { TfiReload } from "react-icons/tfi";
 
 import ModalEditSuperTeacher from "./components/modals/ModalEditSuperTeacher";
 
@@ -16,19 +17,9 @@ const TeacherList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [teacherEntries, setTeacherEntries] = useState([]);
   const [totalTeachers, setTotalTeachers] = useState(0);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editTeacherId, setEditTeacherId] = useState(null);
-  const [modalKey, setModalKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-
-  // const openAddModal = () => {
-  //   setIsAddModalOpen(true);
-  // };
-
-  // const closeAddModal = () => {
-  //   setIsAddModalOpen(false);
-  // };
 
   const openEditModal = (userId) => {
     setEditTeacherId(userId);
@@ -114,7 +105,7 @@ const TeacherList = () => {
         <h1 className="text-white text-4xl pt-4 pb-2">TEACHER MANAGEMENT</h1>
         <div className="mx-4 w-full max-w-screen-lg">
           {!isLoading && (
-            <div className="flex justify-between w-full mb-2 pr-2 pl-2">
+            <div className="flex justify-between w-full mb-2 px-2">
               <div className="flex items-center">
                 <input
                   type="text"
@@ -124,12 +115,13 @@ const TeacherList = () => {
                   onChange={handleSearch}
                 />
               </div>
-              {/* <button
-                className="bg-white hover:bg-gray-200 p-2 rounded"
-                onClick={openAddModal}
+              <button
+                className="bg-blue-500 md:bg-white hover:bg-blue-300 p-2 rounded"
+                onClick={fetchTeacherEntries}
               >
-                <h2>ADD TEACHER</h2>
-              </button> */}
+                <h2 className="hidden md:block">RELOAD</h2>
+                <TfiReload className="block md:hidden text-white hover:text-black" />
+              </button>
             </div>
           )}
         </div>
