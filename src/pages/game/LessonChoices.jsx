@@ -56,7 +56,7 @@ const LessonChoices = ({
             onClick={() => handleLessonSelect(lesson)}
           >
             <p className="text-center mb-2 transition-opacity duration-500 hover:opacity-70">
-              {lesson.lessonName}
+              Ikapila nga leksyon: {lesson.lessonNumber}
             </p>
             <img
               src={lesson.lessonThumbnail}
@@ -64,7 +64,7 @@ const LessonChoices = ({
               className="w-64 h-64 cursor-pointer transition-transform duration-500 transform hover:rotate-6"
             />
             <p className="mb-2 transition-opacity duration-500 hover:opacity-70">
-              Ikapila nga leksyon: {lesson.lessonNumber}
+              {lesson.lessonName}
             </p>
           </div>
         ))}

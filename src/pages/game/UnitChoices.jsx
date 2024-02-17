@@ -52,7 +52,10 @@ const UnitChoices = ({
             className="flex flex-col items-center justify-center m-4 transition-transform duration-500 transform hover:scale-105"
             onClick={() => handleUnitSelect(unit)}
           >
-            <p className="text-center mb-2">Yunit {unit.yunitNumber}</p>
+            <p className="text-center mb-2">
+              {" "}
+              Ikapila nga yunit: {unit.yunitNumber}
+            </p>
             <img
               src={unit.yunitThumbnail}
               alt={`Yunit ${unit.yunitNumber} Thumbnail`}
