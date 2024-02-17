@@ -4,7 +4,6 @@ import backButton from "../../assets/images/back.png";
 
 const Profile = ({
   onBack,
-  fetchStudentProfile,
   studentName,
   firstLoginDate,
   completedExercises,
@@ -18,10 +17,6 @@ const Profile = ({
     return () => {
       setIsActive(false);
     };
-  }, []);
-
-  useEffect(() => {
-    fetchStudentProfile();
   }, []);
 
   return (
