@@ -23,7 +23,6 @@ const ModalAddLessonVideo = ({
           `${server_url}/lessons/view/${lessonId}`
         );
         setExistingVideo(response.data.lessonVideo);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching existing video:", error);
       }
@@ -36,7 +35,25 @@ const ModalAddLessonVideo = ({
 
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
-    setSelectedVideo(file);
+
+    const fileSizeLimit = 200 * 1024 * 1024;
+    if (file.size > fileSizeLimit) {
+      alert("File size exceeds the limit of 200MB.");
+      return;
+    }
+
+    const videoElement = document.createElement("video");
+    videoElement.onloadedmetadata = () => {
+      const durationLimit = 5 * 60;
+      if (videoElement.duration > durationLimit) {
+        alert("Video duration exceeds the limit of 5 minutes.");
+        return;
+      }
+
+      setSelectedVideo(file);
+    };
+
+    videoElement.src = URL.createObjectURL(file);
   };
 
   const handleUpload = async () => {
@@ -119,6 +136,9 @@ const ModalAddLessonVideo = ({
         >
           Select Video File:
         </label>
+        <p className="text-sm text-red-500">
+          Warning: Video must not exceed 200MB or 5minutes.
+        </p>
         <input
           type="file"
           id="lessonVideo"
