@@ -21,46 +21,6 @@ const AdminList = () => {
   const [editAdminId, setEditAdminId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    if (!usr) {
-      alert("Session Expired. Re-login.");
-      Navigate("/");
-    } else {
-      setIsLoading(false);
-      fetchAdminEntries();
-    }
-  }, [usr, Navigate]);
-
-  usr = JSON.parse(Cookies.get("SESSION_ID"));
-
-  const fetchAdminEntries = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(`${server_url}/user/admins/${usr.id}`);
-      setAdminEntries(response.data.admin);
-      setTotalAdmins(response.data.adminCount);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDeleteAdmin = async (userId) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this admin?"
-    );
-    if (!isConfirmed) {
-      return;
-    }
-    try {
-      await axios.delete(`${server_url}/user/admin/delete/${userId}`);
-      fetchAdminEntries();
-    } catch (error) {
-      console.error("Error deleting admin:", error);
-    }
-  };
-
   const openEditModal = (userId) => {
     setEditAdminId(userId);
     setIsEditModalOpen(true);
@@ -86,6 +46,46 @@ const AdminList = () => {
       console.log("Admin demoted to Teacher successfully.");
     } catch (error) {
       console.error("Error demoting admin:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!usr) {
+      alert("Session Expired. Re-login.");
+      Navigate("/");
+    } else {
+      setIsLoading(false);
+      fetchAdminEntries();
+    }
+  }, [usr, Navigate]);
+
+  usr = JSON.parse(Cookies.get("SESSION_ID"));
+
+  const fetchAdminEntries = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`${server_url}/user/admins/${usr.id}`);
+      setAdminEntries(response.data.admins);
+      setTotalAdmins(response.data.adminCount);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteAdmin = async (userId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this admin?"
+    );
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      await axios.delete(`${server_url}/user/admin/delete/${userId}`);
+      fetchAdminEntries();
+    } catch (error) {
+      console.error("Error deleting admin:", error);
     }
   };
 
