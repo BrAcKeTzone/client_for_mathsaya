@@ -177,7 +177,6 @@ const AdminList = () => {
                             <button
                               className="bg-blue-500 hover:bg-blue-400 p-2 rounded"
                               onClick={() => {
-                                console.log(admin.UserId);
                                 openEditModal(admin.UserId);
                               }}
                             >

@@ -97,8 +97,6 @@ const MathSaya = () => {
       setCompletedLessons(completedLessons);
       setCompletedUnits(completedUnits);
 
-      console.log(completedExercises);
-
       const teacherId = studentData.studentProfile.userId;
       Cookies.set("teach", teacherId);
     } catch (error) {
@@ -132,7 +130,6 @@ const MathSaya = () => {
         `${server_url}/exercises/${selectedlesson}`
       );
       const exercises = response.data;
-      console.log("Exercises entry: ", exercises);
       setExerciseChoice(exercises);
     } catch (error) {
       console.error("Error fetching Exercises:", error);
@@ -145,7 +142,6 @@ const MathSaya = () => {
         `${server_url}/questions/${selectedexercise}`
       );
       const questions = response.data;
-      console.log("Questions entry: ", questions);
       setQuestions(questions);
     } catch (error) {
       console.error("Error fetching Questions:", error);
@@ -289,7 +285,6 @@ const MathSaya = () => {
         `${server_url}/sprofile/add-completed-exercise`,
         completeDataExercise
       );
-      console.log(responseExercise);
     } catch (error) {
       console.error("Error saving exercise progress:", error);
       throw error;
@@ -305,7 +300,6 @@ const MathSaya = () => {
         `${server_url}/sprofile/add-completed-lesson`,
         completeDataLesson
       );
-      console.log(responseLesson);
     } catch (error) {
       console.error("Error saving lesson progress:", error);
       throw error;
@@ -321,7 +315,6 @@ const MathSaya = () => {
         `${server_url}/sprofile/add-completed-yunit`,
         completedDataUnit
       );
-      console.log(responseUnit);
     } catch (error) {
       console.error("Error saving unit progress:", error);
       throw error;

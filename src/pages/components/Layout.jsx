@@ -4,7 +4,6 @@ import Bottombar from "./Bottombar";
 import Cookies from "js-cookie";
 
 function NavLayout({ children, userRole, server_url, usr }) {
-  // console.log(userRole);
   usr = JSON.parse(Cookies.get("SESSION_ID"));
 
   return (
