@@ -70,10 +70,16 @@ const AdminList = () => {
         params: {
           page: currentPage,
           pageSize: pageSize,
+          searchTerm: searchTerm,
         },
       });
-      setAdminEntries(response.data.admins.rows);
-      setTotalAdmins(response.data.admins.count);
+      if (response.data.admins.rows) {
+        setAdminEntries(response.data.admins.rows);
+        setTotalAdmins(response.data.admins.count);
+      } else {
+        setAdminEntries(response.data.admins);
+        setTotalAdmins(response.data.totalCount);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -96,8 +102,8 @@ const AdminList = () => {
     }
   };
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+  const handleSearch = () => {
+    fetchAdminEntries();
   };
 
   const totalPages = Math.ceil(totalAdmins / pageSize);
@@ -108,7 +114,7 @@ const AdminList = () => {
 
   const handlePageSizeChange = (event) => {
     setPageSize(parseInt(event.target.value));
-    setCurrentPage(1); // Reset to the first page when changing page size
+    setCurrentPage(1);
   };
 
   const handlePreviousPage = () => {
@@ -141,8 +147,14 @@ const AdminList = () => {
                   placeholder="Search..."
                   className="bg-white p-2 rounded border border-gray-300"
                   value={searchTerm}
-                  onChange={handleSearch}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                <button
+                  className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={handleSearch}
+                >
+                  Search
+                </button>
               </div>
               <div className="flex items-center">
                 <span className="mr-2 text-white">Page Size:</span>

@@ -72,11 +72,17 @@ const TeacherList = () => {
           params: {
             page: currentPage,
             pageSize: pageSize,
+            searchTerm: searchTerm,
           },
         }
       );
-      setTeacherEntries(response.data.teachers.rows);
-      setTotalTeachers(response.data.teachers.count);
+      if (response.data.teachers.rows) {
+        setTeacherEntries(response.data.teachers.rows);
+        setTotalTeachers(response.data.teachers.count);
+      } else {
+        setTeacherEntries(response.data.teachers);
+        setTotalTeachers(response.data.totalCount);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -99,8 +105,8 @@ const TeacherList = () => {
     }
   };
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+  const handleSearch = () => {
+    fetchTeacherEntries();
   };
 
   const totalPages = Math.ceil(totalTeachers / pageSize);
@@ -144,8 +150,14 @@ const TeacherList = () => {
                   placeholder="Search..."
                   className="bg-white p-2 rounded border border-gray-300"
                   value={searchTerm}
-                  onChange={handleSearch}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                <button
+                  className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={handleSearch}
+                >
+                  Search
+                </button>
               </div>
               <div className="flex items-center">
                 <span className="mr-2 text-white">Page Size:</span>
