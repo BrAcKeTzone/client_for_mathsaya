@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
-import axios from "axios";
 import skyBackground from "../../assets/images/waterfall.gif";
 import starSpinning from "../../assets/images/star-spinning.gif";
 import wrongGesture from "../../assets/images/wrong.gif";
@@ -114,8 +113,8 @@ const GameOver = ({
       </div>
       <div className="flex flex-col max-w-96">
         <h1 className="text-center text-2xl mb-2 p-1 bg-green-200 bg-opacity-40">
-          Arong makita ang listahan sa tubag, kinahanglan nga pili-on nimo ang
-          eksaktong numero sa mga bituon gikan sa pilianan sa ubos.
+          Aron makita nimo ang listahan sa tubag, kinahanglan nga pili-on nimo
+          ang eksaktong numero sa mga bituon gikan sa pilianan sa ubos.
         </h1>
         <div className="grid grid-cols-4 gap-4">
           {randomNumbers.map((number, index) => (

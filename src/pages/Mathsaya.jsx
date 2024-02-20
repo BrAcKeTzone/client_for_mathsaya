@@ -14,11 +14,30 @@ import QuestionsAnswering from "./game/QuestionsAnswering";
 import GameOver from "./game/GameOver";
 import Profile from "./game/Profile";
 import Settings from "./game/Settings";
-import playgameBG from "../assets/audios/playgameBG.mp3";
-import testscreenLoop from "../assets/audios/voice_lines/testscreen_loop.mp3";
-import welcome from "../assets/audios/voice_lines/testscreen_wlcm_sa_ms.mp3";
-import calmBG from "../assets/audios/settingsBG.mp3";
+import calm from "../assets/audios/calmBG.mp3";
+import testscreenLoop from "../assets/audios/voicelines/testscreen.mp3";
+import welcome from "../assets/audios/voicelines/wlcm.mp3";
+import playprofilesettings from "../assets/audios/playprofilesettings.mp3";
+import profileAudio from "../assets/audios/voicelines/profile.mp3";
+import settingsAudio from "../assets/audios/voicelines/settings.mp3";
+import musicOff from "../assets/audios/voicelines/music_off.mp3";
+import musicOn from "../assets/audios/voicelines/music_on.mp3";
+import voiceOff from "../assets/audios/voicelines/voice_off.mp3";
+import voiceOn from "../assets/audios/voicelines/voice_on.mp3";
+import signoutAudio from "../assets/audios/voicelines/signout.mp3";
+import choicescene from "../assets/audios/choicescene.mp3";
+import unitAudio from "../assets/audios/voicelines/yunitscene.mp3";
+import lessonAudio from "../assets/audios/voicelines/leksyonscene.mp3";
+import exerciseAudio from "../assets/audios/voicelines/tunananscene.mp3";
+import answering from "../assets/audios/answeringMusic.mp3";
+import tickingTimer from "../assets/audios/voicelines/answering_timer.mp3";
+import congratsAudio from "../assets/audios/voicelines/congrats.mp3";
+import gameoverAudio from "../assets/audios/voicelines/gameover.mp3";
+import correctAudio from "../assets/audios/voicelines/gameover_correct.mp3";
+import wrongAudio from "../assets/audios/voicelines/gameover_wrong.mp3";
+import backAudio from "../assets/audios/voicelines/back.mp3";
 import clicksound from "../assets/audios/click_sound.mp3";
+import gameOverMusic from "../assets/audios/gameOverMusic.ogg";
 import { preventRightClickAndHighlight } from "./components/mySystemLogic";
 import Eyeball from "./components/Eyeball";
 
@@ -55,11 +74,30 @@ const MathSaya = () => {
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
 
-  const bg_music = new Audio(playgameBG);
+  const choicesceneBG = new Audio(choicescene);
   const testscreen_loop = new Audio(testscreenLoop);
   const wlcm = new Audio(welcome);
   const click_sound = new Audio(clicksound);
-  const calm_BG = new Audio(calmBG);
+  const calmBG = new Audio(calm);
+  const playprofilesettingsBG = new Audio(playprofilesettings);
+  const answeringBG = new Audio(answering);
+  const gameOverBG = new Audio(gameOverMusic);
+  const prfl = new Audio(profileAudio);
+  const stng = new Audio(settingsAudio);
+  const music_off = new Audio(musicOff);
+  const music_on = new Audio(musicOn);
+  const voice_off = new Audio(voiceOff);
+  const voice_on = new Audio(voiceOn);
+  const signout = new Audio(signoutAudio);
+  const yunitscene = new Audio(unitAudio);
+  const leksyonscene = new Audio(lessonAudio);
+  const tunananscene = new Audio(exerciseAudio);
+  const answering_timer = new Audio(tickingTimer);
+  const congrats = new Audio(congratsAudio);
+  const gameover = new Audio(gameoverAudio);
+  const correct = new Audio(correctAudio);
+  const wrong = new Audio(wrongAudio);
+  const back = new Audio(backAudio);
 
   const studentProfile = Cookies.get("STUDENT_SESSION");
   const studentProfileId = studentProfile
@@ -77,6 +115,161 @@ const MathSaya = () => {
       Navigate("/login");
     }
   }, [studentProfile]);
+
+  useEffect(() => {
+    if (!showTestScreen || !soundState) {
+      calmBG.pause();
+      calmBG.currentTime = 0;
+      return;
+    }
+    calmBG.loop = true;
+    calmBG.currentTime = 0;
+    calmBG.volume = 0.4;
+    calmBG.play();
+    return () => {
+      calmBG.pause();
+      calmBG.currentTime = 0;
+    };
+  }, [showTestScreen]);
+
+  useEffect(() => {
+    if (!showPlayGame || !audioState) {
+      wlcm.pause();
+      wlcm.currentTime = 0;
+    } else {
+      wlcm.volume = 1;
+      wlcm.play();
+    }
+  }, [showPlayGame]);
+
+  useEffect(() => {
+    if (!showProfile || !audioState) {
+      prfl.pause();
+      prfl.currentTime = 0;
+    } else {
+      prfl.volume = 1;
+      prfl.play();
+    }
+  }, [showProfile]);
+
+  useEffect(() => {
+    if (!showSettings || !audioState) {
+      stng.pause();
+      stng.currentTime = 0;
+    } else {
+      stng.volume = 1;
+      stng.play();
+    }
+  }, [showSettings]);
+
+  useEffect(() => {
+    if ((!showPlayGame && !showProfile && !showSettings) || !soundState) {
+      playprofilesettingsBG.pause();
+      playprofilesettingsBG.currentTime = 0;
+      return;
+    }
+    playprofilesettingsBG.loop = true;
+    playprofilesettingsBG.currentTime = 0;
+    playprofilesettingsBG.volume = 0.1;
+    playprofilesettingsBG.play();
+    return () => {
+      playprofilesettingsBG.pause();
+      playprofilesettingsBG.currentTime = 0;
+    };
+  }, [showPlayGame, showProfile, showSettings]);
+
+  useEffect(() => {
+    if (!showUnitChoices || !audioState) {
+      yunitscene.pause();
+      yunitscene.currentTime = 0;
+    } else {
+      yunitscene.volume = 1;
+      yunitscene.play();
+    }
+  }, [showUnitChoices]);
+
+  useEffect(() => {
+    if (!showLessonChoices || !audioState) {
+      leksyonscene.pause();
+      leksyonscene.currentTime = 0;
+    } else {
+      leksyonscene.volume = 1;
+      leksyonscene.play();
+    }
+  }, [showLessonChoices]);
+
+  useEffect(() => {
+    if (!showExerciseChoices || !audioState) {
+      tunananscene.pause();
+      tunananscene.currentTime = 0;
+    } else {
+      tunananscene.volume = 1;
+      tunananscene.play();
+    }
+  }, [showExerciseChoices]);
+
+  useEffect(() => {
+    if (
+      (!showUnitChoices && !showLessonChoices && !showExerciseChoices) ||
+      !soundState
+    ) {
+      choicesceneBG.pause();
+      choicesceneBG.currentTime = 0;
+      return;
+    }
+    choicesceneBG.loop = true;
+    choicesceneBG.currentTime = 2;
+    choicesceneBG.volume = 0.1;
+    choicesceneBG.play();
+    return () => {
+      choicesceneBG.pause();
+      choicesceneBG.currentTime = 0;
+    };
+  }, [showUnitChoices, showLessonChoices, showExerciseChoices]);
+
+  useEffect(() => {
+    if (!showQuestionsAnswering || !soundState) {
+      answeringBG.pause();
+      answeringBG.currentTime = 0;
+      return;
+    }
+    answeringBG.loop = true;
+    answeringBG.currentTime = 0;
+    answeringBG.volume = 0.2;
+    answeringBG.play();
+    return () => {
+      answeringBG.pause();
+      answeringBG.currentTime = 0;
+    };
+  }, [showQuestionsAnswering]);
+
+  useEffect(() => {
+    if (!showGameOver || !audioState) {
+      gameover.pause();
+      congrats.pause();
+      congrats.currentTime = 0;
+    } else {
+      congrats.volume = 1;
+      gameover.volume = 1;
+      congrats.play().then(gameover.play());
+    }
+  }, [showGameOver]);
+
+  useEffect(() => {
+    if (!showGameOver || !soundState) {
+      gameOverBG.pause();
+      gameOverBG.currentTime = 0;
+      return;
+    }
+    gameOverBG.loop = true;
+    gameOverBG.currentTime = 0;
+    gameOverBG.volume = 0.4;
+    gameOverBG.play();
+    return () => {
+      gameOverBG.pause();
+      gameOverBG.currentTime = 0;
+    };
+  }, [showGameOver]);
 
   async function fetchStudentProfile() {
     try {
@@ -158,7 +351,7 @@ const MathSaya = () => {
   };
 
   const handleIntroComplete = () => {
-    click_sound.play();
+    // click_sound.play();
     initializeLocalStorage();
 
     setShowGameIntro(false);
@@ -166,63 +359,63 @@ const MathSaya = () => {
   };
 
   const handleContinueClick = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowTestScreen(false);
     setShowPlayGame(true);
   };
 
   const handlePlayClick = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowPlayGame(false);
     setShowUnitChoices(true);
   };
 
   const handleUnitSelect = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowUnitChoices(false);
     setShowLessonChoices(true);
   };
 
   const handleLessonSelect = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowLessonChoices(false);
     setShowExerciseChoices(true);
   };
 
   const handleExerciseSelect = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowExerciseChoices(false);
     setShowQuestionsAnswering(true);
   };
 
   const handleGameOverClick = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowQuestionsAnswering(false);
     setShowGameOver(true);
   };
 
   const handleProfileClick = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowPlayGame(false);
     setShowProfile(true);
   };
 
   const handleSettingsClick = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowPlayGame(false);
     setShowSettings(true);
   };
 
   const handleBackToPlayGame = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowProfile(false);
     setShowSettings(false);
@@ -230,28 +423,28 @@ const MathSaya = () => {
   };
 
   const handleBackToMainMenu = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowUnitChoices(false);
     setShowPlayGame(true);
   };
 
   const handleBackToUnitChoices = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowLessonChoices(false);
     setShowUnitChoices(true);
   };
 
   const handleBackToLessonChoices = () => {
-    click_sound.play();
+    // click_sound.play();
 
     setShowExerciseChoices(false);
     setShowLessonChoices(true);
   };
 
   const handleBackFromGameOver = () => {
-    click_sound.play();
+    // click_sound.play();
 
     sessionStorage.removeItem("score");
     setShowGameOver(false);
@@ -348,9 +541,9 @@ const MathSaya = () => {
       )}
       {showUnitChoices && (
         <UnitChoices
+          backSound={back}
           fetchUnits={fetchUnits}
           unitChoices={unitChoices}
-          clicking={click_sound}
           onSelect={handleUnitSelect}
           onBack={handleBackToMainMenu}
           teacherId={teacherId}
@@ -358,9 +551,9 @@ const MathSaya = () => {
       )}
       {showLessonChoices && (
         <LessonChoices
+          backSound={back}
           fetchLessons={fetchLessons}
           lessonChoices={lessonChoices}
-          clicking={click_sound}
           onSelect={handleLessonSelect}
           onBack={handleBackToUnitChoices}
           selectedunit={selectedunit}
@@ -368,9 +561,9 @@ const MathSaya = () => {
       )}
       {showExerciseChoices && (
         <ExerciseChoices
+          backSound={back}
           fetchExercises={fetchExercises}
           exerciseChoices={exerciseChoices}
-          clicking={click_sound}
           onSelect={handleExerciseSelect}
           onBack={handleBackToLessonChoices}
           selectedlesson={selectedlesson}
@@ -380,6 +573,7 @@ const MathSaya = () => {
       )}
       {showQuestionsAnswering && (
         <QuestionsAnswering
+          answering_timer={answering_timer}
           fetchQuestions={fetchQuestions}
           questions={questions}
           setSelectedAnswers={setSelectedAnswers}
@@ -390,6 +584,8 @@ const MathSaya = () => {
       )}
       {showGameOver && (
         <GameOver
+          correct={correct}
+          wrong={wrong}
           questions={questions}
           selectedAnswers={selectedAnswers}
           clicking={click_sound}
@@ -401,6 +597,7 @@ const MathSaya = () => {
       )}
       {showProfile && (
         <Profile
+          backSound={back}
           onBack={handleBackToPlayGame}
           studentName={studentName}
           firstLoginDate={firstLoginDate}
@@ -411,6 +608,7 @@ const MathSaya = () => {
       )}
       {showSettings && (
         <Settings
+          backSound={back}
           clicking={click_sound}
           onBack={handleBackToPlayGame}
           audioState={audioState}
