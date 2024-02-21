@@ -47,7 +47,9 @@ const ModalAddLesson = ({
         .required("Required ang picture")
         .test("fileFormat", "Unsupported File Format", (value) => {
           if (value) {
-            return ["image/jpeg", "image/png"].includes(value.type);
+            return ["image/jpeg", "image/png", "image/gif"].includes(
+              value.type
+            );
           }
           return false;
         }),

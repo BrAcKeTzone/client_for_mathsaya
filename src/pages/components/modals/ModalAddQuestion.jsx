@@ -64,7 +64,7 @@ const ModalAddQuestion = ({
           if (value === null) {
             return true;
           }
-          return ["image/jpeg", "image/png"].includes(value.type);
+          return ["image/jpeg", "image/png", "image/gif"].includes(value.type);
         }),
     }),
     onSubmit: async (values, { resetForm }) => {
