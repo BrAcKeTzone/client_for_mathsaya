@@ -28,6 +28,7 @@ import signoutAudio from "../assets/audios/voicelines/signout.mp3";
 import choicescene from "../assets/audios/choicescene.mp3";
 import unitAudio from "../assets/audios/voicelines/yunitscene.mp3";
 import lessonAudio from "../assets/audios/voicelines/leksyonscene.mp3";
+import videoDiskasyon from "../assets/audios/voicelines/hover_leksyon_diskasyon.mp3";
 import exerciseAudio from "../assets/audios/voicelines/tunananscene.mp3";
 import answering from "../assets/audios/answeringMusic.mp3";
 import tickingTimer from "../assets/audios/voicelines/answering_timer.mp3";
@@ -38,6 +39,8 @@ import wrongAudio from "../assets/audios/voicelines/gameover_wrong.mp3";
 import backAudio from "../assets/audios/voicelines/back.mp3";
 import clicksound from "../assets/audios/click_sound.mp3";
 import gameOverMusic from "../assets/audios/gameOverMusic.ogg";
+import agayAudio from "../assets/audios/voicelines/agay.mp3";
+import agayAudio2 from "../assets/audios/voicelines/agay_bah.mp3";
 import { preventRightClickAndHighlight } from "./components/mySystemLogic";
 import Eyeball from "./components/Eyeball";
 
@@ -91,6 +94,7 @@ const MathSaya = () => {
   const signout = new Audio(signoutAudio);
   const yunitscene = new Audio(unitAudio);
   const leksyonscene = new Audio(lessonAudio);
+  const videoDiscussion = new Audio(videoDiskasyon);
   const tunananscene = new Audio(exerciseAudio);
   const answering_timer = new Audio(tickingTimer);
   const congrats = new Audio(congratsAudio);
@@ -98,6 +102,8 @@ const MathSaya = () => {
   const correct = new Audio(correctAudio);
   const wrong = new Audio(wrongAudio);
   const back = new Audio(backAudio);
+  const agay = new Audio(agayAudio);
+  const agay2 = new Audio(agayAudio2);
 
   const studentProfile = Cookies.get("STUDENT_SESSION");
   const studentProfileId = studentProfile
@@ -133,36 +139,6 @@ const MathSaya = () => {
   }, [showTestScreen]);
 
   useEffect(() => {
-    if (!showPlayGame || !audioState) {
-      wlcm.pause();
-      wlcm.currentTime = 0;
-    } else {
-      wlcm.volume = 1;
-      wlcm.play();
-    }
-  }, [showPlayGame]);
-
-  useEffect(() => {
-    if (!showProfile || !audioState) {
-      prfl.pause();
-      prfl.currentTime = 0;
-    } else {
-      prfl.volume = 1;
-      prfl.play();
-    }
-  }, [showProfile]);
-
-  useEffect(() => {
-    if (!showSettings || !audioState) {
-      stng.pause();
-      stng.currentTime = 0;
-    } else {
-      stng.volume = 1;
-      stng.play();
-    }
-  }, [showSettings]);
-
-  useEffect(() => {
     if ((!showPlayGame && !showProfile && !showSettings) || !soundState) {
       playprofilesettingsBG.pause();
       playprofilesettingsBG.currentTime = 0;
@@ -177,36 +153,6 @@ const MathSaya = () => {
       playprofilesettingsBG.currentTime = 0;
     };
   }, [showPlayGame, showProfile, showSettings]);
-
-  useEffect(() => {
-    if (!showUnitChoices || !audioState) {
-      yunitscene.pause();
-      yunitscene.currentTime = 0;
-    } else {
-      yunitscene.volume = 1;
-      yunitscene.play();
-    }
-  }, [showUnitChoices]);
-
-  useEffect(() => {
-    if (!showLessonChoices || !audioState) {
-      leksyonscene.pause();
-      leksyonscene.currentTime = 0;
-    } else {
-      leksyonscene.volume = 1;
-      leksyonscene.play();
-    }
-  }, [showLessonChoices]);
-
-  useEffect(() => {
-    if (!showExerciseChoices || !audioState) {
-      tunananscene.pause();
-      tunananscene.currentTime = 0;
-    } else {
-      tunananscene.volume = 1;
-      tunananscene.play();
-    }
-  }, [showExerciseChoices]);
 
   useEffect(() => {
     if (
@@ -242,18 +188,6 @@ const MathSaya = () => {
       answeringBG.currentTime = 0;
     };
   }, [showQuestionsAnswering]);
-
-  useEffect(() => {
-    if (!showGameOver || !audioState) {
-      gameover.pause();
-      congrats.pause();
-      congrats.currentTime = 0;
-    } else {
-      congrats.volume = 1;
-      gameover.volume = 1;
-      congrats.play().then(gameover.play());
-    }
-  }, [showGameOver]);
 
   useEffect(() => {
     if (!showGameOver || !soundState) {
@@ -359,29 +293,49 @@ const MathSaya = () => {
   };
 
   const handleContinueClick = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      wlcm.pause();
+      wlcm.currentTime = 0;
+    } else {
+      wlcm.volume = 1;
+      wlcm.play();
+    }
     setShowTestScreen(false);
     setShowPlayGame(true);
   };
 
   const handlePlayClick = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      yunitscene.pause();
+      yunitscene.currentTime = 0;
+    } else {
+      yunitscene.volume = 1;
+      yunitscene.play();
+    }
     setShowPlayGame(false);
     setShowUnitChoices(true);
   };
 
   const handleUnitSelect = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      leksyonscene.pause();
+      leksyonscene.currentTime = 0;
+    } else {
+      leksyonscene.volume = 1;
+      leksyonscene.play();
+    }
     setShowUnitChoices(false);
     setShowLessonChoices(true);
   };
 
   const handleLessonSelect = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      tunananscene.pause();
+      tunananscene.currentTime = 0;
+    } else {
+      tunananscene.volume = 1;
+      tunananscene.play();
+    }
     setShowLessonChoices(false);
     setShowExerciseChoices(true);
   };
@@ -394,37 +348,50 @@ const MathSaya = () => {
   };
 
   const handleGameOverClick = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      gameover.pause();
+      congrats.pause();
+      congrats.currentTime = 0;
+    } else {
+      congrats.volume = 1;
+      gameover.volume = 1;
+      congrats.play().then(gameover.play());
+    }
     setShowQuestionsAnswering(false);
     setShowGameOver(true);
   };
 
   const handleProfileClick = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      prfl.pause();
+      prfl.currentTime = 0;
+    } else {
+      prfl.volume = 1;
+      prfl.play();
+    }
     setShowPlayGame(false);
     setShowProfile(true);
   };
 
   const handleSettingsClick = () => {
-    // click_sound.play();
-
+    if (!audioState) {
+      stng.pause();
+      stng.currentTime = 0;
+    } else {
+      stng.volume = 1;
+      stng.play();
+    }
     setShowPlayGame(false);
     setShowSettings(true);
   };
 
   const handleBackToPlayGame = () => {
-    // click_sound.play();
-
     setShowProfile(false);
     setShowSettings(false);
     setShowPlayGame(true);
   };
 
   const handleBackToMainMenu = () => {
-    // click_sound.play();
-
     setShowUnitChoices(false);
     setShowPlayGame(true);
   };
@@ -518,7 +485,7 @@ const MathSaya = () => {
     <div className="h-screen flex justify-center items-center overflow-hidden">
       {!showGameIntro && !showTestScreen && !showProfile && !showSettings && (
         <div className="fixed top-0">
-          <Eyeball />
+          <Eyeball agay={agay} agaybah={agay2} />
         </div>
       )}
       {showGameIntro && (
@@ -562,6 +529,7 @@ const MathSaya = () => {
       {showExerciseChoices && (
         <ExerciseChoices
           backSound={back}
+          videoDiscussion={videoDiscussion}
           fetchExercises={fetchExercises}
           exerciseChoices={exerciseChoices}
           onSelect={handleExerciseSelect}
@@ -609,6 +577,11 @@ const MathSaya = () => {
       {showSettings && (
         <Settings
           backSound={back}
+          music_off={music_off}
+          music_on={music_on}
+          voice_off={voice_off}
+          voice_on={voice_on}
+          signout={signout}
           clicking={click_sound}
           onBack={handleBackToPlayGame}
           audioState={audioState}

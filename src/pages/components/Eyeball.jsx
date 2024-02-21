@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-const Eyeball = () => {
+const Eyeball = ({ agay, agaybah }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [irisPositionLeft, setIrisPositionLeft] = useState({ x: 0, y: 0 });
   const [irisPositionRight, setIrisPositionRight] = useState({ x: 0, y: 0 });
+  const [clickCount, setClickCount] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -66,7 +67,13 @@ const Eyeball = () => {
   }, []);
 
   const handleClick = () => {
+    if (clickCount === 0) {
+      agay.play();
+    } else {
+      agaybah.play();
+    }
     setIsVisible(false);
+    setClickCount((prevCount) => prevCount + 1);
     setTimeout(() => {
       setIsVisible(true);
     }, 1000);

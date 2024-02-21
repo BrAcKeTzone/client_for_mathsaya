@@ -4,6 +4,7 @@ import skyBackground from "../../assets/images/sky.gif";
 import { GrPrevious, GrNext } from "react-icons/gr";
 
 const UnitChoices = ({
+  backSound,
   unitChoices,
   onBack,
   onSelect,
@@ -92,12 +93,14 @@ const UnitChoices = ({
           <GrNext className="text-5xl" />
         </button>
       </div>
-      <div
-        className="absolute top-5 left-5 cursor-pointer transition-opacity duration-500 hover:opacity-70"
+      <button
+        className="absolute top-0 left-0 m-4"
         onClick={onBack}
+        onMouseEnter={() => backSound.play()}
+        onTouchStart={() => backSound.play()}
       >
-        <img src={backLogo} alt="Back Logo" className="w-16 h-16" />
-      </div>
+        <img src={backLogo} alt="Back" className="w-16 h-16" />
+      </button>
     </div>
   );
 };

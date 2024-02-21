@@ -4,6 +4,7 @@ import backButton from "../../assets/images/back.png";
 
 const Profile = ({
   onBack,
+  backSound,
   studentName,
   firstLoginDate,
   completedExercises,
@@ -95,7 +96,12 @@ const Profile = ({
           </div>
         </div>
         {/* Back button */}
-        <button className="absolute top-0 left-0 m-4" onClick={onBack}>
+        <button
+          className="absolute top-0 left-0 m-4"
+          onClick={onBack}
+          onMouseEnter={() => backSound.play()}
+          onTouchStart={() => backSound.play()}
+        >
           <img src={backButton} alt="Back" className="w-16 h-16" />
         </button>
       </div>

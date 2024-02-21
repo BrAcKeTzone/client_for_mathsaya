@@ -9,7 +9,13 @@ import sky from "../../assets/images/sky.gif";
 
 const Settings = ({
   clicking,
+  music_off,
+  music_on,
+  voice_off,
+  voice_on,
+  signout,
   onBack,
+  backSound,
   audioState,
   soundState,
   setAudioState,
@@ -26,14 +32,14 @@ const Settings = ({
   }, []);
 
   const handleVoiceToggle = () => {
-    clicking.play();
+    audioState ? voice_off.play() : voice_on.play();
     const newState = !audioState;
     setAudioState(newState);
     localStorage.setItem("voice", newState);
   };
 
   const handleSoundToggle = () => {
-    clicking.play();
+    soundState ? music_off.play() : music_on.play();
     const newState = !soundState;
     setSoundState(newState);
     localStorage.setItem("music", newState);
@@ -75,13 +81,20 @@ const Settings = ({
               alt="Signout Logo"
               className="w-32 h-32 cursor-pointer"
               onClick={handleSignout}
+              onMouseEnter={() => signout.play()}
+              onTouchStart={() => signout.play()}
             />
             {/* <p className="mt-2">Signout</p> */}
           </div>
         </div>
-        <div className="absolute top-5 left-5 cursor-pointer" onClick={onBack}>
-          <img src={backLogo} alt="Back Logo" className="w-16 h-16" />
-        </div>
+        <button
+          className="absolute top-0 left-0 m-4"
+          onClick={onBack}
+          onMouseEnter={() => backSound.play()}
+          onTouchStart={() => backSound.play()}
+        >
+          <img src={backLogo} alt="Back" className="w-16 h-16" />
+        </button>
       </div>
     </div>
   );
