@@ -45,6 +45,11 @@ const Settings = ({
     localStorage.setItem("music", newState);
   };
 
+  const signoutPrompt = () => {
+    signout.play();
+    handleSignout();
+  };
+
   return (
     <div
       className={`min-h-screen w-full flex justify-center items-center overflow-hidden p-10 bg-cover ${
@@ -80,9 +85,7 @@ const Settings = ({
               src={signoutLogo}
               alt="Signout Logo"
               className="w-32 h-32 cursor-pointer"
-              onClick={handleSignout}
-              onMouseEnter={() => signout.play()}
-              onTouchStart={() => signout.play()}
+              onClick={signoutPrompt}
             />
             {/* <p className="mt-2">Signout</p> */}
           </div>
