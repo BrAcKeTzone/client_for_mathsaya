@@ -16,6 +16,8 @@ const ExerciseChoices = ({
   completedExercises,
 }) => {
   const [isActive, setIsActive] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [lastClickedIndex, setLastClickedIndex] = useState(null);
 
   useEffect(() => {
     setIsActive(true);
@@ -46,15 +48,29 @@ const ExerciseChoices = ({
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleExerciseSelect = (exercise) => {
-    sessionStorage.setItem("selectedexercise", exercise.exerciseId);
-    onSelect(exercise);
-  };
-
   const isCompleted = (exerciseId) => {
     return completedExercises.some(
       (completedExercise) => completedExercise.exerciseId === exerciseId
     );
+  };
+
+  const handleExerciseClick = (index, exercise) => {
+    if (lastClickedIndex !== index) {
+      responsiveVoice.speak(
+        exercise.exerciseName +
+          ". Kini ang gipahimong pamaagi. " +
+          exercise.exerciseDescription,
+        "Filipino Female"
+      );
+      setClickCount(1);
+    } else {
+      if (clickCount === 1) {
+        sessionStorage.setItem("selectedexercise", exercise.exerciseId);
+        onSelect(exercise);
+      }
+      setClickCount(0);
+    }
+    setLastClickedIndex(index);
   };
 
   return (
@@ -93,7 +109,7 @@ const ExerciseChoices = ({
             onClick={
               isCompleted(exercise.exerciseId)
                 ? null
-                : () => handleExerciseSelect(exercise)
+                : () => handleExerciseClick(index, exercise)
             }
           >
             <p className="text-center mb-2 transition-opacity duration-500 hover:opacity-70">

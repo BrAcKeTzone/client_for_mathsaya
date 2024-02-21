@@ -13,6 +13,8 @@ const LessonChoices = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isActive, setIsActive] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [lastClickedIndex, setLastClickedIndex] = useState(null);
 
   useEffect(() => {
     setIsActive(true);
@@ -32,11 +34,24 @@ const LessonChoices = ({
     indexOfLastEntry
   );
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    setClickCount(0); // Reset click count when navigating to a different page
+    setLastClickedIndex(null); // Reset last clicked index when navigating to a different page
+  };
 
-  const handleLessonSelect = (lesson) => {
-    sessionStorage.setItem("selectedlesson", lesson.lessonId);
-    onSelect(lesson);
+  const handleLessonClick = (index, lesson) => {
+    if (lastClickedIndex !== index) {
+      responsiveVoice.speak(lesson.lessonName, "Filipino Female");
+      setClickCount(1);
+    } else {
+      if (clickCount === 1) {
+        sessionStorage.setItem("selectedlesson", lesson.lessonId);
+        onSelect(lesson);
+      }
+      setClickCount(0);
+    }
+    setLastClickedIndex(index);
   };
 
   return (
@@ -54,7 +69,7 @@ const LessonChoices = ({
           <div
             key={index}
             className="flex flex-col items-center justify-center m-4 transition-transform duration-500 transform hover:scale-105"
-            onClick={() => handleLessonSelect(lesson)}
+            onClick={() => handleLessonClick(index, lesson)}
           >
             <p className="text-center mb-2 transition-opacity duration-500 hover:opacity-70">
               Ikapila nga leksyon: {lesson.lessonNumber}

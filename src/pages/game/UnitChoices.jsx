@@ -13,6 +13,8 @@ const UnitChoices = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isActive, setIsActive] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [lastClickedIndex, setLastClickedIndex] = useState(null);
 
   useEffect(() => {
     setIsActive(true);
@@ -29,11 +31,24 @@ const UnitChoices = ({
   const indexOfFirstEntry = indexOfLastEntry - 1;
   const currentEntries = unitChoices.slice(indexOfFirstEntry, indexOfLastEntry);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    setClickCount(0); // Reset click count when navigating to a different page
+    setLastClickedIndex(null); // Reset last clicked index when navigating to a different page
+  };
 
-  const handleUnitSelect = (unit) => {
-    sessionStorage.setItem("selectedunit", unit.yunitId);
-    onSelect(unit);
+  const handleUnitClick = (index, unit) => {
+    if (lastClickedIndex !== index) {
+      responsiveVoice.speak(unit.yunitName, "Filipino Female");
+      setClickCount(1); // Set click count to 1 for the first click
+    } else {
+      if (clickCount === 1) {
+        sessionStorage.setItem("selectedunit", unit.yunitId);
+        onSelect(unit);
+      }
+      setClickCount(0);
+    }
+    setLastClickedIndex(index);
   };
 
   return (
@@ -51,7 +66,7 @@ const UnitChoices = ({
           <div
             key={index}
             className="flex flex-col items-center justify-center m-4 transition-transform duration-500 transform hover:scale-105"
-            onClick={() => handleUnitSelect(unit)}
+            onClick={() => handleUnitClick(index, unit)}
           >
             <p className="text-center mb-2">
               {" "}

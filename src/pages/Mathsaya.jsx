@@ -52,13 +52,13 @@ const MathSaya = () => {
   }, []);
 
   const Navigate = useNavigate();
-  const [showGameIntro, setShowGameIntro] = useState(true);
+  const [showGameIntro, setShowGameIntro] = useState(false);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
   const [showLessonChoices, setShowLessonChoices] = useState(false);
   const [showExerciseChoices, setShowExerciseChoices] = useState(false);
-  const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
+  const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(true);
   const [showGameOver, setShowGameOver] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -349,13 +349,11 @@ const MathSaya = () => {
 
   const handleGameOverClick = () => {
     if (!audioState) {
-      gameover.pause();
       congrats.pause();
       congrats.currentTime = 0;
     } else {
       congrats.volume = 1;
-      gameover.volume = 1;
-      congrats.play().then(gameover.play());
+      congrats.play();
     }
     setShowQuestionsAnswering(false);
     setShowGameOver(true);
@@ -554,6 +552,7 @@ const MathSaya = () => {
         <GameOver
           correct={correct}
           wrong={wrong}
+          gameover={gameover}
           questions={questions}
           selectedAnswers={selectedAnswers}
           clicking={click_sound}

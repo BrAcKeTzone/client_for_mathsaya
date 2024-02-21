@@ -13,6 +13,9 @@ const GameOver = ({
   saveExerciseProgress,
   saveLessonProgress,
   saveUnitProgress,
+  correct,
+  wrong,
+  gameover,
 }) => {
   const [starsCount, setStarsCount] = useState(0);
   const [randomNumbers, setRandomNumbers] = useState([]);
@@ -68,17 +71,23 @@ const GameOver = ({
 
   const handleNumberClick = (number) => {
     if (number === starsCount) {
+      correct.play();
       setShowHappyGesture(true);
       setTimeout(() => {
         setShowHappyGesture(false);
         setShowExplanationModal(true);
       }, 2000);
     } else {
+      wrong.play();
       setShowWrongGesture(true);
       setTimeout(() => {
         setShowWrongGesture(false);
       }, 2000);
     }
+  };
+
+  const handleGameOverClick = () => {
+    gameover.play();
   };
 
   return (
@@ -112,7 +121,10 @@ const GameOver = ({
         ))}
       </div>
       <div className="flex flex-col max-w-96">
-        <h1 className="text-center text-2xl mb-2 p-1 bg-green-200 bg-opacity-40">
+        <h1
+          className="text-center text-2xl mb-2 p-1 bg-green-200 bg-opacity-40 cursor-pointer"
+          onClick={handleGameOverClick}
+        >
           Aron makita nimo ang listahan sa tubag, kinahanglan nga pili-on nimo
           ang eksaktong numero sa mga bituon gikan sa pilianan sa ubos.
         </h1>
