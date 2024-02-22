@@ -14,6 +14,7 @@ const ExerciseChoices = ({
   selectedlesson,
   server_url,
   completedExercises,
+  fetchStudentProfile,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [clickCount, setClickCount] = useState(0);
@@ -28,10 +29,13 @@ const ExerciseChoices = ({
 
   useEffect(() => {
     fetchExercises();
+    fetchStudentProfile();
   }, [selectedlesson]);
 
   const handleViewLessonVideoButtonClick = () => {
-    videoDiscussion.play();
+    if (localStorage.getItem("voice") === "true") {
+      videoDiscussion.play();
+    }
     setIsViewLessonVideoModalOpen(true);
   };
 
@@ -56,12 +60,14 @@ const ExerciseChoices = ({
 
   const handleExerciseClick = (index, exercise) => {
     if (lastClickedIndex !== index) {
-      responsiveVoice.speak(
-        exercise.exerciseName +
-          ". Kini ang gipahimong pamaagi. " +
-          exercise.exerciseDescription,
-        "Filipino Female"
-      );
+      if (localStorage.getItem("voice") === "true") {
+        responsiveVoice.speak(
+          exercise.exerciseName +
+            ". Kini ang gipahimong pamaagi. " +
+            exercise.exerciseDescription,
+          "Filipino Female"
+        );
+      }
       setClickCount(1);
     } else {
       if (clickCount === 1) {
@@ -71,6 +77,13 @@ const ExerciseChoices = ({
       setClickCount(0);
     }
     setLastClickedIndex(index);
+  };
+
+  const handleBackClick = () => {
+    if (localStorage.getItem("voice") === "true") {
+      backSound.play();
+    }
+    onBack();
   };
 
   return (
@@ -152,12 +165,7 @@ const ExerciseChoices = ({
           <GrNext className="text-5xl" />
         </button>
       </div>
-      <button
-        className="absolute top-0 left-0 m-4"
-        onClick={onBack}
-        onMouseEnter={() => backSound.play()}
-        onTouchStart={() => backSound.play()}
-      >
+      <button className="absolute top-0 left-0 m-4" onClick={handleBackClick}>
         <img src={backLogo} alt="Back" className="w-16 h-16" />
       </button>
     </div>

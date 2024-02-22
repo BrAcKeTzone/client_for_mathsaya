@@ -41,6 +41,7 @@ import clicksound from "../assets/audios/click_sound.mp3";
 import gameOverMusic from "../assets/audios/gameOverMusic.ogg";
 import agayAudio from "../assets/audios/voicelines/agay.mp3";
 import agayAudio2 from "../assets/audios/voicelines/agay_bah.mp3";
+import healchoir from "../assets/audios/healchoir.wav";
 import { preventRightClickAndHighlight } from "./components/mySystemLogic";
 import Eyeball from "./components/Eyeball";
 
@@ -52,13 +53,13 @@ const MathSaya = () => {
   }, []);
 
   const Navigate = useNavigate();
-  const [showGameIntro, setShowGameIntro] = useState(false);
+  const [showGameIntro, setShowGameIntro] = useState(true);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
   const [showLessonChoices, setShowLessonChoices] = useState(false);
   const [showExerciseChoices, setShowExerciseChoices] = useState(false);
-  const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(true);
+  const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -104,6 +105,7 @@ const MathSaya = () => {
   const back = new Audio(backAudio);
   const agay = new Audio(agayAudio);
   const agay2 = new Audio(agayAudio2);
+  const healChoir = new Audio(healchoir);
 
   const studentProfile = Cookies.get("STUDENT_SESSION");
   const studentProfileId = studentProfile
@@ -285,7 +287,7 @@ const MathSaya = () => {
   };
 
   const handleIntroComplete = () => {
-    // click_sound.play();
+    healChoir.play();
     initializeLocalStorage();
 
     setShowGameIntro(false);
@@ -528,6 +530,7 @@ const MathSaya = () => {
         <ExerciseChoices
           backSound={back}
           videoDiscussion={videoDiscussion}
+          fetchStudentProfile={fetchStudentProfile}
           fetchExercises={fetchExercises}
           exerciseChoices={exerciseChoices}
           onSelect={handleExerciseSelect}

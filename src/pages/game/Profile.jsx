@@ -56,11 +56,17 @@ const Profile = ({
               </p>
               <div className="bg-green-200 rounded p-2 max-h-80 overflow-y-auto">
                 {completedExercises.map((exercise, index) => (
-                  <p
+                  <div
                     key={index}
-                    className="text-base text-center text-green-900"
-                  >{`${exercise.Exercise.exercisesName} - Ihap sa Bituon
-                    : ${exercise.starRating} ⭐`}</p>
+                    className="flex flex-col justify-center items-center"
+                  >
+                    <span className="text-base text-green-900">
+                      {exercise.Exercise.exerciseName}
+                    </span>
+                    <span className="text-base text-green-900">
+                      Ihap sa Bituon : {exercise.starRating} ⭐
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>

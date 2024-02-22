@@ -56,7 +56,9 @@ const QuestionsAnswering = ({
       if (countdown > 0 && !showTransitionCountdown) {
         setCountdown(countdown - 1);
         if (countdown === 20 && !timerSoundPlayed) {
-          playTimerSound();
+          if (localStorage.getItem("voice") === "true") {
+            playTimerSound();
+          }
         }
       } else if (countdown === 0 && !showTransitionCountdown) {
         setShowTransitionCountdown(true);
@@ -104,7 +106,9 @@ const QuestionsAnswering = ({
     } else {
       console.log("Incorrect answer!");
     }
-    countdown321.play();
+    if (localStorage.getItem("voice") === "true") {
+      countdown321.play();
+    }
     setShowTransitionCountdown(true);
   };
 
@@ -132,11 +136,15 @@ const QuestionsAnswering = ({
   }
 
   const handleQuestionTextClick = () => {
-    responsiveVoice.speak(currentQuestion.question_text, "Filipino Female");
+    if (localStorage.getItem("voice") === "true") {
+      responsiveVoice.speak(currentQuestion.question_text, "Filipino Female");
+    }
   };
 
   const playTimerSound = () => {
-    answering_timer.play();
+    if (localStorage.getItem("voice") === "true") {
+      answering_timer.play();
+    }
     setTimerSoundPlayed(true);
   };
 
@@ -147,7 +155,9 @@ const QuestionsAnswering = ({
       setLastClickedIndex(index);
       setClickCount(1);
     }
-    responsiveVoice.speak(choice, "Filipino Female");
+    if (localStorage.getItem("voice") === "true") {
+      responsiveVoice.speak(choice, "Filipino Female");
+    }
     if (clickCount > 1) {
       handleAnswer(currentQuestion.questionId, choice);
       setClickCount(0);

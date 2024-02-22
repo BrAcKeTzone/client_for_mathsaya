@@ -33,14 +33,17 @@ const UnitChoices = ({
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-    setClickCount(0); // Reset click count when navigating to a different page
-    setLastClickedIndex(null); // Reset last clicked index when navigating to a different page
+    setClickCount(0);
+    setLastClickedIndex(null);
   };
 
   const handleUnitClick = (index, unit) => {
     if (lastClickedIndex !== index) {
-      responsiveVoice.speak(unit.yunitName, "Filipino Female");
-      setClickCount(1); // Set click count to 1 for the first click
+      if (localStorage.getItem("voice") === "true") {
+        responsiveVoice.speak(unit.yunitName, "Filipino Female");
+      }
+
+      setClickCount(1);
     } else {
       if (clickCount === 1) {
         sessionStorage.setItem("selectedunit", unit.yunitId);
@@ -49,6 +52,13 @@ const UnitChoices = ({
       setClickCount(0);
     }
     setLastClickedIndex(index);
+  };
+
+  const handleBackClick = () => {
+    if (localStorage.getItem("voice") === "true") {
+      backSound.play();
+    }
+    onBack();
   };
 
   return (
@@ -69,7 +79,6 @@ const UnitChoices = ({
             onClick={() => handleUnitClick(index, unit)}
           >
             <p className="text-center mb-2">
-              {" "}
               Ikapila nga yunit: {unit.yunitNumber}
             </p>
             <img
@@ -108,12 +117,7 @@ const UnitChoices = ({
           <GrNext className="text-5xl" />
         </button>
       </div>
-      <button
-        className="absolute top-0 left-0 m-4"
-        onClick={onBack}
-        onMouseEnter={() => backSound.play()}
-        onTouchStart={() => backSound.play()}
-      >
+      <button className="absolute top-0 left-0 m-4" onClick={handleBackClick}>
         <img src={backLogo} alt="Back" className="w-16 h-16" />
       </button>
     </div>

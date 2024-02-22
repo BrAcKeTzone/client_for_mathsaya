@@ -42,7 +42,9 @@ const LessonChoices = ({
 
   const handleLessonClick = (index, lesson) => {
     if (lastClickedIndex !== index) {
-      responsiveVoice.speak(lesson.lessonName, "Filipino Female");
+      if (localStorage.getItem("voice") === "true") {
+        responsiveVoice.speak(lesson.lessonName, "Filipino Female");
+      }
       setClickCount(1);
     } else {
       if (clickCount === 1) {
@@ -52,6 +54,13 @@ const LessonChoices = ({
       setClickCount(0);
     }
     setLastClickedIndex(index);
+  };
+
+  const handleBackClick = () => {
+    if (localStorage.getItem("voice") === "true") {
+      backSound.play();
+    }
+    onBack();
   };
 
   return (
@@ -110,12 +119,7 @@ const LessonChoices = ({
           <GrNext className="text-5xl" />
         </button>
       </div>
-      <button
-        className="absolute top-0 left-0 m-4"
-        onClick={onBack}
-        onMouseEnter={() => backSound.play()}
-        onTouchStart={() => backSound.play()}
-      >
+      <button className="absolute top-0 left-0 m-4" onClick={handleBackClick}>
         <img src={backLogo} alt="Back" className="w-16 h-16" />
       </button>
     </div>

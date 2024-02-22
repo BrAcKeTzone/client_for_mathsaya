@@ -71,14 +71,18 @@ const GameOver = ({
 
   const handleNumberClick = (number) => {
     if (number === starsCount) {
-      correct.play();
+      if (localStorage.getItem("voice") === "true") {
+        correct.play();
+      }
       setShowHappyGesture(true);
       setTimeout(() => {
         setShowHappyGesture(false);
         setShowExplanationModal(true);
       }, 2000);
     } else {
-      wrong.play();
+      if (localStorage.getItem("voice") === "true") {
+        wrong.play();
+      }
       setShowWrongGesture(true);
       setTimeout(() => {
         setShowWrongGesture(false);
@@ -87,7 +91,9 @@ const GameOver = ({
   };
 
   const handleGameOverClick = () => {
-    gameover.play();
+    if (localStorage.getItem("voice") === "true") {
+      gameover.play();
+    }
   };
 
   return (
