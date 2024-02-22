@@ -185,13 +185,15 @@ const QuestionsAnswering = ({
           >
             {currentQuestion.question_text}
           </p>
-          {currentQuestion.questionImage && (
-            <img
-              src={currentQuestion.questionImage}
-              alt="Question Image"
-              className="w-64 h-64 cursor-pointer"
-            />
-          )}
+          <div className="bg-white">
+            {currentQuestion.questionImage && (
+              <img
+                src={currentQuestion.questionImage}
+                alt="Question Image"
+                className="w-64 h-64 cursor-pointer"
+              />
+            )}
+          </div>
         </div>
         <div
           className={`grid grid-cols-2 gap-4 z-10 hover:bg-white hover:bg-opacity-20 p-5 rounded ${bgOpacity}`}
