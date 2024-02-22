@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaTrashAlt, FaArrowLeft } from "react-icons/fa";
 import ModalAddQuestion from "../modals/ModalAddQuestion";
 import ModalEditQuestion from "../modals/ModalEditQuestion";
 
-function Questions({ teacherId, selectedExerciseId, server_url }) {
+function Questions({ teacherId, selectedExerciseId, server_url, goBack }) {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryQuestions, setSearchQueryQuestions] = useState("");
   const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
   const [isEditQuestionModalOpen, setIsEditQuestionModalOpen] = useState(false);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const openAddQuestionModal = () => {
     setIsAddQuestionModalOpen(true);
@@ -93,7 +94,28 @@ function Questions({ teacherId, selectedExerciseId, server_url }) {
             ADD NEW
           </button>
         </div>
-      </div>{" "}
+      </div>
+      <div className="flex justify-end pt-1">
+        <button
+          className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
+          onClick={goBack}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <FaArrowLeft
+            className={`opacity-0 transition-opacity ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <span
+            className={`opacity-0 transition-opacity ${
+              !isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Back
+          </span>
+        </button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>

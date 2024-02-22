@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaTrashAlt, FaArrowLeft } from "react-icons/fa";
 import ModalAddExercise from "../modals/ModalAddExercise";
 import ModalEditExercise from "../modals/ModalEditExercise";
 import ModalAddLessonVideo from "../modals/ModalAddLessonVideo";
@@ -10,6 +10,7 @@ function Exercises({
   selectedLessonId,
   server_url,
   handleClickExercise,
+  goBack,
 }) {
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,7 @@ function Exercises({
   const [selectedExerciseId, setSelectedExerciseId] = useState(null);
   const [isAddLessonVideoModalOpen, setIsAddLessonVideoModalOpen] =
     useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const openAddExerciseModal = () => {
     setIsAddExerciseModalOpen(true);
@@ -125,12 +127,31 @@ function Exercises({
           </button>
         </div>
       </div>{" "}
-      <div className="w-full flex justify-center pt-2">
+      <div className="flex justify-between pt-1">
         <button
           className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           onClick={openAddLessonVideoModal}
         >
           Watch the lesson video
+        </button>
+        <button
+          className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
+          onClick={goBack}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <FaArrowLeft
+            className={`opacity-0 transition-opacity ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <span
+            className={`opacity-0 transition-opacity ${
+              !isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Back
+          </span>
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">

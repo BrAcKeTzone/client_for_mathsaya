@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaTrashAlt, FaHome } from "react-icons/fa";
 import ModalAddUnit from "../modals/ModalAddUnit";
 import ModalEditUnit from "../modals/ModalEditUnit";
 
-function Units({ teacherId, server_url, handleClickUnit }) {
+function Units({ teacherId, server_url, handleClickUnit, goBack }) {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQueryUnits, setSearchQueryUnits] = useState("");
   const [isAddUnitModalOpen, setIsAddUnitModalOpen] = useState(false);
   const [isEditUnitModalOpen, setIsEditUnitModalOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const openAddUnitModal = () => {
     setIsAddUnitModalOpen(true);
@@ -94,7 +95,28 @@ function Units({ teacherId, server_url, handleClickUnit }) {
             ADD NEW
           </button>
         </div>
-      </div>{" "}
+      </div>
+      <div className="flex justify-end pt-1">
+        <button
+          className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
+          onClick={goBack}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <FaHome
+            className={`opacity-0 transition-opacity ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <span
+            className={`opacity-0 transition-opacity ${
+              !isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Home
+          </span>
+        </button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>

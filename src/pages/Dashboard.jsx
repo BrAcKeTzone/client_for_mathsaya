@@ -11,6 +11,7 @@ import {
   FaTasks,
   FaUserShield,
 } from "react-icons/fa";
+import healchoir from "../assets/audios/healchoir.wav";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
 
@@ -26,11 +27,14 @@ const Dashboard = ({ fetchUserRole }) => {
   const [totalLessons, setTotalLessons] = useState(0);
   const [totalExercises, setTotalExercises] = useState(0);
 
+  const healChoir = new Audio(healchoir);
+
   useEffect(() => {
     if (!usr) {
       alert("Session Expired. Re-login.");
       Navigate("/");
     } else {
+      healChoir.play();
       fetchUserRole();
       setIsLoading(false);
       fetchDashboardData();

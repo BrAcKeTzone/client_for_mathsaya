@@ -29,16 +29,37 @@ function Topics() {
   const handleClickUnit = (yunitId) => {
     setActiveComponent("LessonsList");
     setSelectedUnitId(yunitId);
+    sessionStorage.setItem("U", yunitId);
   };
 
   const handleClickLesson = (lessonId) => {
     setActiveComponent("ExercisesList");
     setSelectedLessonId(lessonId);
+    sessionStorage.setItem("L", lessonId);
   };
 
   const handleClickExercise = (exerciseId) => {
     setActiveComponent("QuestionsList");
     setSelectedExerciseId(exerciseId);
+    sessionStorage.setItem("E", exerciseId);
+  };
+
+  const goBack2Dashboard = () => {
+    Navigate("/dash");
+  };
+
+  const goBack2Unit = () => {
+    setActiveComponent("UnitsList");
+  };
+
+  const goBack2Lesson = () => {
+    setActiveComponent("LessonsList");
+    setSelectedUnitId(sessionStorage.getItem("U"));
+  };
+
+  const goBack2Exercise = () => {
+    setActiveComponent("ExercisesList");
+    setSelectedUnitId(sessionStorage.getItem("L"));
   };
 
   return (
@@ -51,6 +72,7 @@ function Topics() {
                 teacherId={usr.id}
                 server_url={server_url}
                 handleClickUnit={handleClickUnit}
+                goBack={goBack2Dashboard}
               />
             )}
             {activeComponent === "LessonsList" && (
@@ -59,6 +81,7 @@ function Topics() {
                 selectedUnitId={selectedUnitId}
                 server_url={server_url}
                 handleClickLesson={handleClickLesson}
+                goBack={goBack2Unit}
               />
             )}
             {activeComponent === "ExercisesList" && (
@@ -67,6 +90,7 @@ function Topics() {
                 selectedLessonId={selectedLessonId}
                 handleClickExercise={handleClickExercise}
                 server_url={server_url}
+                goBack={goBack2Lesson}
               />
             )}
             {activeComponent === "QuestionsList" && (
@@ -74,6 +98,7 @@ function Topics() {
                 teacherId={usr.id}
                 selectedExerciseId={selectedExerciseId}
                 server_url={server_url}
+                goBack={goBack2Exercise}
               />
             )}
           </div>
