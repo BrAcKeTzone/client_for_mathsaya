@@ -16,7 +16,7 @@ const TestScreen = ({ testscreenLoop, onContinue }) => {
 
   const handleNumberClick = (number) => {
     clearInterval(intervalId);
-    responsiveVoice.speak(number.toString(), "Spanish Latin American Female");
+    responsiveVoice.speak(number.toString(), "Spanish Female");
   };
 
   const numbers = [...Array(99).keys()].map((number) => number + 1);

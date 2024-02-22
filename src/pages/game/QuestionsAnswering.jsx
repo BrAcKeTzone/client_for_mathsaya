@@ -156,7 +156,7 @@ const QuestionsAnswering = ({
       setClickCount(1);
     }
     if (localStorage.getItem("voice") === "true") {
-      responsiveVoice.speak(choice, "Filipino Female");
+      responsiveVoice.speak(choice, "Spanish Female");
     }
     if (clickCount > 1) {
       handleAnswer(currentQuestion.questionId, choice);
