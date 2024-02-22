@@ -299,12 +299,12 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     understanding and proficiency.
                   </p>
                   <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
-                    {studentProfile.minExercise ? (
+                    {studentProfile.maxExercise ? (
                       <div>
-                        {studentProfile.minExercise.Exercise.exerciseName} -{" "}
+                        {studentProfile.maxExercise.Exercise.exerciseName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars:{" "}
-                          {studentProfile.minExercise.starRating} ⭐
+                          {studentProfile.maxExercise.starRating} ⭐
                         </span>
                       </div>
                     ) : (
@@ -316,11 +316,11 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     and proficiency.
                   </p>
                   <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
-                    {studentProfile.minLesson ? (
+                    {studentProfile.maxLesson ? (
                       <div>
-                        {studentProfile.minLesson.Lesson.lessonName} -{" "}
+                        {studentProfile.maxLesson.Lesson.lessonName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars: {studentProfile.minLesson.starRating}{" "}
+                          Collected Stars: {studentProfile.maxLesson.starRating}{" "}
                           ⭐
                         </span>
                       </div>
@@ -329,15 +329,15 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     )}
                   </div>
                   <p className="mb-2">
-                    Unitswhere the student demonstrates strong understanding and
-                    proficiency.
+                    Units where the student demonstrates strong understanding
+                    and proficiency.
                   </p>
                   <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
-                    {studentProfile.minYunit ? (
+                    {studentProfile.maxYunit ? (
                       <div>
-                        {studentProfile.minYunit.Yunit.yunitName} -{" "}
+                        {studentProfile.maxYunit.Yunit.yunitName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars: {studentProfile.minYunit.starRating}{" "}
+                          Collected Stars: {studentProfile.maxYunit.starRating}{" "}
                           ⭐
                         </span>
                       </div>
