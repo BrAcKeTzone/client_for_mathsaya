@@ -96,6 +96,9 @@ const GameOver = ({
     }
   };
 
+  const totalOver = questions.length * 3;
+  const totalscore = sessionStorage.getItem("score");
+
   return (
     <div
       className="min-h-screen w-full flex flex-col justify-center items-center overflow-hidden p-10 bg-cover"
@@ -149,6 +152,8 @@ const GameOver = ({
       <ModalShowExplanation
         questions={questions}
         selectedAnswers={selectedAnswers}
+        totalscore={totalscore}
+        totalOver={totalOver}
         isOpen={showExplanationModal}
         onClose={() => {
           setShowExplanationModal(false);

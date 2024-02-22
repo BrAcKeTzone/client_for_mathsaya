@@ -5,6 +5,8 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 const ModalShowExplanation = ({
   questions,
   selectedAnswers,
+  totalscore,
+  totalOver,
   isOpen,
   onClose,
 }) => {
@@ -21,14 +23,24 @@ const ModalShowExplanation = ({
             Tubag sa Estudyante kontra sa Tugma nga Tubag
           </span>
         </h1>
-        <div className="flex items-center space-x-4">
-          <div className="w-4 h-4 bg-green-300 rounded-full"></div>
-          <p className="text-green-500 font-semibold">Tugma nga tubag</p>
+        <div className="container mx-auto grid grid-cols-2 gap-4">
+          {/* Left column */}
+          <div>
+            <div className="flex items-center space-x-4">
+              <div className="w-4 h-4 bg-green-300 rounded-full"></div>
+              <p className="text-green-500 font-semibold">Tugma nga tubag</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="w-4 h-4 bg-red-200 rounded-full"></div>
+              <p className="text-red-500 font-semibold">Sayup nga tubag</p>
+            </div>
+          </div>
+          {/* Right column */}
+          <div className="text-3xl font-semibold flex items-center justify-end">
+            <span className="bg-white bg-opacity-50 rounded-full py-2 px-1">{`${totalscore}/${totalOver}`}</span>
+          </div>
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="w-4 h-4 bg-red-200 rounded-full"></div>
-          <p className="text-red-500 font-semibold">Sayup nga tubag</p>
-        </div>
+
         <div className="overflow-y-auto max-h-96">
           {questions.map((question, index) => (
             <div key={index} className="mb-4">
