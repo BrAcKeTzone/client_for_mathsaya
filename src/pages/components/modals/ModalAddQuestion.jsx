@@ -60,7 +60,7 @@ const ModalAddQuestion = ({
           }
         )
         .required("Required"),
-      answer_explanation: Yup.string().required("Required"),
+      answer_explanation: Yup.string(),
       questionImage: Yup.mixed()
         .nullable()
         .test("fileFormat", "Unsupported File Format", (value) => {

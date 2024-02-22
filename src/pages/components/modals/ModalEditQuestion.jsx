@@ -93,7 +93,7 @@ const ModalEditQuestion = ({
           }
           return ["image/jpeg", "image/png"].includes(value.type);
         }),
-      answer_explanation: Yup.string().required("Required"),
+      answer_explanation: Yup.string(),
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
