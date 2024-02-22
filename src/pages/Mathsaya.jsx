@@ -199,7 +199,7 @@ const MathSaya = () => {
     }
     gameOverBG.loop = true;
     gameOverBG.currentTime = 0;
-    gameOverBG.volume = 0.4;
+    gameOverBG.volume = 0.2;
     gameOverBG.play();
     return () => {
       gameOverBG.pause();
