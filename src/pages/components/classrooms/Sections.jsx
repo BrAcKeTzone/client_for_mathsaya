@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaTrashAlt, FaHome } from "react-icons/fa";
 import ModalAddSection from "../modals/ModalAddSection";
-import ModalEditSection from "../modals/ModalEditSection"; // Import the new modal
+import ModalEditSection from "../modals/ModalEditSection";
 
-function Sections({ teacherId, server_url, handleClickSection }) {
+function Sections({ teacherId, server_url, handleClickSection, goBack }) {
   const [sections, setSections] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuerySections, setSearchQuerySections] = useState("");
   const [isAddSectionModalOpen, setIsAddSectionModalOpen] = useState(false);
   const [isEditSectionModalOpen, setIsEditSectionModalOpen] = useState(false);
   const [selectedSectionId, setSelectedSectionId] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const openAddSectionModal = () => {
     setIsAddSectionModalOpen(true);
@@ -93,7 +94,28 @@ function Sections({ teacherId, server_url, handleClickSection }) {
             ADD NEW
           </button>
         </div>
-      </div>{" "}
+      </div>
+      <div className="flex justify-end pt-1">
+        <button
+          className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
+          onClick={goBack}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <FaHome
+            className={`opacity-0 transition-opacity ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <span
+            className={`opacity-0 transition-opacity ${
+              !isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Home
+          </span>
+        </button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaTrashAlt, FaArrowLeft } from "react-icons/fa";
 import { CgBoy, CgGirl } from "react-icons/cg";
 import ModalAddStudent from "../modals/ModalAddStudent";
 import ModalEditStudent from "../modals/ModalEditStudent";
@@ -10,6 +10,7 @@ function Students({
   selectedSectionId,
   server_url,
   handleClickStudent,
+  goBack,
 }) {
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,7 @@ function Students({
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
   const [isEditStudentModalOpen, setIsEditStudentModalOpen] = useState(false);
   const [selectedStudentId, setSelectedStudentId] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const openAddStudentModal = () => {
     setIsAddStudentModalOpen(true);
@@ -102,7 +104,28 @@ function Students({
             ADD STUDENT
           </button>
         </div>
-      </div>{" "}
+      </div>
+      <div className="flex justify-end pt-1">
+        <button
+          className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
+          onClick={goBack}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <FaArrowLeft
+            className={`opacity-0 transition-opacity ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <span
+            className={`opacity-0 transition-opacity ${
+              !isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Back
+          </span>
+        </button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>

@@ -24,14 +24,29 @@ function Topics() {
 
   usr = JSON.parse(Cookies.get("SESSION_ID"));
 
-  const handleClickSection = (yunitId) => {
+  const handleClickSection = (sectionId) => {
     setActiveComponent("StudentsList");
-    setSelectedSectionId(yunitId);
+    setSelectedSectionId(sectionId);
+    sessionStorage.setItem("sEc", sectionId);
   };
 
-  const handleClickStudent = (lessonId) => {
+  const handleClickStudent = (studentId) => {
     setActiveComponent("StudProfile");
-    setSelectedStudentId(lessonId);
+    setSelectedStudentId(studentId);
+    sessionStorage.setItem("sTu", studentId);
+  };
+
+  const goBack2Dashboard = () => {
+    Navigate("/dash");
+  };
+
+  const goBack2Section = () => {
+    setActiveComponent("SectionsList");
+  };
+
+  const goBack2Student = () => {
+    setActiveComponent("StudentsList");
+    setSelectedSectionId(sessionStorage.getItem("sEc"));
   };
 
   return (
@@ -44,6 +59,7 @@ function Topics() {
                 teacherId={usr.id}
                 server_url={server_url}
                 handleClickSection={handleClickSection}
+                goBack={goBack2Dashboard}
               />
             )}
             {activeComponent === "StudentsList" && (
@@ -52,6 +68,7 @@ function Topics() {
                 selectedSectionId={selectedSectionId}
                 server_url={server_url}
                 handleClickStudent={handleClickStudent}
+                goBack={goBack2Section}
               />
             )}
             {activeComponent === "StudProfile" && (
@@ -59,6 +76,7 @@ function Topics() {
                 teacherId={usr.id}
                 selectedStudentId={selectedStudentId}
                 server_url={server_url}
+                goBack={goBack2Student}
               />
             )}
           </div>

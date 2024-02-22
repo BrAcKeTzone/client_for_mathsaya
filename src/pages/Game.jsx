@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Confetti from "react-confetti";
 import Phaser from "phaser";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -15,7 +14,6 @@ import QuestionsAnswering from "./scenes/QuestionsAnswering";
 import GameOver from "./scenes/GameOver";
 import Settings from "./scenes/Settings";
 import Profile from "./scenes/Profile";
-import VideoScene from "./scenes/VideoScene";
 
 const Mathsaya = () => {
   const server_url = import.meta.env.VITE_SERVER_LINK;

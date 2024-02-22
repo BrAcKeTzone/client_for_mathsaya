@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CgBoy, CgGirl } from "react-icons/cg";
+import { FaClock, FaArrowLeft } from "react-icons/fa";
 import {
   LineChart,
   Line,
@@ -10,9 +11,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-function StudProfile({ selectedStudentId, server_url }) {
+function StudProfile({ selectedStudentId, server_url, goBack }) {
   const [studentProfile, setStudentProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     console.log(selectedStudentId);
@@ -80,6 +82,27 @@ function StudProfile({ selectedStudentId, server_url }) {
   return (
     <>
       <div className="">
+        <div className="flex justify-end pt-1">
+          <button
+            className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
+            onClick={goBack}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <FaArrowLeft
+              className={`opacity-0 transition-opacity ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+            />
+            <span
+              className={`opacity-0 transition-opacity ${
+                !isHovered ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              Back
+            </span>
+          </button>
+        </div>
         {studentProfile ? (
           <div className="p-4">
             <h1 className="text-6xl text-white font-semibold mb-6">
