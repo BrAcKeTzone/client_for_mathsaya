@@ -161,6 +161,10 @@ function Questions({ teacherId, selectedExerciseId, server_url, goBack }) {
                     ))}
                   </div>
                 </div>
+                <div className="p-4 text-sm min-h-28 flex flex-col">
+                  <span className="font-bold">Explanation: </span>
+                  {question.answer_explanation}
+                </div>
               </div>
               <div className="flex justify-center p-2 border-t-2">
                 <button

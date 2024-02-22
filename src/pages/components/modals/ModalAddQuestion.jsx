@@ -25,6 +25,7 @@ const ModalAddQuestion = ({
       question_text: "",
       answer_choices: [""],
       correct_answer: "",
+      answer_explanation: "",
       questionImage: null,
     });
     setResetKey((prevKey) => prevKey + 1);
@@ -41,6 +42,7 @@ const ModalAddQuestion = ({
       question_text: "",
       answer_choices: [""],
       correct_answer: "",
+      answer_explanation: "",
       questionImage: null,
     },
     validationSchema: Yup.object({
@@ -58,6 +60,7 @@ const ModalAddQuestion = ({
           }
         )
         .required("Required"),
+      answer_explanation: Yup.string().required("Required"),
       questionImage: Yup.mixed()
         .nullable()
         .test("fileFormat", "Unsupported File Format", (value) => {
@@ -78,6 +81,7 @@ const ModalAddQuestion = ({
         formData.append("teacherId", teacherId);
         formData.append("exerciseId", selectedExerciseId);
         formData.append("correct_answer", values.correct_answer);
+        formData.append("answer_explanation", values.answer_explanation);
 
         const response = await axios.post(
           `${server_url}/questions/add`,
@@ -264,6 +268,28 @@ const ModalAddQuestion = ({
                 formik.errors.correct_answer && (
                   <div className="text-red-500 text-sm">
                     {formik.errors.correct_answer}
+                  </div>
+                )}
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="answer_explanation"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Explanation
+              </label>
+              <textarea
+                id="answer_explanation"
+                name="answer_explanation"
+                {...formik.getFieldProps("answer_explanation")}
+                className="mt-1 p-2 w-full border rounded-md"
+                disabled={isSubmitting}
+                rows="3"
+              />
+              {formik.touched.answer_explanation &&
+                formik.errors.answer_explanation && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.answer_explanation}
                   </div>
                 )}
             </div>

@@ -189,7 +189,7 @@ const QuestionsAnswering = ({
             <img
               src={currentQuestion.questionImage}
               alt="Question Image"
-              className="w-64 h-64 cursor-pointer bg-white  bg-opacity-20"
+              className="w-64 h-64 cursor-pointer bg-white bg-opacity-20"
             />
           )}
         </div>
