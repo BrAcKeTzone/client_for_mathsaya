@@ -155,8 +155,10 @@ const QuestionsAnswering = ({
       setLastClickedIndex(index);
       setClickCount(1);
     }
+    const voice = !isNaN(choice) ? "Spanish Female" : "Filipino Female";
+
     if (localStorage.getItem("voice") === "true") {
-      responsiveVoice.speak(choice, "Spanish Female");
+      responsiveVoice.speak(choice, voice);
     }
     if (clickCount > 1) {
       handleAnswer(currentQuestion.questionId, choice);
