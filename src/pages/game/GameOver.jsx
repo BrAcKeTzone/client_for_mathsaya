@@ -23,6 +23,8 @@ const GameOver = ({
   const [showExplanationModal, setShowExplanationModal] = useState(false);
   const [showWrongGesture, setShowWrongGesture] = useState(false);
   const [showHappyGesture, setShowHappyGesture] = useState(false);
+  const [rating, setRating] = useState("");
+  const [textColor, setTextColor] = useState("");
 
   useEffect(() => {
     setShowConfetti(true);
@@ -69,6 +71,35 @@ const GameOver = ({
     generateRandomNumbers();
   }, [starsCount]);
 
+  const totalOver = questions.length * 3;
+  const totalScore = sessionStorage.getItem("score");
+
+  useEffect(() => {
+    const percentage = (totalScore / totalOver) * 100;
+
+    let rating = "";
+    let textColorClass = "";
+    if (percentage >= 90) {
+      rating = "Maayo kaayo!";
+      textColorClass = "text-green-500";
+    } else if (percentage >= 80 && percentage <= 89) {
+      rating = "Maayo!";
+      textColorClass = "text-green-400";
+    } else if (percentage >= 70 && percentage <= 79) {
+      rating = "Nagtubo kaayo!";
+      textColorClass = "text-yellow-500";
+    } else if (percentage >= 60 && percentage <= 69) {
+      rating = "Himuon pa nato nga mas maayo!";
+      textColorClass = "text-yellow-400";
+    } else {
+      rating = "Dili pa maayo, pero ayos ra!";
+      textColorClass = "text-red-500";
+    }
+
+    setRating(rating);
+    setTextColor(textColorClass);
+  }, [questions.length, starsCount]);
+
   const handleNumberClick = (number) => {
     if (number === starsCount) {
       if (localStorage.getItem("voice") === "true") {
@@ -96,9 +127,6 @@ const GameOver = ({
     }
   };
 
-  const totalOver = questions.length * 3;
-  const totalscore = sessionStorage.getItem("score");
-
   return (
     <div
       className="min-h-screen w-full flex flex-col justify-center items-center overflow-hidden p-10 bg-cover"
@@ -116,8 +144,10 @@ const GameOver = ({
         </div>
       )}
 
-      <div className="text-4xl text-gray-800 font-bold mb-10 text-center border-b-2 shadow-lg">
-        <span className="congrats" />
+      <div
+        className={`text-4xl font-bold mb-10 text-center border-b-2 shadow-lg ${textColor}`}
+      >
+        {rating && <span className="rating">{rating}</span>}
       </div>
       <div className="grid grid-cols-5 md:grid-cols-5 gap-4 mb-10">
         {Array.from({ length: starsCount }, (_, index) => (
@@ -152,7 +182,7 @@ const GameOver = ({
       <ModalShowExplanation
         questions={questions}
         selectedAnswers={selectedAnswers}
-        totalscore={totalscore}
+        totalscore={totalScore}
         totalOver={totalOver}
         isOpen={showExplanationModal}
         onClose={() => {
