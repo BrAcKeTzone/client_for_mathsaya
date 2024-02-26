@@ -8,39 +8,41 @@ Modal.setAppElement("#root");
 
 const genderOptions = ["Male", "Female", "Non-binary"];
 
-const ModalEditSuperAdmin = ({
+const ModalEditUser = ({
   isOpen,
   closeModal,
   server_url,
-  fetchAdminEntries,
-  adminId,
+  fetchUserInfo,
+  userId,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resetKey, setResetKey] = useState(0);
-  const [adminData, setAdminData] = useState(null);
+  const [teacherData, setTeacherData] = useState(null);
 
   useEffect(() => {
-    const fetchAdminData = async () => {
+    const fetchTeacherData = async () => {
       try {
-        const response = await axios.get(`${server_url}/user/admin/${adminId}`);
-        setAdminData(response.data);
+        const response = await axios.get(
+          `${server_url}/user/teacher/${userId}`
+        );
+        setTeacherData(response.data);
         console.log(response.data);
       } catch (error) {
-        console.error("Error fetching admin data", error);
+        console.error("Error fetching teacher data", error);
       }
     };
 
-    if (isOpen && adminId) {
-      fetchAdminData();
+    if (isOpen && userId) {
+      fetchTeacherData();
     }
-  }, [isOpen, adminId, server_url]);
+  }, [isOpen, userId, server_url]);
 
   const handleClearForm = () => {
     formik.setValues({
-      firstname: adminData?.firstname || "",
-      lastname: adminData?.lastname || "",
-      gender: adminData?.gender || "",
-      schoolName: adminData?.schoolName || "",
+      firstname: teacherData?.firstname || "",
+      lastname: teacherData?.lastname || "",
+      gender: teacherData?.gender || "",
+      schoolName: teacherData?.schoolName || "",
     });
     setResetKey((prevKey) => prevKey + 1);
   };
@@ -48,17 +50,17 @@ const ModalEditSuperAdmin = ({
   useEffect(() => {
     if (!isOpen) {
       setResetKey(0);
-      setAdminData(null);
+      setTeacherData(null);
     }
   }, [isOpen]);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstname: adminData?.firstname || "",
-      lastname: adminData?.lastname || "",
-      gender: adminData?.gender || "",
-      schoolName: adminData?.schoolName || "",
+      firstname: teacherData?.firstname || "",
+      lastname: teacherData?.lastname || "",
+      gender: teacherData?.gender || "",
+      schoolName: teacherData?.schoolName || "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("First name is required"),
@@ -77,16 +79,16 @@ const ModalEditSuperAdmin = ({
         };
 
         const response = await axios.put(
-          `${server_url}/user/admin/edit/${adminId}`,
+          `${server_url}/user/bypass/teacher/edit/${userId}`,
           updatedData
         );
 
-        console.log("Admin edited successfully:", response.data);
+        console.log("Teacher edited successfully:", response.data);
         closeModal();
         resetForm();
-        fetchAdminEntries();
+        fetchUserInfo();
       } catch (error) {
-        console.error("Error during editing admin information:", error);
+        console.error("Error during editing teacher information:", error);
       } finally {
         setIsSubmitting(false);
       }
@@ -98,7 +100,7 @@ const ModalEditSuperAdmin = ({
       isOpen={isOpen}
       key={resetKey}
       onRequestClose={isSubmitting ? null : closeModal}
-      contentLabel="Edit Admin Information"
+      contentLabel="Edit Teacher Information"
       className="Modal max-w-md mx-auto mt-16 p-4 bg-gray-100 rounded-md shadow-md"
     >
       <div className="flex justify-between items-center mb-4">
@@ -227,4 +229,4 @@ const ModalEditSuperAdmin = ({
   );
 };
 
-export default ModalEditSuperAdmin;
+export default ModalEditUser;
