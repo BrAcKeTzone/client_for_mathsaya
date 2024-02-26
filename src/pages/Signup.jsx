@@ -109,8 +109,11 @@ const Signup = () => {
       return;
     }
 
-    if (!formData.password) {
-      setLoginError("Password is required");
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})/;
+    if (!passwordRegex.test(formData.password)) {
+      setLoginError(
+        "Password must be at least 6 characters long and contain alphanumeric characters"
+      );
       return;
     }
 

@@ -24,6 +24,13 @@ const ModalChangePass = ({
     try {
       setIsLoading(true);
       setError(null);
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})/;
+      if (!passwordRegex.test(newPassword)) {
+        setError(
+          "New password must be at least 6 characters long and contain alphanumeric characters"
+        );
+        return;
+      }
       await axios.put(`${server_url}/auth/verifyChangePass`, {
         userId,
         email: currentEmail,
