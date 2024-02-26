@@ -26,7 +26,6 @@ const ModalEditUser = ({
           `${server_url}/user/teacher/${userId}`
         );
         setTeacherData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching teacher data", error);
       }
