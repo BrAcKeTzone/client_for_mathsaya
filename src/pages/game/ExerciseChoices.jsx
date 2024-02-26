@@ -19,6 +19,7 @@ const ExerciseChoices = ({
   const [isActive, setIsActive] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [lastClickedIndex, setLastClickedIndex] = useState(null);
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
 
   useEffect(() => {
     setIsActive(true);
@@ -31,6 +32,25 @@ const ExerciseChoices = ({
     fetchExercises();
     fetchStudentProfile();
   }, [selectedlesson]);
+
+  useEffect(() => {
+    // Preload background image
+    const preloadBackgroundImage = async () => {
+      try {
+        await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = skyBackground;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+        setResourcesLoaded(true);
+      } catch (error) {
+        console.error("Error preloading background image:", error);
+      }
+    };
+
+    preloadBackgroundImage();
+  }, []);
 
   const handleViewLessonVideoButtonClick = () => {
     if (localStorage.getItem("voice") === "true") {
@@ -85,6 +105,13 @@ const ExerciseChoices = ({
     }
     onBack();
   };
+
+  if (!resourcesLoaded) {
+    // Render loading indicator if resources are not loaded yet
+    return (
+      <div className="absolute inset-0 flex justify-center items-center bg-blue-300"></div>
+    );
+  }
 
   return (
     <div

@@ -3,6 +3,30 @@ import aniBackground from "../../assets/images/menu_bg.gif";
 
 const TestScreen = ({ testscreenLoop, onContinue }) => {
   const [intervalId, setIntervalId] = useState(null);
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
+
+  useEffect(() => {
+    // Function to preload the resources
+    const preloadResources = async () => {
+      try {
+        // Load background image
+        await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = aniBackground;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+
+        // Set resourcesLoaded to true when all resources are loaded
+        setResourcesLoaded(true);
+      } catch (error) {
+        console.error("Error preloading resources:", error);
+      }
+    };
+
+    // Call the preloadResources function
+    preloadResources();
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -12,7 +36,7 @@ const TestScreen = ({ testscreenLoop, onContinue }) => {
     return () => {
       clearInterval(id);
     };
-  }, []);
+  }, [testscreenLoop]);
 
   const handleNumberClick = (number) => {
     clearInterval(intervalId);
@@ -20,6 +44,13 @@ const TestScreen = ({ testscreenLoop, onContinue }) => {
   };
 
   const numbers = [...Array(99).keys()].map((number) => number + 1);
+
+  if (!resourcesLoaded) {
+    // Render loading indicator if resources are not loaded yet
+    return (
+      <div className="absolute inset-0 flex justify-center items-center bg-emerald-400 bg-opacity-50"></div>
+    );
+  }
 
   return (
     <div>

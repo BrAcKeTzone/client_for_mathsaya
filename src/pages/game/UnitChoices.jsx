@@ -15,6 +15,38 @@ const UnitChoices = ({
   const [isActive, setIsActive] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [lastClickedIndex, setLastClickedIndex] = useState(null);
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
+
+  useEffect(() => {
+    // Function to preload the resources
+    const preloadResources = async () => {
+      try {
+        // Load images
+        await Promise.all([
+          new Promise((resolve, reject) => {
+            const img1 = new Image();
+            img1.src = backLogo;
+            img1.onload = resolve;
+            img1.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img2 = new Image();
+            img2.src = skyBackground;
+            img2.onload = resolve;
+            img2.onerror = reject;
+          }),
+        ]);
+
+        // Set resourcesLoaded to true when all resources are loaded
+        setResourcesLoaded(true);
+      } catch (error) {
+        console.error("Error preloading resources:", error);
+      }
+    };
+
+    // Call the preloadResources function
+    preloadResources();
+  }, []);
 
   useEffect(() => {
     setIsActive(true);
@@ -60,6 +92,13 @@ const UnitChoices = ({
     }
     onBack();
   };
+
+  if (!resourcesLoaded) {
+    // Render loading indicator if resources are not loaded yet
+    return (
+      <div className="absolute inset-0 flex justify-center items-center bg-blue-300"></div>
+    );
+  }
 
   return (
     <div

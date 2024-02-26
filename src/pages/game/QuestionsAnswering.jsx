@@ -21,6 +21,7 @@ const QuestionsAnswering = ({
   const [lastClickedIndex, setLastClickedIndex] = useState(null);
   const [clickCount, setClickCount] = useState(0);
   const [bgOpacity, setBgOpacity] = useState("bg-white bg-opacity-0");
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
 
   const countdown321 = new Audio(ct321);
 
@@ -50,6 +51,40 @@ const QuestionsAnswering = ({
   useEffect(() => {
     sessionStorage.setItem("score", score);
   }, [score]);
+
+  useEffect(() => {
+    // Preload background images and sounds
+    const preloadResources = async () => {
+      try {
+        await Promise.all([
+          new Promise((resolve, reject) => {
+            const img1 = new Image();
+            img1.src = loopBG;
+            img1.onload = resolve;
+            img1.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img2 = new Image();
+            img2.src = dancing;
+            img2.onload = resolve;
+            img2.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const audio = new Audio(ct321);
+            audio.preload = "auto";
+            audio.load();
+            audio.oncanplaythrough = resolve;
+            audio.onerror = reject;
+          }),
+        ]);
+        setResourcesLoaded(true);
+      } catch (error) {
+        console.error("Error preloading resources:", error);
+      }
+    };
+
+    preloadResources();
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -124,8 +159,10 @@ const QuestionsAnswering = ({
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  if (!currentQuestion) {
-    return null;
+  if (!currentQuestion || !resourcesLoaded) {
+    return (
+      <div className="absolute inset-0 flex justify-center items-center bg-blue-400"></div>
+    );
   }
 
   let countdownColor = "";

@@ -23,6 +23,68 @@ const Settings = ({
   handleSignout,
 }) => {
   const [isActive, setIsActive] = useState(false);
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
+
+  useEffect(() => {
+    // Function to preload the resources
+    const preloadResources = async () => {
+      try {
+        // Load images
+        await Promise.all([
+          new Promise((resolve, reject) => {
+            const img1 = new Image();
+            img1.src = musicOnLogo;
+            img1.onload = resolve;
+            img1.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img2 = new Image();
+            img2.src = musicOffLogo;
+            img2.onload = resolve;
+            img2.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img3 = new Image();
+            img3.src = voiceOnLogo;
+            img3.onload = resolve;
+            img3.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img4 = new Image();
+            img4.src = voiceOffLogo;
+            img4.onload = resolve;
+            img4.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img5 = new Image();
+            img5.src = signoutLogo;
+            img5.onload = resolve;
+            img5.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img6 = new Image();
+            img6.src = backLogo;
+            img6.onload = resolve;
+            img6.onerror = reject;
+          }),
+          new Promise((resolve, reject) => {
+            const img7 = new Image();
+            img7.src = sky;
+            img7.onload = resolve;
+            img7.onerror = reject;
+          }),
+        ]);
+
+        // Set resourcesLoaded to true when all resources are loaded
+        setResourcesLoaded(true);
+      } catch (error) {
+        console.error("Error preloading resources:", error);
+      }
+    };
+
+    // Call the preloadResources function
+    preloadResources();
+  }, []);
 
   useEffect(() => {
     setIsActive(true);
@@ -50,6 +112,13 @@ const Settings = ({
     handleSignout();
   };
 
+  if (!resourcesLoaded) {
+    // Render loading indicator if resources are not loaded yet
+    return (
+      <div className="absolute inset-0 flex justify-center items-center bg-blue-300"></div>
+    );
+  }
+
   return (
     <div
       className={`min-h-screen w-full flex justify-center items-center overflow-hidden p-10 bg-cover ${
@@ -69,7 +138,6 @@ const Settings = ({
               className="w-32 h-32 cursor-pointer"
               onClick={handleVoiceToggle}
             />
-            {/* <p className="mt-2">{audioState ? "Voice: On" : "Voice: Off"}</p> */}
           </div>
           <div className="flex flex-col items-center justify-center">
             <img
@@ -78,7 +146,6 @@ const Settings = ({
               className="w-32 h-32 cursor-pointer"
               onClick={handleSoundToggle}
             />
-            {/* <p className="mt-2">{soundState ? "Music: On" : "Music: Off"}</p> */}
           </div>
           <div className="flex flex-col items-center justify-center">
             <img
@@ -87,7 +154,6 @@ const Settings = ({
               className="w-32 h-32 cursor-pointer"
               onClick={signoutPrompt}
             />
-            {/* <p className="mt-2">Signout</p> */}
           </div>
         </div>
         <button

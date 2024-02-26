@@ -12,6 +12,7 @@ const Profile = ({
   completedUnits,
 }) => {
   const [isActive, setIsActive] = useState(false);
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
 
   useEffect(() => {
     setIsActive(true);
@@ -19,6 +20,34 @@ const Profile = ({
       setIsActive(false);
     };
   }, []);
+
+  useEffect(() => {
+    // Function to preload the background image
+    const preloadBackgroundImage = async () => {
+      try {
+        await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = sky;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+        // Set resourcesLoaded to true when the background image is loaded
+        setResourcesLoaded(true);
+      } catch (error) {
+        console.error("Error preloading background image:", error);
+      }
+    };
+
+    // Call the preloadBackgroundImage function
+    preloadBackgroundImage();
+  }, []);
+
+  if (!resourcesLoaded) {
+    // Render loading indicator if resources are not loaded yet
+    return (
+      <div className="absolute inset-0 flex justify-center items-center bg-blue-300"></div>
+    );
+  }
 
   return (
     <div
