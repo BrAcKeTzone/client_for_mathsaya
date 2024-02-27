@@ -149,13 +149,13 @@ const GameOver = ({
       >
         {rating && <span className="rating">{rating}</span>}
       </div>
-      <div className="grid grid-cols-5 md:grid-cols-5 gap-4 mb-10">
+      <div className="grid grid-cols-6 gap-4 mb-10">
         {Array.from({ length: starsCount }, (_, index) => (
           <img
             key={index}
             src={starSpinning}
             alt="Star"
-            className="w-4 h-4 md:w-8 md:h-8"
+            className="w-8 h-8 md:w-8 md:h-8"
           />
         ))}
       </div>
