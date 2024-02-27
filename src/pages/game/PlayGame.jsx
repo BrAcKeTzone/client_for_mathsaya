@@ -15,38 +15,23 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
     const preloadResources = async () => {
       try {
         // Load images
-        await Promise.all([
-          new Promise((resolve, reject) => {
-            const img1 = new Image();
-            img1.src = profileLogo;
-            img1.onload = resolve;
-            img1.onerror = reject;
-          }),
-          new Promise((resolve, reject) => {
-            const img2 = new Image();
-            img2.src = playLogo;
-            img2.onload = resolve;
-            img2.onerror = reject;
-          }),
-          new Promise((resolve, reject) => {
-            const img3 = new Image();
-            img3.src = settingLogo;
-            img3.onload = resolve;
-            img3.onerror = reject;
-          }),
-          new Promise((resolve, reject) => {
-            const img4 = new Image();
-            img4.src = sky;
-            img4.onload = resolve;
-            img4.onerror = reject;
-          }),
-          new Promise((resolve, reject) => {
-            const img5 = new Image();
-            img5.src = weird;
-            img5.onload = resolve;
-            img5.onerror = reject;
-          }),
-        ]);
+        await Promise.all(
+          [
+            // Preload images
+            profileLogo,
+            playLogo,
+            settingLogo,
+            sky,
+            weird,
+          ].map((src) => {
+            return new Promise((resolve, reject) => {
+              const img = new Image();
+              img.src = src;
+              img.onload = resolve;
+              img.onerror = reject;
+            });
+          })
+        );
 
         // Set resourcesLoaded to true when all resources are loaded
         setResourcesLoaded(true);
@@ -90,6 +75,19 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
     }
   };
 
+  const getMenuName = (buttonType) => {
+    switch (buttonType) {
+      case "play":
+        return "Play Menu";
+      case "profile":
+        return "Profile Menu";
+      case "settings":
+        return "Settings Menu";
+      default:
+        return "";
+    }
+  };
+
   if (!resourcesLoaded) {
     // Render loading indicator if resources are not loaded yet
     return (
@@ -109,40 +107,61 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
           <img src={weird} alt="Weird" className="w-48 h-w-48" />
         </div>
         <h1 className="text-center fixed top-64 bg-white bg-opacity-20 rounded">
-          <span className="myLogoTitle text-7xl md:text-8xl" />
+          <span className="myLogoTitle text-6xl md:text-8xl" />
         </h1>
 
         <div className="flex justify-center gap-8 mt-36">
-          <img
-            src={profileLogo}
-            alt="Profile Logo"
-            className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
-              selectedButton === "profile"
-                ? "bg-green-200 rounded-full selected"
-                : ""
-            }`}
-            onClick={() => handleButtonClick("profile")}
-          />
-          <img
-            src={playLogo}
-            alt="Play Logo"
-            className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
-              selectedButton === "play"
-                ? "bg-blue-200 rounded-full selected"
-                : ""
-            }`}
-            onClick={() => handleButtonClick("play")}
-          />
-          <img
-            src={settingLogo}
-            alt="Settings Logo"
-            className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
-              selectedButton === "settings"
-                ? "bg-orange-200 rounded-full selected"
-                : ""
-            }`}
-            onClick={() => handleButtonClick("settings")}
-          />
+          <div className="flex flex-col items-center">
+            <img
+              src={profileLogo}
+              alt="Profile Logo"
+              className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
+                selectedButton === "profile"
+                  ? "bg-green-200 rounded-full selected"
+                  : ""
+              }`}
+              onClick={() => handleButtonClick("profile")}
+            />
+            {selectedButton === "profile" && (
+              <span className="text-black mt-12 bg-white bg-opacity-20 fixed">
+                IMONG PROPAYL
+              </span>
+            )}
+          </div>
+          <div className="flex flex-col items-center">
+            <img
+              src={playLogo}
+              alt="Play Logo"
+              className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
+                selectedButton === "play"
+                  ? "bg-blue-200 rounded-full selected"
+                  : ""
+              }`}
+              onClick={() => handleButtonClick("play")}
+            />
+            {selectedButton === "play" && (
+              <span className="text-black mt-12 bg-white bg-opacity-20 fixed">
+                MAGDULA
+              </span>
+            )}
+          </div>
+          <div className="flex flex-col items-center">
+            <img
+              src={settingLogo}
+              alt="Settings Logo"
+              className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
+                selectedButton === "settings"
+                  ? "bg-orange-200 rounded-full selected"
+                  : ""
+              }`}
+              onClick={() => handleButtonClick("settings")}
+            />
+            {selectedButton === "settings" && (
+              <span className="text-black mt-12 bg-white bg-opacity-20 fixed">
+                MGA SETTINGS
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
