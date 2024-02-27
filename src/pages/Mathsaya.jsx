@@ -53,7 +53,7 @@ const MathSaya = () => {
   }, []);
 
   const Navigate = useNavigate();
-  const [showGameIntro, setShowGameIntro] = useState(false);
+  const [showGameIntro, setShowGameIntro] = useState(true);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
@@ -61,7 +61,7 @@ const MathSaya = () => {
   const [showExerciseChoices, setShowExerciseChoices] = useState(false);
   const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
-  const [showProfile, setShowProfile] = useState(true);
+  const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [studentName, setStudentName] = useState({
     firstname: "",
