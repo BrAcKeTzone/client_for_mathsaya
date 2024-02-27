@@ -110,7 +110,7 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
           <span className="myLogoTitle text-6xl md:text-8xl" />
         </h1>
 
-        <div className="flex justify-center gap-8 mt-36">
+        <div className="flex justify-center gap-2 md:gap-3 mt-36">
           <div className="flex flex-col items-center">
             <img
               src={profileLogo}
@@ -123,7 +123,7 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
               onClick={() => handleButtonClick("profile")}
             />
             {selectedButton === "profile" && (
-              <span className="text-black mt-12 bg-white bg-opacity-20 fixed">
+              <span className="text-black mt-28 md:mt-36 bg-white bg-opacity-30 fixed">
                 IMONG PROPAYL
               </span>
             )}
@@ -134,13 +134,13 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
               alt="Play Logo"
               className={`w-24 sm:w-32 h-24 sm:h-32 cursor-pointer ${
                 selectedButton === "play"
-                  ? "bg-blue-200 rounded-full selected"
+                  ? "bg-blue-300 rounded-full selected"
                   : ""
               }`}
               onClick={() => handleButtonClick("play")}
             />
             {selectedButton === "play" && (
-              <span className="text-black mt-12 bg-white bg-opacity-20 fixed">
+              <span className="text-black mt-28 md:mt-36 bg-white bg-opacity-30 fixed">
                 MAGDULA
               </span>
             )}
@@ -157,7 +157,7 @@ const PlayGame = ({ fetchStudentProfile, onPlay, onProfile, onSettings }) => {
               onClick={() => handleButtonClick("settings")}
             />
             {selectedButton === "settings" && (
-              <span className="text-black mt-12 bg-white bg-opacity-20 fixed">
+              <span className="text-black mt-28 md:mt-36 bg-white bg-opacity-20 fixed">
                 MGA SETTINGS
               </span>
             )}
