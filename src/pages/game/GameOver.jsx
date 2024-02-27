@@ -5,6 +5,7 @@ import starSpinning from "../../assets/images/star-spinning.gif";
 import wrongGesture from "../../assets/images/wrong.gif";
 import happyGesture from "../../assets/images/smile.gif";
 import ModalShowExplanation from "../components/modals/ModalShowExplanation";
+import { HiSpeakerWave } from "react-icons/hi2";
 
 const GameOver = ({
   questions,
@@ -25,6 +26,7 @@ const GameOver = ({
   const [showHappyGesture, setShowHappyGesture] = useState(false);
   const [rating, setRating] = useState("");
   const [textColor, setTextColor] = useState("");
+  const [iconScale, setIconScale] = useState(1);
 
   useEffect(() => {
     setShowConfetti(true);
@@ -84,13 +86,13 @@ const GameOver = ({
       textColorClass = "text-green-500";
     } else if (percentage >= 80 && percentage <= 89) {
       rating = "Maayo!";
-      textColorClass = "text-green-400";
+      textColorClass = "text-green-300";
     } else if (percentage >= 70 && percentage <= 79) {
       rating = "Nagtubo kaayo!";
       textColorClass = "text-yellow-500";
     } else if (percentage >= 60 && percentage <= 69) {
       rating = "Himuon pa nato nga mas maayo!";
-      textColorClass = "text-yellow-400";
+      textColorClass = "text-yellow-700";
     } else {
       rating = "Dili pa maayo, pero ayos ra!";
       textColorClass = "text-red-500";
@@ -99,6 +101,15 @@ const GameOver = ({
     setRating(rating);
     setTextColor(textColorClass);
   }, [questions.length, starsCount]);
+
+  useEffect(() => {
+    // Interval to update the icon scale every second
+    const scaleInterval = setInterval(() => {
+      setIconScale((prevScale) => (prevScale === 1 ? 1.5 : 1));
+    }, 2000);
+
+    return () => clearInterval(scaleInterval);
+  }, []);
 
   const handleNumberClick = (number) => {
     if (number === starsCount) {
@@ -147,7 +158,9 @@ const GameOver = ({
       <div
         className={`text-4xl font-bold mb-10 text-center border-b-2 shadow-lg ${textColor}`}
       >
-        {rating && <span className="rating">{rating}</span>}
+        {rating && (
+          <span className="rating bg-black bg-opacity-20">{rating}</span>
+        )}
       </div>
       <div className="grid grid-cols-6 gap-4 mb-10">
         {Array.from({ length: starsCount }, (_, index) => (
@@ -160,13 +173,17 @@ const GameOver = ({
         ))}
       </div>
       <div className="flex flex-col max-w-96">
-        <h1
-          className="text-center text-2xl mb-2 p-1 bg-green-200 bg-opacity-40 cursor-pointer"
-          onClick={handleGameOverClick}
-        >
-          Aron makita nimo ang listahan sa tubag, kinahanglan nga pili-on nimo
-          ang eksaktong numero sa mga bituon gikan sa pilianan sa ubos.
-        </h1>
+        <div className="relative" onClick={handleGameOverClick}>
+          <HiSpeakerWave
+            className="text-2xl absolute top-0 right-0 mt-1 mr-1 text-red-500 cursor-pointer"
+            style={{ transform: `scale(${iconScale})` }}
+          />
+          <h1 className="text-center text-2xl mb-2 p-1 bg-green-200 bg-opacity-40 cursor-pointer">
+            Aron makita nimo ang listahan sa tubag, kinahanglan nga pili-on nimo
+            ang eksaktong numero sa mga bituon gikan sa pilianan sa ubos.
+          </h1>
+        </div>
+
         <div className="grid grid-cols-4 gap-4">
           {randomNumbers.map((number, index) => (
             <button

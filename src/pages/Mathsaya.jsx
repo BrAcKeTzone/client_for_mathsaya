@@ -53,7 +53,7 @@ const MathSaya = () => {
   }, []);
 
   const Navigate = useNavigate();
-  const [showGameIntro, setShowGameIntro] = useState(true);
+  const [showGameIntro, setShowGameIntro] = useState(false);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [showPlayGame, setShowPlayGame] = useState(false);
   const [showUnitChoices, setShowUnitChoices] = useState(false);
@@ -61,7 +61,7 @@ const MathSaya = () => {
   const [showExerciseChoices, setShowExerciseChoices] = useState(false);
   const [showQuestionsAnswering, setShowQuestionsAnswering] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
+  const [showProfile, setShowProfile] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [studentName, setStudentName] = useState({
     firstname: "",
@@ -106,61 +106,6 @@ const MathSaya = () => {
   const agay = new Audio(agayAudio);
   const agay2 = new Audio(agayAudio2);
   const healChoir = new Audio(healchoir);
-  const [resourcesLoaded, setResourcesLoaded] = useState(false);
-
-  useEffect(() => {
-    const preloadResources = async () => {
-      try {
-        await Promise.all([
-          new Promise((resolve, reject) => {
-            const audios = [
-              calm,
-              testscreenLoop,
-              welcome,
-              playprofilesettings,
-              profileAudio,
-              settingsAudio,
-              musicOff,
-              musicOn,
-              voiceOff,
-              voiceOn,
-              signoutAudio,
-              choicescene,
-              unitAudio,
-              lessonAudio,
-              videoDiskasyon,
-              exerciseAudio,
-              answering,
-              tickingTimer,
-              congratsAudio,
-              gameoverAudio,
-              correctAudio,
-              wrongAudio,
-              backAudio,
-              clicksound,
-              gameOverMusic,
-              agayAudio,
-              agayAudio2,
-              healchoir,
-            ];
-
-            audios.forEach((audio) => {
-              const audioObj = new Audio(audio);
-              audioObj.preload = "auto";
-              audioObj.onloadeddata = resolve;
-              audioObj.onerror = reject;
-            });
-          }),
-        ]);
-
-        setResourcesLoaded(true);
-      } catch (error) {
-        console.error("Error preloading resources:", error);
-      }
-    };
-
-    preloadResources();
-  }, []);
 
   const studentProfile = Cookies.get("STUDENT_SESSION");
   const studentProfileId = studentProfile
