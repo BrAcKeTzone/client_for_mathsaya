@@ -69,7 +69,7 @@ const TestScreen = ({ testscreenLoop, onContinue }) => {
             {numbers.map((number) => (
               <div
                 key={number}
-                className="rounded w-12 h-12 flex justify-center items-center bg-white text-black hover:bg-black hover:text-white font-bold transition duration-300"
+                className="rounded w-12 h-12 flex justify-center items-center bg-white text-black hover:bg-black hover:text-white font-bold transition duration-300 cursor-pointer"
                 onClick={() => handleNumberClick(number)}
               >
                 {number}
