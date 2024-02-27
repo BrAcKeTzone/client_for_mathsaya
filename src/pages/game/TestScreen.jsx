@@ -48,7 +48,9 @@ const TestScreen = ({ testscreenLoop, onContinue }) => {
   if (!resourcesLoaded) {
     // Render loading indicator if resources are not loaded yet
     return (
-      <div className="absolute inset-0 flex justify-center items-center bg-emerald-400 bg-opacity-50"></div>
+      <div class="h-screen w-full flex justify-center items-center bg-emerald-400 bg-opacity-50">
+        <div class="colorloader"></div>
+      </div>
     );
   }
 

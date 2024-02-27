@@ -58,6 +58,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
     ) {
       // Assuming loginDates is a comma-separated string of date strings
       const dates = studentProfile.studentProfile.loginDates.split(",");
+      console.log(dates);
       return dates.map((dateString) => ({
         date: new Date(dateString),
       }));

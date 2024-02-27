@@ -172,7 +172,9 @@ const QuestionsAnswering = ({
 
   if (!currentQuestion || !resourcesLoaded) {
     return (
-      <div className="absolute inset-0 flex justify-center items-center bg-blue-400"></div>
+      <div class="h-screen w-full flex justify-center items-center bg-blue-300">
+        <div class="colorloader"></div>
+      </div>
     );
   }
 

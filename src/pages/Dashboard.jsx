@@ -11,6 +11,7 @@ import {
   FaTasks,
   FaUserShield,
 } from "react-icons/fa";
+
 import healchoir from "../assets/audios/healchoir.wav";
 
 const server_url = import.meta.env.VITE_SERVER_LINK;
@@ -26,6 +27,7 @@ const Dashboard = ({ fetchUserRole }) => {
   const [totalYunits, setTotalYunits] = useState(0);
   const [totalLessons, setTotalLessons] = useState(0);
   const [totalExercises, setTotalExercises] = useState(0);
+  const [studentProfiles, setStudentProfiles] = useState([]);
 
   const healChoir = new Audio(healchoir);
 
@@ -55,6 +57,8 @@ const Dashboard = ({ fetchUserRole }) => {
       setTotalYunits(statResponse.data.totalYunits);
       setTotalLessons(statResponse.data.totalLessons);
       setTotalExercises(statResponse.data.totalExercises);
+      setStudentProfiles(statResponse.data.studentProfiles);
+      console.log(statResponse.data.studentProfiles);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {

@@ -57,7 +57,9 @@ const GameIntro = ({ onComplete }) => {
   if (!resourcesLoaded) {
     // Render loading indicator if resources are not loaded yet
     return (
-      <div className="absolute inset-0 flex justify-center items-center bg-yellow-400 bg-opacity-10"></div>
+      <div class="h-screen w-full flex justify-center items-center bg-yellow-400 bg-opacity-10">
+        <div class="colorloader"></div>
+      </div>
     );
   }
 
