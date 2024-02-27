@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import loopBG from "../../assets/images/loopingBG.gif";
 import dancing from "../../assets/images/dancing.gif";
 import ct321 from "../../assets/audios/countdown-321.wav";
+import { HiSpeakerWave } from "react-icons/hi2";
 
 const QuestionsAnswering = ({
   questions,
@@ -22,6 +23,7 @@ const QuestionsAnswering = ({
   const [clickCount, setClickCount] = useState(0);
   const [bgOpacity, setBgOpacity] = useState("bg-white bg-opacity-0");
   const [resourcesLoaded, setResourcesLoaded] = useState(false);
+  const [iconScale, setIconScale] = useState(1);
 
   const countdown321 = new Audio(ct321);
 
@@ -84,6 +86,15 @@ const QuestionsAnswering = ({
     };
 
     preloadResources();
+  }, []);
+
+  useEffect(() => {
+    // Interval to update the icon scale every second
+    const scaleInterval = setInterval(() => {
+      setIconScale((prevScale) => (prevScale === 1 ? 1.5 : 1));
+    }, 2000);
+
+    return () => clearInterval(scaleInterval);
   }, []);
 
   useEffect(() => {
@@ -218,12 +229,17 @@ const QuestionsAnswering = ({
       </div>
       <div className="max-w-lg z-10 min-w-64 md:min-w-72">
         <div className="flex flex-col items-center justify-center mb-8">
-          <p
-            className={`text-center mb-2 hover:bg-white hover:bg-opacity-20 p-5 rounded cursor-pointer ${bgOpacity}`}
-            onClick={handleQuestionTextClick}
-          >
-            {currentQuestion.question_text}
-          </p>
+          <div className="relative" onClick={handleQuestionTextClick}>
+            <HiSpeakerWave
+              className="text-2xl absolute top-0 right-0 mt-1 mr-1 text-red-500 cursor-pointer"
+              style={{ transform: `scale(${iconScale})` }}
+            />
+            <p
+              className={`text-center mb-2 hover:bg-white hover:bg-opacity-20 p-5 rounded ${bgOpacity}`}
+            >
+              {currentQuestion.question_text}
+            </p>
+          </div>
           {currentQuestion.questionImage && (
             <img
               src={currentQuestion.questionImage}
