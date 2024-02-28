@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
-import skyBackground from "../../assets/images/waterfall.gif";
+import skyBackground from "../../assets/images/land.jpg";
 import starSpinning from "../../assets/images/star-spinning.gif";
 import wrongGesture from "../../assets/images/wrong.gif";
 import happyGesture from "../../assets/images/smile.gif";
