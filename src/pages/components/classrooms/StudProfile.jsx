@@ -352,7 +352,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
           </div>
         ) : (
           <div className="text-center text-3xl font-bold p-4 text-red-500">
-            <h2>This student haven't signed in yet!</h2>
+            <h2>This student may haven't signed in yet! Please wait!</h2>
           </div>
         )}
       </div>
