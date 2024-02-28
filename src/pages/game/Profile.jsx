@@ -95,7 +95,7 @@ const Profile = ({
                       {exercise.Exercise.exerciseName}
                     </span>
                     <span className="text-base text-green-900">
-                      Ihap sa Bituon : {exercise.starRating} ⭐
+                      Ihap sa Bituon : {exercise.starRating}%
                     </span>
                   </div>
                 ))}
@@ -116,7 +116,7 @@ const Profile = ({
                       {lesson.Lesson.lessonName}
                     </span>
                     <span className="text-base text-green-900">
-                      Ihap sa Bituon : {lesson.starRating} ⭐
+                      Ihap sa Bituon : {lesson.starRating}%
                     </span>
                   </div>
                 ))}
@@ -137,7 +137,7 @@ const Profile = ({
                       {unit.Yunit.yunitName}
                     </span>
                     <span className="text-base text-green-900">
-                      Ihap sa Bituon : {unit.starRating} ⭐
+                      Ihap sa Bituon : {unit.starRating}%
                     </span>
                   </div>
                 ))}
