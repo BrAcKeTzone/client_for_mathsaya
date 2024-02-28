@@ -49,7 +49,7 @@ const GameIntro = ({ onComplete }) => {
   useEffect(() => {
     const animationTimer = setTimeout(() => {
       setLogoScale(1);
-    }, 1000);
+    }, 3000);
 
     return () => clearTimeout(animationTimer);
   }, []);
