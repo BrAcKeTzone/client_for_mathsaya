@@ -179,7 +179,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {exercise.Exercise.exerciseName}
                       </span>
                       <span className="flex text-gray-500">
-                        - Collected Stars: {exercise.starRating}%
+                        - Progress Report: {exercise.starRating}%
                       </span>
                       {exercise.completionTime && (
                         <span className="flex items-center">
@@ -205,7 +205,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     >
                       {lesson.Lesson.lessonName}{" "}
                       <span className="flex text-gray-500">
-                        - Collected Stars: {lesson.starRating}%
+                        - Progress Report: {lesson.starRating}%
                       </span>
                     </li>
                   ))}
@@ -224,7 +224,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     >
                       {yunit.Yunit.yunitName}{" "}
                       <span className="flex text-gray-500">
-                        - Collected Stars: {yunit.starRating}%
+                        - Progress Report: {yunit.starRating}%
                       </span>
                     </li>
                   ))}
@@ -246,8 +246,8 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                       <div>
                         {studentProfile.minExercise.Exercise.exerciseName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars:{" "}
-                          {studentProfile.minExercise.starRating}
+                          Progress Report:{" "}
+                          {studentProfile.minExercise.starRating}%
                         </span>
                       </div>
                     ) : (
@@ -263,7 +263,8 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                       <div>
                         {studentProfile.minLesson.Lesson.lessonName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars: {studentProfile.minLesson.starRating}{" "}
+                          Progress Report: {studentProfile.minLesson.starRating}
+                          %
                         </span>
                       </div>
                     ) : (
@@ -279,7 +280,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                       <div>
                         {studentProfile.minYunit.Yunit.yunitName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars: {studentProfile.minYunit.starRating}{" "}
+                          Progress Report: {studentProfile.minYunit.starRating}%
                         </span>
                       </div>
                     ) : (
@@ -302,8 +303,8 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                       <div>
                         {studentProfile.maxExercise.Exercise.exerciseName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars:{" "}
-                          {studentProfile.maxExercise.starRating}
+                          Progress Report:{" "}
+                          {studentProfile.maxExercise.starRating}%
                         </span>
                       </div>
                     ) : (
@@ -319,7 +320,8 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                       <div>
                         {studentProfile.maxLesson.Lesson.lessonName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars: {studentProfile.maxLesson.starRating}{" "}
+                          Progress Report: {studentProfile.maxLesson.starRating}
+                          %
                         </span>
                       </div>
                     ) : (
@@ -335,7 +337,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                       <div>
                         {studentProfile.maxYunit.Yunit.yunitName} -{" "}
                         <span className="text-gray-500">
-                          Collected Stars: {studentProfile.maxYunit.starRating}{" "}
+                          Progress Report: {studentProfile.maxYunit.starRating}%
                         </span>
                       </div>
                     ) : (
