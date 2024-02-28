@@ -46,8 +46,6 @@ const GameOver = ({
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem("percentage", percentage);
-
     const saveProgress = async () => {
       await saveExerciseProgress();
       await saveLessonProgress();
@@ -78,6 +76,7 @@ const GameOver = ({
   const totalOver = questions.length;
   const totalScore = sessionStorage.getItem("score");
   const percentage = (totalScore / totalOver) * 100;
+  sessionStorage.setItem("percentage", percentage);
 
   useEffect(() => {
     let rating = "";
