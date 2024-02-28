@@ -113,7 +113,6 @@ const MathSaya = () => {
   const selectedunit = sessionStorage.getItem("selectedunit");
   const selectedlesson = sessionStorage.getItem("selectedlesson");
   const selectedexercise = sessionStorage.getItem("selectedexercise");
-  const percentage = sessionStorage.getItem("percentage");
 
   useEffect(() => {
     if (!studentProfile) {
@@ -434,6 +433,8 @@ const MathSaya = () => {
 
   async function saveExerciseProgress() {
     try {
+      const percentage = sessionStorage.getItem("percentage");
+
       const completeDataExercise = {
         exerciseId: selectedexercise,
         starRating: percentage,

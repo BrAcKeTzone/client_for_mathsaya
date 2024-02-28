@@ -27,6 +27,7 @@ const GameOver = ({
   const [rating, setRating] = useState("");
   const [textColor, setTextColor] = useState("");
   const [iconScale, setIconScale] = useState(1);
+  const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
     setShowConfetti(true);
@@ -43,16 +44,6 @@ const GameOver = ({
     if (score) {
       setStarsCount(parseInt(score));
     }
-  }, []);
-
-  useEffect(() => {
-    const saveProgress = async () => {
-      await saveExerciseProgress();
-      await saveLessonProgress();
-      await saveUnitProgress();
-    };
-
-    saveProgress();
   }, []);
 
   useEffect(() => {
@@ -75,8 +66,14 @@ const GameOver = ({
 
   const totalOver = questions.length;
   const totalScore = sessionStorage.getItem("score");
-  const percentage = (totalScore / totalOver) * 100;
-  sessionStorage.setItem("percentage", percentage);
+
+  useEffect(() => {
+    if (totalScore !== null) {
+      const calculatedPercentage = (totalScore / totalOver) * 100;
+      setPercentage(calculatedPercentage);
+      sessionStorage.setItem("percentage", calculatedPercentage);
+    }
+  }, [totalOver, totalScore]);
 
   useEffect(() => {
     let rating = "";
@@ -99,7 +96,7 @@ const GameOver = ({
     }
     setRating(rating);
     setTextColor(textColorClass);
-  }, [questions.length, starsCount]);
+  }, [questions.length, starsCount, percentage]);
 
   useEffect(() => {
     // Interval to update the icon scale every second
@@ -136,6 +133,16 @@ const GameOver = ({
       gameover.play();
     }
   };
+
+  useEffect(() => {
+    const saveProgress = async () => {
+      await saveExerciseProgress();
+      await saveLessonProgress();
+      await saveUnitProgress();
+    };
+
+    saveProgress();
+  }, [percentage]); // Include percentage in the dependency array
 
   return (
     <div
