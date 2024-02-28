@@ -27,6 +27,7 @@ const GameOver = ({
   const [rating, setRating] = useState("");
   const [textColor, setTextColor] = useState("");
   const [iconScale, setIconScale] = useState(1);
+  const [myPercent, setMyPercent] = useState(0);
 
   useEffect(() => {
     setShowConfetti(true);
@@ -73,7 +74,7 @@ const GameOver = ({
     generateRandomNumbers();
   }, [starsCount]);
 
-  const totalOver = questions.length * 3;
+  const totalOver = questions.length;
   const totalScore = sessionStorage.getItem("score");
 
   useEffect(() => {
@@ -97,7 +98,7 @@ const GameOver = ({
       rating = "Dili pa maayo, pero ayos ra!";
       textColorClass = "text-red-500";
     }
-
+    sessionStorage.setItem("percentage", percentage);
     setRating(rating);
     setTextColor(textColorClass);
   }, [questions.length, starsCount]);

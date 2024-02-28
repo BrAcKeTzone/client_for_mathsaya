@@ -179,7 +179,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {exercise.Exercise.exerciseName}
                       </span>
                       <span className="flex text-gray-500">
-                        - Collected Stars: {exercise.starRating} ⭐
+                        - Collected Stars: {exercise.starRating}%
                       </span>
                       {exercise.completionTime && (
                         <span className="flex items-center">
@@ -205,7 +205,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     >
                       {lesson.Lesson.lessonName}{" "}
                       <span className="flex text-gray-500">
-                        - Collected Stars: {lesson.starRating} ⭐
+                        - Collected Stars: {lesson.starRating}%
                       </span>
                     </li>
                   ))}
@@ -224,7 +224,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                     >
                       {yunit.Yunit.yunitName}{" "}
                       <span className="flex text-gray-500">
-                        - Collected Stars: {yunit.starRating} ⭐
+                        - Collected Stars: {yunit.starRating}%
                       </span>
                     </li>
                   ))}
@@ -247,7 +247,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {studentProfile.minExercise.Exercise.exerciseName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars:{" "}
-                          {studentProfile.minExercise.starRating} ⭐
+                          {studentProfile.minExercise.starRating}
                         </span>
                       </div>
                     ) : (
@@ -264,7 +264,6 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {studentProfile.minLesson.Lesson.lessonName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars: {studentProfile.minLesson.starRating}{" "}
-                          ⭐
                         </span>
                       </div>
                     ) : (
@@ -281,7 +280,6 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {studentProfile.minYunit.Yunit.yunitName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars: {studentProfile.minYunit.starRating}{" "}
-                          ⭐
                         </span>
                       </div>
                     ) : (
@@ -305,7 +303,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {studentProfile.maxExercise.Exercise.exerciseName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars:{" "}
-                          {studentProfile.maxExercise.starRating} ⭐
+                          {studentProfile.maxExercise.starRating}
                         </span>
                       </div>
                     ) : (
@@ -322,7 +320,6 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {studentProfile.maxLesson.Lesson.lessonName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars: {studentProfile.maxLesson.starRating}{" "}
-                          ⭐
                         </span>
                       </div>
                     ) : (
@@ -339,7 +336,6 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                         {studentProfile.maxYunit.Yunit.yunitName} -{" "}
                         <span className="text-gray-500">
                           Collected Stars: {studentProfile.maxYunit.starRating}{" "}
-                          ⭐
                         </span>
                       </div>
                     ) : (

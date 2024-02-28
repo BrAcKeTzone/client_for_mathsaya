@@ -10,10 +10,8 @@ const QuestionsAnswering = ({
   onGameOver,
   fetchQuestions,
   selectedexercise,
-  answering_timer,
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [countdown, setCountdown] = useState(60);
   const [showTransitionCountdown, setShowTransitionCountdown] = useState(false);
   const [transitionCountdown, setTransitionCountdown] = useState(3);
   const [score, setScore] = useState(0);
@@ -99,17 +97,8 @@ const QuestionsAnswering = ({
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (countdown > 0 && !showTransitionCountdown) {
-        setCountdown(countdown - 1);
-        if (countdown === 20 && !timerSoundPlayed) {
-          if (localStorage.getItem("voice") === "true") {
-            playTimerSound();
-          }
-        }
-      } else if (countdown === 0 && !showTransitionCountdown) {
-        setShowTransitionCountdown(true);
-      } else if (showTransitionCountdown && transitionCountdown > 0) {
-        setTransitionCountdown(transitionCountdown - 1);
+      if (showTransitionCountdown && transitionCountdown > 0) {
+        setTransitionCountdown((prevCount) => prevCount - 1);
       } else if (showTransitionCountdown && transitionCountdown === 0) {
         if (currentQuestionIndex < questions.length - 1) {
           console.log("Total Score: " + score);
@@ -121,16 +110,10 @@ const QuestionsAnswering = ({
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [
-    countdown,
-    currentQuestionIndex,
-    showTransitionCountdown,
-    transitionCountdown,
-  ]);
+  }, [showTransitionCountdown, transitionCountdown]);
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
-    setCountdown(60);
     setShowTransitionCountdown(false);
     setTransitionCountdown(3);
     setTimerSoundPlayed(false);
@@ -144,7 +127,7 @@ const QuestionsAnswering = ({
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
 
     if (selectedAnswer === correctAnswer) {
-      setScore((prevScore) => prevScore + calculateScore(countdown));
+      setScore((prevScore) => prevScore + calculateScore());
       setScore((prevScore) => {
         console.log(`Correct answer! Score: ${prevScore}`);
         return prevScore;
@@ -158,44 +141,25 @@ const QuestionsAnswering = ({
     setShowTransitionCountdown(true);
   };
 
-  const calculateScore = (timeLeft) => {
-    if (timeLeft >= 40) {
-      return 3;
-    } else if (timeLeft >= 20) {
-      return 2;
-    } else {
-      return 1;
-    }
+  const calculateScore = () => {
+    // Adjust scoring logic as needed
+    return 1;
   };
 
   const currentQuestion = questions[currentQuestionIndex];
 
   if (!currentQuestion || !resourcesLoaded) {
     return (
-      <div class="h-screen w-full flex justify-center items-center bg-blue-300">
-        <div class="colorloader"></div>
+      <div className="h-screen w-full flex justify-center items-center bg-blue-300">
+        <div className="colorloader"></div>
       </div>
     );
-  }
-
-  let countdownColor = "";
-  if (countdown <= 10) {
-    countdownColor = "text-red-500";
-  } else if (countdown <= 20) {
-    countdownColor = "text-yellow-400";
   }
 
   const handleQuestionTextClick = () => {
     if (localStorage.getItem("voice") === "true") {
       responsiveVoice.speak(currentQuestion.question_text, "Filipino Female");
     }
-  };
-
-  const playTimerSound = () => {
-    if (localStorage.getItem("voice") === "true") {
-      answering_timer.play();
-    }
-    setTimerSoundPlayed(true);
   };
 
   const handleChoiceClick = (choice, index) => {
@@ -224,11 +188,6 @@ const QuestionsAnswering = ({
       style={{ backgroundImage: `url(${loopBG})` }}
     >
       <div className="absolute inset-0 bg-gray-500 bg-opacity-30 z-0"></div>
-      <div className="absolute bottom-1 md:top-5 md:right-5 right-0 left-0 md:left-auto text-white bg-slate-500 bg-opacity-20 md:bottom-auto">
-        <span className={`text-4xl ${countdownColor}`}>
-          {`Nahabiling Oras: ${countdown}`}
-        </span>
-      </div>
       <div className="max-w-lg z-10 min-w-64 md:min-w-72">
         <div className="flex flex-col items-center justify-center mb-8">
           <div className="relative" onClick={handleQuestionTextClick}>

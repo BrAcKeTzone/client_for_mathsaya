@@ -31,7 +31,6 @@ import lessonAudio from "../assets/audios/voicelines/leksyonscene.mp3";
 import videoDiskasyon from "../assets/audios/voicelines/hover_leksyon_diskasyon.mp3";
 import exerciseAudio from "../assets/audios/voicelines/tunananscene.mp3";
 import answering from "../assets/audios/answeringMusic.mp3";
-import tickingTimer from "../assets/audios/voicelines/answering_timer.mp3";
 import congratsAudio from "../assets/audios/voicelines/congrats.mp3";
 import gameoverAudio from "../assets/audios/voicelines/gameover.mp3";
 import correctAudio from "../assets/audios/voicelines/gameover_correct.mp3";
@@ -97,7 +96,6 @@ const MathSaya = () => {
   const leksyonscene = new Audio(lessonAudio);
   const videoDiscussion = new Audio(videoDiskasyon);
   const tunananscene = new Audio(exerciseAudio);
-  const answering_timer = new Audio(tickingTimer);
   const congrats = new Audio(congratsAudio);
   const gameover = new Audio(gameoverAudio);
   const correct = new Audio(correctAudio);
@@ -115,7 +113,7 @@ const MathSaya = () => {
   const selectedunit = sessionStorage.getItem("selectedunit");
   const selectedlesson = sessionStorage.getItem("selectedlesson");
   const selectedexercise = sessionStorage.getItem("selectedexercise");
-  const score = sessionStorage.getItem("score");
+  const percentage = sessionStorage.getItem("percentage");
 
   useEffect(() => {
     if (!studentProfile) {
@@ -438,7 +436,7 @@ const MathSaya = () => {
     try {
       const completeDataExercise = {
         exerciseId: selectedexercise,
-        starRating: score,
+        starRating: percentage,
         studentProfileId,
       };
       const responseExercise = await axios.post(
@@ -542,7 +540,7 @@ const MathSaya = () => {
       )}
       {showQuestionsAnswering && (
         <QuestionsAnswering
-          answering_timer={answering_timer}
+          // answering_timer={answering_timer}
           fetchQuestions={fetchQuestions}
           questions={questions}
           setSelectedAnswers={setSelectedAnswers}
