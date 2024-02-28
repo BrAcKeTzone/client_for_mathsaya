@@ -142,6 +142,7 @@ const GameOver = ({
     };
 
     saveProgress();
+    sessionStorage.removeItem("percentage");
   }, []); // Include percentage in the dependency array
 
   return (
