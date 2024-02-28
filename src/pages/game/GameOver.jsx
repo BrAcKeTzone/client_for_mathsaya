@@ -142,7 +142,7 @@ const GameOver = ({
     };
 
     saveProgress();
-  }, [percentage]); // Include percentage in the dependency array
+  }, []); // Include percentage in the dependency array
 
   return (
     <div
