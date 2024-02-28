@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
-import skyBackground from "../../assets/images/land.jpg";
+import landBackground from "../../assets/images/land.jpg";
 import starSpinning from "../../assets/images/star-spinning.gif";
 import wrongGesture from "../../assets/images/wrong.gif";
 import happyGesture from "../../assets/images/smile.gif";
@@ -141,7 +141,7 @@ const GameOver = ({
   return (
     <div
       className="min-h-screen w-full flex flex-col justify-center items-center overflow-hidden p-10 bg-cover"
-      style={{ backgroundImage: `url(${skyBackground})` }}
+      style={{ backgroundImage: `url(${landBackground})` }}
     >
       {showConfetti && <Confetti />}
       {showWrongGesture && (
