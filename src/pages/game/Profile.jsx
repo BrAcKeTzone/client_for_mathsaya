@@ -108,12 +108,17 @@ const Profile = ({
               </p>
               <div className="bg-yellow-200 rounded p-2 max-h-80 overflow-y-auto">
                 {completedLessons.map((lesson, index) => (
-                  <p
+                  <div
                     key={index}
-                    className="text-base text-center text-yellow-900"
+                    className="flex flex-col justify-center items-center"
                   >
-                    {`${lesson.Lesson.lessonName} - Ihap sa Bituon: ${lesson.starRating} ⭐`}
-                  </p>
+                    <span className="text-base text-green-900">
+                      {lesson.Lesson.lessonName}
+                    </span>
+                    <span className="text-base text-green-900">
+                      Ihap sa Bituon : {lesson.starRating} ⭐
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -124,9 +129,17 @@ const Profile = ({
               </p>
               <div className="bg-red-200 rounded p-2 max-h-80 overflow-y-auto">
                 {completedUnits.map((unit, index) => (
-                  <p key={index} className="text-base text-center text-red-900">
-                    {`${unit.Yunit.yunitName} - Ihap sa Bituon: ${unit.starRating} ⭐`}
-                  </p>
+                  <div
+                    key={index}
+                    className="flex flex-col justify-center items-center"
+                  >
+                    <span className="text-base text-green-900">
+                      {unit.Yunit.yunitName}
+                    </span>
+                    <span className="text-base text-green-900">
+                      Ihap sa Bituon : {unit.starRating} ⭐
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>
