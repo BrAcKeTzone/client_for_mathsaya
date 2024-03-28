@@ -144,23 +144,23 @@ function Students({
               >
                 <div className="flex">
                   <div className="flex flex-row">
-                    <div className="min-w-6 md:min-w-20">
+                    <div className="min-w-6 md:min-w-20 md:border-r border-blue-700">
                       {student.gender === "Male" ? (
                         <CgBoy className="rounded-full text-2xl bg-blue-500 inline-block" />
                       ) : (
                         <CgGirl className="rounded-full text-2xl bg-pink-500 inline-block" />
                       )}
                     </div>
-                    <div className="min-w-20 md:min-w-32">
+                    <div className="min-w-20 md:min-w-32 md:border-r border-blue-700">
                       {student.username}
                     </div>
-                    <div className="min-w-20 md:min-w-32 text-left">
+                    <div className="min-w-20 md:min-w-32 text-left md:pl-10">
                       {student.lastname}, {student.firstname}
                     </div>
                   </div>
                 </div>
               </button>
-              <div className="flex flex-row">
+              <div className="flex flex-row md:border-l border-blue-700 md:pl-2">
                 <button
                   className="bg-blue-600 hover:bg-blue-400 p-2 rounded mx-1"
                   onClick={() => openEditStudentModal(student.studentId)}
