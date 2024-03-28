@@ -33,7 +33,6 @@ function Questions({ teacherId, selectedExerciseId, server_url, goBack }) {
 
   const fetchQuestions = async (selectedExerciseId) => {
     try {
-      console.log(selectedExerciseId);
       setIsLoading(true);
       const response = await axios.get(
         `${server_url}/questions/${selectedExerciseId}`
@@ -95,7 +94,7 @@ function Questions({ teacherId, selectedExerciseId, server_url, goBack }) {
           </button>
         </div>
       </div>
-      <div className="flex justify-end pt-1">
+      <div className="flex justify-end pt-1 px-5 md:px-0">
         <button
           className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
           onClick={goBack}

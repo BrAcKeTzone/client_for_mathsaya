@@ -33,7 +33,6 @@ function Units({ teacherId, server_url, handleClickUnit, goBack }) {
 
   const fetchUnits = async (teacherId) => {
     try {
-      console.log(teacherId);
       setIsLoading(true);
       const response = await axios.get(`${server_url}/units/${teacherId}`);
       setUnits(response.data);
@@ -96,7 +95,7 @@ function Units({ teacherId, server_url, handleClickUnit, goBack }) {
           </button>
         </div>
       </div>
-      <div className="flex justify-end pt-1">
+      <div className="flex justify-end pt-1 px-4 md:px-0">
         <button
           className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
           onClick={goBack}
@@ -137,7 +136,7 @@ function Units({ teacherId, server_url, handleClickUnit, goBack }) {
                   alt={unit.yunitName}
                   className="w-full h-24 object-cover object-center"
                 />
-                <div className="p-2 flex flex-col h-full min-h-20">
+                <div className="p-2 flex flex-col min-h-40 max-h-40">
                   <div className="text-xl font-bold mb-2">
                     Unit {unit.yunitNumber}
                   </div>

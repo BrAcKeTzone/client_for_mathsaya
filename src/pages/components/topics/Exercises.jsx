@@ -50,7 +50,6 @@ function Exercises({
 
   const fetchExercises = async (selectedLessonId) => {
     try {
-      console.log(selectedLessonId);
       setIsLoading(true);
       const response = await axios.get(
         `${server_url}/exercises/${selectedLessonId}`
@@ -127,7 +126,7 @@ function Exercises({
           </button>
         </div>
       </div>{" "}
-      <div className="flex justify-between pt-1">
+      <div className="flex justify-between pt-1 px-5 md:px-0">
         <button
           className="ml-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           onClick={openAddLessonVideoModal}
@@ -169,7 +168,7 @@ function Exercises({
                   handleClickExercise(exercise.exerciseId);
                 }}
               >
-                <div className="p-2 flex flex-col h-full min-h-20">
+                <div className="p-2 flex flex-col min-h-40 max-h-52">
                   <div className="text-xl font-bold mb-2">
                     {exercise.exerciseNumber}
                   </div>

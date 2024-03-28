@@ -39,7 +39,6 @@ function Lessons({
 
   const fetchLessons = async (selectedUnitId) => {
     try {
-      console.log(selectedUnitId);
       setIsLoading(true);
       const response = await axios.get(
         `${server_url}/lessons/${selectedUnitId}`
@@ -92,7 +91,7 @@ function Lessons({
   };
 
   const truncatedDescription = (description) => {
-    const maxLength = 100;
+    const maxLength = 70;
     return truncateText(description, maxLength);
   };
 
@@ -116,7 +115,7 @@ function Lessons({
           </button>
         </div>
       </div>
-      <div className="flex justify-end pt-1">
+      <div className="flex justify-end pt-1 px-4 md:px-0">
         <button
           className="w-[89px] p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center relative"
           onClick={goBack}
@@ -137,7 +136,7 @@ function Lessons({
           </span>
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {isLoading ? (
           <span className="loader"></span>
         ) : (
@@ -157,7 +156,7 @@ function Lessons({
                   alt={lesson.lessonName}
                   className="w-full h-24 object-cover object-center"
                 />
-                <div className="p-2 flex flex-col h-full min-h-20">
+                <div className="p-2 flex flex-col min-h-56 max-h-56">
                   <div className="text-xl font-bold mb-2">
                     Lesson {lesson.lessonNumber}
                   </div>
