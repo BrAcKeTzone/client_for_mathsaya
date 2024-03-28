@@ -135,7 +135,7 @@ function Students({
           filteredStudents.map((student) => (
             <div
               key={student.studentId}
-              className="border border-gray-400 mb-4 p-2 flex items-center justify-between transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-700 hover:text-white"
+              className="border border-gray-400 mb-2 p-2 flex items-center justify-between transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-700 hover:text-white"
             >
               <button
                 onClick={() => {
@@ -146,9 +146,9 @@ function Students({
                   <div className="flex flex-row">
                     <div className="min-w-6 md:min-w-20">
                       {student.gender === "Male" ? (
-                        <CgBoy className="text-2xl text-blue-700 inline-block" />
+                        <CgBoy className="rounded-full text-2xl bg-blue-500 inline-block" />
                       ) : (
-                        <CgGirl className="text-2xl text-pink-700 inline-block" />
+                        <CgGirl className="rounded-full text-2xl bg-pink-500 inline-block" />
                       )}
                     </div>
                     <div className="min-w-20 md:min-w-32">
@@ -162,13 +162,13 @@ function Students({
               </button>
               <div className="flex flex-row">
                 <button
-                  className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
+                  className="bg-blue-600 hover:bg-blue-400 p-2 rounded mx-1"
                   onClick={() => openEditStudentModal(student.studentId)}
                 >
                   <FaRegEdit className="text-xl" />
                 </button>
                 <button
-                  className="bg-red-500 hover:bg-red-400 p-2 rounded mx-1"
+                  className="bg-red-600 hover:bg-red-400 p-2 rounded mx-1"
                   onClick={() => handleDeleteStudent(student.studentId)}
                 >
                   <FaTrashAlt className="text-xl" />
