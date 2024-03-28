@@ -75,13 +75,16 @@ function Navbar({ userRole, server_url, usr }) {
             <NavLink to="/dash" onClick={toggleMobileMenu}>
               Dashboard
             </NavLink>
-            <NavLink to="/admins" onClick={toggleMobileMenu}>
-              Admins
-            </NavLink>
-            <NavLink to="/teachers" onClick={toggleMobileMenu}>
-              Teachers
-            </NavLink>
-
+            {userRole !== "Teacher" && (
+              <NavLink to="/admins" onClick={toggleMobileMenu}>
+                Admins
+              </NavLink>
+            )}
+            {userRole !== "Teacher" && (
+              <NavLink to="/teachers" onClick={toggleMobileMenu}>
+                Teachers
+              </NavLink>
+            )}
             <NavLink to="/topics" onClick={toggleMobileMenu}>
               Topics
             </NavLink>
