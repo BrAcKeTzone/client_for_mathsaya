@@ -126,41 +126,41 @@ function Students({
           </span>
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+      <div className="p-2">
         {isLoading ? (
-          <span className="loader"></span>
+          <div className="text-center py-4">
+            <span className="loader"></span>
+          </div>
         ) : (
-          filteredStudents.length > 0 &&
           filteredStudents.map((student) => (
             <div
               key={student.studentId}
-              className="flex flex-col bg-blue-500 rounded-t-none rounded-b mr-2 overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+              className="border border-gray-400 mb-4 p-2 flex items-center justify-between transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-700 hover:text-white"
             >
               <button
                 onClick={() => {
                   handleClickStudent(student.studentId);
                 }}
               >
-                <div className="bg-slate-700 w-full flex justify-center">
-                  {student.gender === "Male" ? (
-                    <CgBoy className="text-7xl text-white" />
-                  ) : (
-                    student.gender === "Female" && (
-                      <CgGirl className="text-7xl text-white" />
-                    )
-                  )}
-                </div>
-                <div className="bg-slate-300 text-xl py-1">
-                  {student.username}
-                </div>
-                <div className="p-4 flex flex-col h-full min-h-16">
-                  <div className="flex flex-col text-base font-bold mb-2">
-                    <span>{student.lastname},</span>
-                    <span>{student.firstname}</span>
+                <div className="flex">
+                  <div className="flex flex-row">
+                    <div className="min-w-6 md:min-w-20">
+                      {student.gender === "Male" ? (
+                        <CgBoy className="text-2xl text-blue-700 inline-block" />
+                      ) : (
+                        <CgGirl className="text-2xl text-pink-700 inline-block" />
+                      )}
+                    </div>
+                    <div className="min-w-20 md:min-w-32">
+                      {student.username}
+                    </div>
+                    <div className="min-w-20 md:min-w-32 text-left">
+                      {student.lastname}, {student.firstname}
+                    </div>
                   </div>
                 </div>
               </button>
-              <div className="flex justify-center p-2 border-t-2">
+              <div className="flex flex-row">
                 <button
                   className="bg-blue-600 hover:bg-blue-700 p-2 rounded mx-1"
                   onClick={() => openEditStudentModal(student.studentId)}
