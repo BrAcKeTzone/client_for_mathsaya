@@ -6,7 +6,7 @@ import axios from "axios";
 
 Modal.setAppElement("#root");
 
-const genderOptions = ["Male", "Female", "Non-binary"];
+const genderOptions = ["Male", "Female"];
 
 const ModalAddStudent = ({
   isOpen,
