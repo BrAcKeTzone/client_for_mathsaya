@@ -58,7 +58,6 @@ const Dashboard = ({ fetchUserRole }) => {
       setTotalLessons(statResponse.data.totalLessons);
       setTotalExercises(statResponse.data.totalExercises);
       setStudentProfiles(statResponse.data.studentProfiles);
-      console.log(statResponse.data.studentProfiles);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
