@@ -239,12 +239,22 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-purple-200 rounded p-4 mt-6 hover:shadow-md hover:ring-4 ring-purple-400 transition duration-300">
                     <h2 className="text-2xl font-bold mb-2 text-purple-600">
-                      Concepts Needing Reinforcement
+                      Concepts where students have lowest percentage scores
                     </h2>
                     <div className="text-blue-600">
-                      <p className="mb-2">
-                        Exercises where the student needs additional practice
-                        and support.
+                      <p className="my-2">
+                        In this Exercise:{" "}
+                        <span className="bg-red-500 text-white p-1">
+                          {studentProfile.minExercise.starRating >= 98
+                            ? "Outstanding"
+                            : studentProfile.minExercise.starRating >= 85.6
+                            ? "Strongly Satisfactory (Passed)"
+                            : studentProfile.minExercise.starRating >= 80.8
+                            ? "Satisfactory (Passed)"
+                            : studentProfile.minExercise.starRating >= 66.4
+                            ? "Fairly Satisfactory (Passed)"
+                            : "Did Not Meet Expectations (Failed)"}
+                        </span>
                       </p>
                       <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
                         {studentProfile.minExercise ? (
@@ -261,9 +271,21 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                           </span>
                         )}
                       </div>
-                      <p className="mb-2">
-                        Lessons where the student needs additional practice and
-                        support.{" "}
+                      {/* Display whether the starRating is outstanding, Strongly Satisfactory (Passed), 	Satisfactory (Passed), Fairly Satisfactory (Passed), Did Not Meet Expectations (Failed) */}
+
+                      <p className="my-2">
+                        In this Lesson:{" "}
+                        <span className="bg-red-500 text-white p-1">
+                          {studentProfile.minLesson.starRating >= 98
+                            ? "Outstanding"
+                            : studentProfile.minLesson.starRating >= 85.6
+                            ? "Strongly Satisfactory (Passed)"
+                            : studentProfile.minLesson.starRating >= 80.8
+                            ? "Satisfactory (Passed)"
+                            : studentProfile.minLesson.starRating >= 66.4
+                            ? "Fairly Satisfactory (Passed)"
+                            : "Did Not Meet Expectations (Failed)"}
+                        </span>
                       </p>
                       <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
                         {studentProfile.minLesson ? (
@@ -280,9 +302,21 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                           </span>
                         )}
                       </div>
-                      <p className="mb-2">
-                        Units where the student needs additional practice and
-                        support.{" "}
+                      {/* Display whether the starRating is outstanding, Strongly Satisfactory (Passed), 	Satisfactory (Passed), Fairly Satisfactory (Passed), Did Not Meet Expectations (Failed) */}
+
+                      <p className="my-2">
+                        In this Unit:{" "}
+                        <span className="bg-red-500 text-white p-1">
+                          {studentProfile.minYunit.starRating >= 98
+                            ? "Outstanding"
+                            : studentProfile.minYunit.starRating >= 85.6
+                            ? "Strongly Satisfactory (Passed)"
+                            : studentProfile.minYunit.starRating >= 80.8
+                            ? "Satisfactory (Passed)"
+                            : studentProfile.minYunit.starRating >= 66.4
+                            ? "Fairly Satisfactory (Passed)"
+                            : "Did Not Meet Expectations (Failed)"}
+                        </span>
                       </p>
                       <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
                         {studentProfile.minYunit ? (
@@ -299,16 +333,27 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                           </span>
                         )}
                       </div>
+                      {/* Display whether the starRating is outstanding, Strongly Satisfactory (Passed), 	Satisfactory (Passed), Fairly Satisfactory (Passed), Did Not Meet Expectations (Failed) */}
                     </div>
                   </div>
                   <div className="bg-purple-200 rounded p-4 mt-6 hover:shadow-md hover:ring-4 ring-purple-400 transition duration-300">
                     <h2 className="text-2xl font-bold mb-2 text-purple-600">
-                      Ready for Enrichment
+                      Concepts where students have highest percentage scores
                     </h2>
                     <div className="text-blue-600">
-                      <p className="mb-2">
-                        Exercises where the student demonstrates strong
-                        understanding and proficiency.
+                      <p className="my-2">
+                        In this Exercise:{" "}
+                        <span className="bg-red-500 text-white p-1">
+                          {studentProfile.maxExercise.starRating >= 98
+                            ? "Outstanding"
+                            : studentProfile.maxExercise.starRating >= 85.6
+                            ? "Strongly Satisfactory (Passed)"
+                            : studentProfile.maxExercise.starRating >= 80.8
+                            ? "Satisfactory (Passed)"
+                            : studentProfile.maxExercise.starRating >= 66.4
+                            ? "Fairly Satisfactory (Passed)"
+                            : "Did Not Meet Expectations (Failed)"}
+                        </span>
                       </p>
                       <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
                         {studentProfile.maxExercise ? (
@@ -325,9 +370,21 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                           </span>
                         )}
                       </div>
-                      <p className="mb-2">
-                        Lessons where the student demonstrates strong
-                        understanding and proficiency.
+                      {/* Display whether the starRating is outstanding, Strongly Satisfactory (Passed), 	Satisfactory (Passed), Fairly Satisfactory (Passed), Did Not Meet Expectations (Failed) */}
+
+                      <p className="my-2">
+                        In this Lesson:{" "}
+                        <span className="bg-red-500 text-white p-1">
+                          {studentProfile.maxLesson.starRating >= 98
+                            ? "Outstanding"
+                            : studentProfile.maxLesson.starRating >= 85.6
+                            ? "Strongly Satisfactory (Passed)"
+                            : studentProfile.maxLesson.starRating >= 80.8
+                            ? "Satisfactory (Passed)"
+                            : studentProfile.maxLesson.starRating >= 66.4
+                            ? "Fairly Satisfactory (Passed)"
+                            : "Did Not Meet Expectations (Failed)"}
+                        </span>
                       </p>
                       <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
                         {studentProfile.maxLesson ? (
@@ -344,9 +401,21 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                           </span>
                         )}
                       </div>
-                      <p className="mb-2">
-                        Units where the student demonstrates strong
-                        understanding and proficiency.
+                      {/* Display whether the starRating is outstanding, Strongly Satisfactory (Passed), 	Satisfactory (Passed), Fairly Satisfactory (Passed), Did Not Meet Expectations (Failed) */}
+
+                      <p className="my-2">
+                        In this Unit:{" "}
+                        <span className="bg-red-500 text-white p-1">
+                          {studentProfile.maxYunit.starRating >= 98
+                            ? "Outstanding"
+                            : studentProfile.maxYunit.starRating >= 85.6
+                            ? "Strongly Satisfactory (Passed)"
+                            : studentProfile.maxYunit.starRating >= 80.8
+                            ? "Satisfactory (Passed)"
+                            : studentProfile.maxYunit.starRating >= 66.4
+                            ? "Fairly Satisfactory (Passed)"
+                            : "Did Not Meet Expectations (Failed)"}
+                        </span>
                       </p>
                       <div className="bg-white rounded p-2 border border-blue-400 hover:text-blue-800">
                         {studentProfile.maxYunit ? (
@@ -363,6 +432,7 @@ function StudProfile({ selectedStudentId, server_url, goBack }) {
                           </span>
                         )}
                       </div>
+                      {/* Display whether the starRating is outstanding, Strongly Satisfactory (Passed), 	Satisfactory (Passed), Fairly Satisfactory (Passed), Did Not Meet Expectations (Failed) */}
                     </div>
                   </div>
                 </div>
